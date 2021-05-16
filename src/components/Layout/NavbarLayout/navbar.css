@@ -1,0 +1,42 @@
+.seacrh{
+  width: 500px;
+  margin-right: 20px;
+}
+.seacrh input{
+  border-radius: 30px;
+  border: 2px ;
+  padding-left: 20px;
+  background-color: #fff;
+}
+input:focus{
+  border-bottom: none !important;
+}
+.seacrh:hover{
+  background: none;
+}
+.User__btn{
+  display: flex;
+  align-items: center;
+  width: max-content;
+  margin-right: 30px;
+}
+.user:hover{
+  background: none;
+}
+.logo{
+  margin-left: 40px;
+}
+.navbar{
+  position: fixed;
+  top: 0;
+}
+@media screen and (max-width: 1340px){
+  .seacrh{
+    width: 300px;
+  }
+}
+@media screen and (max-width: 1100px){
+  .seacrh{
+    width: 200px;
+  }
+}
