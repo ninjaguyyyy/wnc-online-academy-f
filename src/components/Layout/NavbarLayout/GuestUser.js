@@ -5,7 +5,7 @@ function UserIcon() {
   return (
     <div style={{ display: 'flex' }}>
         <Link to='/login'>Login</Link>
-        <Link to='/login'>Sign up</Link>
+        <Link to='/signup'>Sign up</Link>
     </div>
 
   )
