@@ -1,42 +1,19 @@
-.seacrh{
-  width: 500px;
+a.navbar__link:hover{
+  text-decoration: none !important;
+}
+.navbar__logo{
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
   margin-right: 20px;
 }
-.seacrh input{
-  border-radius: 30px;
-  border: 2px ;
-  padding-left: 20px;
-  background-color: #fff;
+.navbar__search{
+  width: 500px !important;
+  margin-left: 50px !important;
 }
-input:focus{
-  border-bottom: none !important;
+.navbar__custom{
+  padding-left: 180px;
 }
-.seacrh:hover{
-  background: none;
-}
-.User__btn{
-  display: flex;
-  align-items: center;
-  width: max-content;
-  margin-right: 30px;
-}
-.user:hover{
-  background: none;
-}
-.logo{
-  margin-left: 40px;
-}
-.navbar{
-  position: fixed;
-  top: 0;
-}
-@media screen and (max-width: 1340px){
-  .seacrh{
-    width: 300px;
-  }
-}
-@media screen and (max-width: 1100px){
-  .seacrh{
-    width: 200px;
-  }
+.navbar__userIcon{
+  margin-right: 80px;
 }

@@ -1,12 +1,10 @@
 import React from 'react'
-import { Icon } from 'react-materialize'
 import { Link } from 'react-router-dom'
 import './index.css'
 function index() {
   return (
     <div className='searchbar'>
       <div className='search'>
-        <Icon style={{ paddingLeft:'20px'}}>search</Icon>
         <input type='text'  className='searchbutton' placeholder='Search...'/>
       </div>
       <div className='content'>
