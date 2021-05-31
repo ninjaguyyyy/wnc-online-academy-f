@@ -4,9 +4,6 @@ import './index.css'
 function index() {
   return (
     <div className='searchbar'>
-      <div className='search'>
-        <input type='text'  className='searchbutton' placeholder='Search...'/>
-      </div>
       <div className='content'>
         <div className='category'>
           <Link to='web' className='category_item'>Web</Link>

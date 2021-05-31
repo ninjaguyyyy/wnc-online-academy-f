@@ -5,7 +5,6 @@ function Dashboard() {
   return (
     <div>
       <Layout />
-      <h2>hello</h2>
       <Course />
     </div>
   )

@@ -25,7 +25,7 @@ function App() {
             <Switch>
               <PublicRoute path="/web" component={Web} />
               <PublicRoute path="/mobile" component={Mobile} />
-              <PublicRoute path="/student" component={Student} />
+              <PrivateRoute path="/student" component={Student} />
               <PrivateRoute path="/teacher" component={Teacher} />
               <Redirect from="/" to="/student" />
             </Switch>

@@ -3,8 +3,51 @@ import './Course.css'
 function index() {
   return (
     <div className='course'>
-      Course
+      <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>    <h1 className='course'>
+        Course
+    </h1>
     </div>
+
   )
 }
 
