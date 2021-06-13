@@ -82,7 +82,8 @@ function Login() {
           </div>
           <div className='login__signup'>
             <Link className='login__signupbtn' to='/register'>Sign up</Link>
-            <Link to='/forgotpassword'>Forgot password</Link>
+            <Link className='login__signupbtn' to='/forgotpassword'>Forgot password</Link>
+            <Link to='/dashobard'>Dashboard</Link>
           </div>
         </Form>
       </Formstyle>
@@ -103,7 +104,7 @@ export const LoginContainer = styled.div`
 export const Formstyle = styled.div`
   text-align:center;
   width:450px;
-  height:85vh;
+  height:90vh;
   border-radius:19px;
   background-color:#ffffff;
 `

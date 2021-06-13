@@ -6,21 +6,31 @@ import  background from 'assets/image/backgroundSignUp.jpg'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { Button } from 'react-bootstrap'
+import { Button, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Formstyle,Form,LoginContainer,Role,Input} from './../Login/index'
+import { ToastContainer } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux'
+import { getMe, signUp } from 'store/signSlice'
+import { unwrapResult } from '@reduxjs/toolkit'
+
+ 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   userName: yup.string().required(),
   passWord: yup.string().required(),
   repeatPassWord: yup.string().oneOf([yup.ref('passWord'), null], 'Passwords must match'),
   role: yup.number().required(),
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
 })
 
 function Register() {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
+  const dispatch=useDispatch()
+  const isLoading = useSelector(state=>state.sign.signUp.loading)
   const [role, setRole] = useState(3)
   const List = [
     {
@@ -39,7 +49,20 @@ function Register() {
       icon: <IconTeacher />
     }
   ]
-  const onSubmit = (data) => console.log(data)
+  const onSubmit = async (data) =>{
+    const submitdata={
+      role: data.role,
+      email: data.email,
+      userName: data.userName,
+      passWord: data.passWord,
+      firstName: data.firstName,
+      lastName: data.lastName
+    }
+    dispatch(signUp(submitdata))
+    const result= await dispatch(getMe())
+    const user=unwrapResult(result)
+    console.log(user)
+  }
   const displayList = (role) => {
     return List.map((item, i) => {
       return (
@@ -61,6 +84,7 @@ function Register() {
     if (role === 3)
       return 'Student'
   }
+
   return (
     <LoginContainer style={{ backgroundImage: `url(${background})`}}>
       <Formstyle style={{ margin:'unset'}}>
@@ -68,28 +92,34 @@ function Register() {
           Sign up as {displayRole(role)}
         </h3>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Role style={{}}>
+          <Role>
             {displayList(role)}
           </Role>
-          <label for='email'>Email</label>
-          <Input {...register('email')} id='email' />
+          <Input {...register('email')}   placeholder='Email'/>
           <p className='login__error'>{errors.email?.message.toLowerCase()}</p>
-          <label for='username'>Username</label>
-          <Input {...register('userName')} id='username' />
+          <Input {...register('userName')}  placeholder='Username'/>
           <p className='login__error'>{errors.userName?.message.toLowerCase()}</p>
-          <label for='password'>Password</label>
-          <Input type='password'{...register('passWord')} id='password' />
+          <Input {...register('firstName')}  placeholder='First Name'/>
+          <p className='login__error'>{errors.firstName?.message.toLowerCase()}</p>
+          <Input {...register('lastName')} placeholder='Last Name'/>
+          <p className='login__error'>{errors.lastName?.message.toLowerCase()}</p>
+          <Input type='password'{...register('passWord')}  placeholder='Password' />
           <p className='login__error'>{errors.passWord?.message.toLowerCase()}</p>
-          <label for='repeatpassword'>Retype Password</label>
-          <Input type='password'{...register('repeatPassWord')} id='repeatpassword' />
+          <Input type='password'{...register('repeatPassWord')} placeholder='Retype Password' />
           <p className='login__error'>{errors.repeatPassWord?.message.toLowerCase()}</p>
           <div className='login__button' style={{ width: '100%'}}>
-            <Button variant="primary" size="lg" className='login__button' type='submit' style={{ margin:'unset', marginTop:'40px'}}>
+            <Button variant="primary" size="lg" 
+              className='login__button' type='submit' 
+              style={{ margin:'unset', marginTop:'40px'}}
+            >
+              {isLoading&& <Spinner animation="border" />}
               Sign up
             </Button>
           </div>
+          <ToastContainer autoClose={2000} />
           <div className='login__signup'>
             <Link className='login__signupbtn' to='/login'>Login </Link>
+            <Link className='login__signupbtn' to='/dashboard'>Dashboard </Link>
           </div>
         </Form>
       </Formstyle>

@@ -12,6 +12,7 @@ import Teacher from 'features/Teacher'
 import Layout from 'components/Layout'
 import Web from 'features/Course/Web'
 import Mobile from 'features/Course/Mobile'
+import CourseDetail from 'features/Course/CourseDetail'
 function App() {
   return (
     <Provider store={store}>
@@ -25,6 +26,7 @@ function App() {
             <Switch>
               <PublicRoute path="/web" component={Web} />
               <PublicRoute path="/mobile" component={Mobile} />
+              <PublicRoute path="/course/:id" component={CourseDetail} />
               <PrivateRoute path="/student" component={Student} />
               <PrivateRoute path="/teacher" component={Teacher} />
               <Redirect from="/" to="/student" />

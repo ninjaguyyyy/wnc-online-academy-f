@@ -16,6 +16,7 @@ a.navbar__link:hover {
   top: 0;
   width: 100%;
   padding-left: 180px;
+  z-index: 100;
 }
 .navbar__userIcon {
   margin-right: 80px;
