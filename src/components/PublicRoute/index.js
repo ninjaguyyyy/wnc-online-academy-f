@@ -5,12 +5,8 @@ const PublicRoute=({
   component: Component,
   ...rest
 })=>{
-  console.log('asd',Component,rest)
   const { token } = useSelector((state) => state.user)
-  return <Route 
-    {...rest} 
-    render={(props) => (token 
-      ? <Redirect to="/" /> 
-      : <Component {...props} />)} />;
+  return <Route {...rest} render={(props) => (token ? <Redirect to="/" /> : <Component {...props} />)} />;
+
 }
 export default PublicRoute;

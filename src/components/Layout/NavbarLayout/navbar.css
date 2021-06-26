@@ -1,19 +1,26 @@
-a.navbar__link:hover{
+a.navbar__link:hover {
   text-decoration: none !important;
 }
-.navbar__logo{
+.navbar__logo {
   width: 60px;
   height: 60px;
   cursor: pointer;
   margin-right: 20px;
 }
-.navbar__search{
-  width: 500px !important;
+.navbar__search {
+  width: 100%;
   margin-left: 50px !important;
 }
-.navbar__custom{
+.navbar__custom {
+  position: fixed;
+  top: 0;
+  width: 100%;
   padding-left: 180px;
+  z-index: 100;
 }
-.navbar__userIcon{
+.navbar__userIcon {
   margin-right: 80px;
+}
+.navbar__right {
+  justify-content: flex-end;
 }

@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import guest from './guestSlice'
+import sign from './signSlice'
 import user from './userSlice'
 const rootReducer = {
-    guest,
+    sign,
     user
 };
 

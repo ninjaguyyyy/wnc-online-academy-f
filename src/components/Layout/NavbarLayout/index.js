@@ -18,10 +18,10 @@ function NavbarLayout() {
         <img src={logo} alt='logo' className='navbar__logo' />
         <Link to='/dashboard' className='navbar__link'>Online Academy</Link>
       </Navbar.Brand>
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto" >
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2 navbar__search" />
+      <Navbar.Collapse id="basic-navbar-nav" className='navbar__right'>
+        <Nav className="mr-auto navbar__search" >
+          <Form inline style={{ width:'100%'}}>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" style={{ width:'85%'}} />
             <Button variant="outline-success">Search</Button>
           </Form>
         </Nav>
