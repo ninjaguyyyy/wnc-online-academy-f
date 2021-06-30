@@ -66,6 +66,7 @@ function Register() {
   const displayList = (role) => {
     return List.map((item, i) => {
       return (
+        <div key={i} >
         <label>
           <input type='checkbox' checked={role === item.roleNum} value={item.roleNum} onClick={() => setRole(item.roleNum)} {...register('role')} />
           <div className='login__chooseRole'>
@@ -73,6 +74,7 @@ function Register() {
             {item.role}
           </div>
         </label>
+        </div>
       )
     })
   }

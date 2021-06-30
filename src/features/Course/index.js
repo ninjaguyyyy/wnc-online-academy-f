@@ -34,24 +34,24 @@ function index() {
     }
   ]
   return (
-    <Container className='course' id='carousel__course'>
+    <Container  className='course' id='carousel__course'>
       <h2>Top 4 popular course</h2>
       <Carousel>
-        <Carousel.Item>
-          <Link to='/course/1' className='carousel__courseLink'>
+        <Carousel.Item >
+          <Link to='/course/1' className='carousel__courseLink' >
             <img
               className='carousel__img'
               src={no1}
               alt="First slide"
             />
-            <Carousel.Caption className='carousel__text'>
+            <Carousel.Caption className='carousel__text' >
               <h3>First slide label</h3>
               <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
             </Carousel.Caption>
           </Link>       
         </Carousel.Item>
-        <Carousel.Item>
-          <Link to='/course/2' className='carousel__courseLink'>
+        <Carousel.Item >
+          <Link to='/course/2' className='carousel__courseLink' >
             <img
               className='carousel__img'
               src={no2}
@@ -64,8 +64,8 @@ function index() {
           </Link>
           
         </Carousel.Item>
-        <Carousel.Item>
-          <Link to='/course/2' className='carousel__courseLink'>
+        <Carousel.Item >
+          <Link to='/course/2' className='carousel__courseLink' >
             <img
               className='carousel__img'
               src={no3}
@@ -76,43 +76,44 @@ function index() {
               <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
             </Carousel.Caption>
           </Link>
-
         </Carousel.Item>
       </Carousel>
       <h2>Top 10 most views course</h2>
       <Container fluid>
         <Row xs={1} md={2} >
           {items.map((item, idx) => (
-            <Link to={`/course/${item.id}`}>
-              <Col style={{ padding: '20px' }}>
-                <Card >
-                  <Card.Img variant="top" src={no1} />
-                  <Card.Body>
-                    <Card.Title>{item.name}</Card.Title>
-                    <Card.Title>Teacher</Card.Title>
-                    <Card.Text style={{ display:'flex', justifyContent:'space-between'}}>
-                      {item.title}
-                      <div style={{display:'flex' }}>
-                        {Array(4)
-                          .fill()
-                          .map((_, i) => (
-                            <p>⭐️</p>
-                          ))}
-                      </div>
+            <div key={1*idx}>
+              <Link to={`/course/${item.id}`} >
+                <Col style={{ padding: '20px' }}>
+                  <Card >
+                    <Card.Img variant="top" src={no1} />
+                    <Card.Body>
+                      <Card.Title>{item.name}</Card.Title>
+                      <Card.Title>Teacher</Card.Title>
+                      <Card.Text style={{ display:'flex', justifyContent:'space-between'}}>
+                        {item.title}
+                        <span style={{display:'flex' }}>
+                          {Array(4)
+                            .fill()
+                            .map((_, i) => (
+                              <span key={1*i}>⭐️</span>
+                            ))}
+                        </span>
 
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-              </Col>
-            </Link>
-
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              </Link>
+            </div>
           ))}
         </Row>
       </Container>
-      <h2>Top 10 most views course</h2>
+    <h2>Top 10 most views course</h2>
       <Container fluid>
         <Row xs={1} md={2} >
           {items.map((item, idx) => (
+            <div key={2*idx}>
             <Link to={`/course/${item.id}`}>
               <Col style={{ padding: '20px' }}>
                 <Card >
@@ -125,7 +126,7 @@ function index() {
                 </Card>
               </Col>
             </Link>
-
+            </div>
           ))}
         </Row>
       </Container>
@@ -133,7 +134,8 @@ function index() {
       <Container fluid>
         <Row xs={1} md={2} >
           {items.map((item, idx) => (
-            <Link to={`/course/${item.id}`}>
+            <div key={3*idx}>
+            <Link to={`/course/${item.id}`} key={idx}>
               <Col style={{ padding: '20px' }}>
                 <Card >
                   <Card.Body>
@@ -145,7 +147,7 @@ function index() {
                 </Card>
               </Col>
             </Link>
-
+            </div>
           ))}
         </Row>
       </Container>
@@ -153,7 +155,8 @@ function index() {
       <Container fluid>
         <Row xs={1} md={2} >
           {items.map((item, idx) => (
-            <Link to={`/course/${item.id}`}>
+            <div key={4*idx}>
+            <Link to={`/course/${item.id}`} key={idx}>
               <Col style={{ padding: '20px' }}>
                 <Card >
                   <Card.Body>
@@ -165,7 +168,7 @@ function index() {
                 </Card>
               </Col>
             </Link>
-
+            </div>
           ))}
         </Row>
       </Container>
@@ -173,7 +176,8 @@ function index() {
       <Container fluid>
         <Row xs={1} md={3} >
           {items.map((item, idx) => (
-            <Link to={`/course/${item.id}`}>
+            <div key={5*idx}>
+            <Link to={`/course/${item.id}`} key={idx}>
               <Col style={{ padding: '20px' }}>
                 <Card >
                   <Card.Body>
@@ -185,10 +189,10 @@ function index() {
                 </Card>
               </Col>
             </Link>
-
+            </div>
           ))}
         </Row>
-      </Container>
+      </Container> 
     </Container>
   )
 }

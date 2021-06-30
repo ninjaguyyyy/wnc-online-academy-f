@@ -40,13 +40,15 @@ function Login() {
   const displayList = (role) => {
     return List.map((item, i) => {
       return (
-        <label>
-          <input type='checkbox' checked={role === item.roleNum} value={item.roleNum} onClick={() => setRole(item.roleNum)} {...register('role')} />
-          <div className='login__chooseRole'>
-            {item.icon}
-            {item.role}
-          </div>
-        </label>
+        <div key={i} >
+          <label>
+            <input type='checkbox' checked={role === item.roleNum} value={item.roleNum} onClick={() => setRole(item.roleNum)} {...register('role')} />
+            <div className='login__chooseRole'>
+              {item.icon}
+              {item.role}
+            </div>
+          </label>
+        </div>
       )
     })
   }

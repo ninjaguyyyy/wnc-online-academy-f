@@ -20,17 +20,13 @@ function NavbarLayout() {
       </Navbar.Brand>
       <Navbar.Collapse id="basic-navbar-nav" className='navbar__right'>
         <Nav className="mr-auto navbar__search" >
-          <Form inline style={{ width:'100%'}}>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" style={{ width:'85%'}} />
+          <Form inline style={{ width: '100%' }}>
+            <FormControl type="text" placeholder="Search" className="mr-sm-2" style={{ width: '85%' }} />
             <Button variant="outline-success">Search</Button>
           </Form>
         </Nav>
-        <Nav.Link>
-          <Link to='/login' className='navbar__link'>Login</Link>
-        </Nav.Link>
-        <Nav.Link>
-          <Link to='/register' className='navbar__link'>Register</Link>
-        </Nav.Link>
+        <Link to='/login' className='navbar__link'>Login</Link>
+        <Link to='/register' className='navbar__link'>Register</Link>
         <NavDropdown title="User" id="basic-nav-dropdown" className='navbar__userIcon'>
           <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
           <NavDropdown.Divider />
