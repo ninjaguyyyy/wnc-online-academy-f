@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import IconTeacher from 'assets/image/IconTeacher'
 import IconStudent from 'assets/image/IconStudent'
 import './../Login/index.css'
@@ -13,8 +13,7 @@ import { ToastContainer } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux'
 import { getMe, signUp } from 'store/signSlice'
 import { unwrapResult } from '@reduxjs/toolkit'
-
- 
+import authApi from 'api/authUser'
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   userName: yup.string().required(),
@@ -86,7 +85,9 @@ function Register() {
     if (role === 3)
       return 'Student'
   }
-
+  useEffect(() => {
+    authApi.register('boy2balls','1','email','hoa','nguyen',1)
+  }, [])
   return (
     <LoginContainer style={{ backgroundImage: `url(${background})`}}>
       <Formstyle style={{ margin:'unset'}}>

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import userApi from 'api/authUser';
+// import userApi from 'api/authUser';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const initialState = {
@@ -9,8 +9,12 @@ const initialState = {
   }
 };
 export const getMe= createAsyncThunk('sign/getMe',async (params,thunkAPI)=>{
-  const user= await userApi.getMe();
-  return user;
+  // const user= await userApi.getMe();
+  return ({
+    id:'1998',
+    name:'boy2balls',
+    email:'boy2balls@gmail.com',
+  }) 
 })
 const sign = createSlice({
   name: 'sign',
