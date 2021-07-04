@@ -11,7 +11,9 @@ import {
 import { Link } from 'react-router-dom'
 import './navbar.css'
 import logo from 'assets/image/logo.png'
+import { useSelector } from 'react-redux'
 function NavbarLayout() {
+  const { signIn } = useSelector((state) => state.sign)
   return (
     <Navbar bg="light" expand="lg" className='navbar__custom'>
       <Navbar.Brand>
@@ -25,13 +27,13 @@ function NavbarLayout() {
             <Button variant="outline-success">Search</Button>
           </Form>
         </Nav>
-        <Link to='/login' className='navbar__link'>Login</Link>
-        <Link to='/register' className='navbar__link'>Register</Link>
-        <NavDropdown title="User" id="basic-nav-dropdown" className='navbar__userIcon'>
+        {!signIn?.accessToken&&<Link to='/login' className='navbar__link'>Login</Link>}
+        {!signIn?.accessToken&&<Link to='/register' className='navbar__link'>Register</Link>}
+        {signIn?.accessToken&&<NavDropdown title="User" id="basic-nav-dropdown" className='navbar__userIcon'>
           <NavDropdown.Item href="#action/3.1">Profile</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item href="#action/3.3">Log out</NavDropdown.Item>
-        </NavDropdown>
+        </NavDropdown>}
       </Navbar.Collapse>
     </Navbar>
   );

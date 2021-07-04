@@ -1,48 +1,34 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import userApi from 'api/authUser';
+import { createSlice } from '@reduxjs/toolkit';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const initialState = {
   signUp:{
     loading:false,
-    user:null
-  }
+    err:null
+  },
+  signIn:null
 };
-export const getMe= createAsyncThunk('sign/getMe',async (params,thunkAPI)=>{
-  // const user= await userApi.getMe();
-  return ({
-    id:'1998',
-    name:'boy2balls',
-    email:'boy2balls@gmail.com',
-  }) 
-})
 const sign = createSlice({
   name: 'sign',
   initialState,
   reducers: {
     signUp:(state,{payload})=>{
-      state.signUp.user=payload
-      setTimeout(() => {
-        toast.success("MY SUCCESS")
-        toast.error('My error')
-      }, 3000);
-    }
-  },
-  extraReducers:{
-    [getMe.pending]:(state)=>{
-      state.signUp.loading=true
+      state.signUp.err=payload
+      if(payload.msg)
+        toast.error(payload.msg)
+      else
+        toast.success("Successfully register")
     },
-    [getMe.rejected]:(state)=>{
-      state.signUp.loading=false
-      state.signUp.error='Fail to sign up'
-    },
-    [getMe.fulfilled]:(state,action)=>{
-      state.signUp.loading=false
-      state.signUp.user=action.payload
+    signIn:(state,{payload})=>{
+      state.signIn=payload
+      if(payload.msg)
+        toast.error(payload.msg)
+      else
+        toast.success('Successfully login')
     }
   }
 });
 
 const { reducer, actions } = sign;
-export const { signUp } = actions;
+export const { signUp,signIn } = actions;
 export default reducer;

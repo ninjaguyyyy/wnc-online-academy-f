@@ -1,6 +1,9 @@
 a.navbar__link:hover {
   text-decoration: none !important;
 }
+a.navbar__link{
+  margin-right:10px;
+}
 .navbar__logo {
   width: 60px;
   height: 60px;

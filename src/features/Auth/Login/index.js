@@ -9,13 +9,16 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-
+import { useDispatch } from 'react-redux'
+import authApi from 'api/authUser'
+import { signIn } from 'store/signSlice'
+import { ToastContainer } from 'react-toastify'
 const schema = yup.object().shape({
   userName: yup.string().required(),
   passWord: yup.string().required(),
   role: yup.number().required(),
 })
-function Login() {
+function Login(props) {
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
@@ -60,9 +63,17 @@ function Login() {
     if (role === 3)
       return 'Student'
   }
-  const onSubmit = (data) => console.log(data)
+  const dispatch=useDispatch()
+  const onSubmit = async(data) => {
+    await authApi.signIn(data).then(res=>{
+      dispatch(signIn(res))
+      if(res.accessToken)
+        props.history.push('/student')
+    })
+  }
   return (
     <LoginContainer>
+      <ToastContainer autoClose={2000} />
       <Formstyle>
         <h3 style={{ paddingTop: '50px' }}>
           Login as {displayRole(role)}
@@ -71,14 +82,14 @@ function Login() {
           <Role>
             {displayList(role)}
           </Role>
-          <label for='username' style={{ marginTop: '30px' }}>Username</label>
+          <label htmlFor='username' style={{ marginTop: '30px' }}>Username</label>
           <Input {...register('userName')} id='username' />
-          <p className='login__error'>{errors.userName?.message.toLowerCase()}</p>
-          <label for='password'>Password</label>
+          <p className='login__error'>{errors.userName?.message}</p>
+          <label htmlFor='password'>Password</label>
           <Input type='password'{...register('passWord')} id='password' />
-          <p className='login__error'>{errors.passWord?.message.toLowerCase()}</p>
+          <p className='login__error'>{errors.passWord?.message}</p>
           <div className='login__button' style={{ width: '100%', marginTop: '50px' }}>
-            <Button variant="primary" size="lg" className='login__button' type='submit'>
+            <Button variant="primary" size="lg" className='login__button' type='submit' >
               Login
             </Button>
           </div>

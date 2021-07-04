@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState } from 'react'
 import IconTeacher from 'assets/image/IconTeacher'
 import IconStudent from 'assets/image/IconStudent'
 import './../Login/index.css'
@@ -10,9 +10,8 @@ import { Button, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Formstyle,Form,LoginContainer,Role,Input} from './../Login/index'
 import { ToastContainer } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux'
-import { getMe, signUp } from 'store/signSlice'
-import { unwrapResult } from '@reduxjs/toolkit'
+import { useSelector,useDispatch } from 'react-redux'
+import {  signUp } from 'store/signSlice'
 import authApi from 'api/authUser'
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -57,10 +56,7 @@ function Register() {
       firstName: data.firstName,
       lastName: data.lastName
     }
-    dispatch(signUp(submitdata))
-    const result= await dispatch(getMe())
-    const user=unwrapResult(result)
-    console.log(user)
+    await authApi.register(submitdata).then(res=>dispatch(signUp(res)))
   }
   const displayList = (role) => {
     return List.map((item, i) => {
@@ -85,9 +81,6 @@ function Register() {
     if (role === 3)
       return 'Student'
   }
-  useEffect(() => {
-    authApi.register('boy2balls','1','email','hoa','nguyen',1)
-  }, [])
   return (
     <LoginContainer style={{ backgroundImage: `url(${background})`}}>
       <Formstyle style={{ margin:'unset'}}>
@@ -99,17 +92,17 @@ function Register() {
             {displayList(role)}
           </Role>
           <Input {...register('email')}   placeholder='Email'/>
-          <p className='login__error'>{errors.email?.message.toLowerCase()}</p>
+          <p className='login__error'>{errors.email?.message}</p>
           <Input {...register('userName')}  placeholder='Username'/>
-          <p className='login__error'>{errors.userName?.message.toLowerCase()}</p>
+          <p className='login__error'>{errors.userName?.message}</p>
           <Input {...register('firstName')}  placeholder='First Name'/>
-          <p className='login__error'>{errors.firstName?.message.toLowerCase()}</p>
+          <p className='login__error'>{errors.firstName?.message}</p>
           <Input {...register('lastName')} placeholder='Last Name'/>
-          <p className='login__error'>{errors.lastName?.message.toLowerCase()}</p>
+          <p className='login__error'>{errors.lastName?.message}</p>
           <Input type='password'{...register('passWord')}  placeholder='Password' />
-          <p className='login__error'>{errors.passWord?.message.toLowerCase()}</p>
+          <p className='login__error'>{errors.passWord?.message}</p>
           <Input type='password'{...register('repeatPassWord')} placeholder='Retype Password' />
-          <p className='login__error'>{errors.repeatPassWord?.message.toLowerCase()}</p>
+          <p className='login__error'>{errors.repeatPassWord?.message}</p>
           <div className='login__button' style={{ width: '100%'}}>
             <Button variant="primary" size="lg" 
               className='login__button' type='submit' 
