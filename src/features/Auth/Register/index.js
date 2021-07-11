@@ -56,7 +56,7 @@ function Register() {
       firstName: data.firstName,
       lastName: data.lastName
     }
-    await authApi.register(submitdata).then(res=>dispatch(signUp(res)))
+    await authApi.registerApi(submitdata).then(res=>dispatch(signUp(res)))
   }
   const displayList = (role) => {
     return List.map((item, i) => {

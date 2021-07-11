@@ -12,9 +12,9 @@ import { Link,useHistory } from 'react-router-dom'
 import './navbar.css'
 import logo from 'assets/image/logo.png'
 import { useDispatch, useSelector } from 'react-redux'
-import { signOut } from "store/signSlice"
+import { removeToken } from "store/userSlice";
 function NavbarLayout(props) {
-  const { signIn } = useSelector((state) => state.sign)
+  const { token,userInfo} = useSelector(state => state.user)
   const dispatch= useDispatch()
   const history= useHistory()
   const checkRole= (role) =>{
@@ -38,14 +38,14 @@ function NavbarLayout(props) {
             <Button variant="outline-success">Search</Button>
           </Form>
         </Nav>
-        {!signIn?.accessToken&&<Link to='/login' className='navbar__link' style={{ marginRight:'70px'}}>Login</Link>}
-        {!signIn?.accessToken&&<Link to='/register' className='navbar__link'>Register</Link>}
-        {signIn?.accessToken&&<NavDropdown title={signIn.user.userName} id="basic-nav-dropdown" className='navbar__userIcon'>
-          <NavDropdown.Item onClick={()=>checkRole(signIn.user.role)}>Profile</NavDropdown.Item>
+        {!token&&<Link to='/login' className='navbar__link' style={{ marginRight:'70px'}}>Login</Link>}
+        {!token&&<Link to='/register' className='navbar__link'>Register</Link>}
+        {token&&<NavDropdown title={userInfo.userName} id="basic-nav-dropdown" className='navbar__userIcon'>
+          <NavDropdown.Item onClick={()=>checkRole(userInfo.role)}>Profile</NavDropdown.Item>
           <NavDropdown.Divider />
           <NavDropdown.Item onClick={()=>{
-            dispatch(signOut(null))
             history.push('/dashboard')
+            dispatch(removeToken())
           }}>
             Log out
           </NavDropdown.Item>

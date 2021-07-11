@@ -5,8 +5,7 @@ const PrivateRoute = ({
   component: Component,
   ...rest
 }) => {
-  const { signIn } = useSelector((state) => state.sign)
-  console.log(signIn)
-  return <Route {...rest} render={(props) => (signIn?.accessToken&&signIn?.user.role===3 ? <Component {...props} /> : <Redirect to="/dashboard" />)} />;
+  const { token,userInfo } = useSelector((state) => state.user)
+  return <Route {...rest} render={(props) => (token&&userInfo.role===3 ? <Component {...props} /> : <Redirect to="/dashboard" />)} />;
 };
 export default PrivateRoute;

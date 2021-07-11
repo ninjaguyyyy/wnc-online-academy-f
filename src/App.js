@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux'
 import store from './store/rootstore'
-import { BrowserRouter, Redirect, Switch } from 'react-router-dom'
+import { BrowserRouter, Redirect, Switch,Route } from 'react-router-dom'
 import Login from 'features/Auth/Login'
 import Register from 'features/Auth/Register'
 import PublicRoute from 'components/PublicRoute'
@@ -19,15 +19,15 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <Switch>
-          <PublicRoute path="/dashboard" component={Dashboard} />
+          <Route path="/dashboard" component={Dashboard} />
           <PublicRoute path="/login" component={Login} />
           <PublicRoute path="/register" component={Register} />
           <PublicRoute path="/forgot-password" component={ResetPassword} />
           <Layout>
             <Switch>
-              <PublicRoute path="/web" component={Web} />
-              <PublicRoute path="/mobile" component={Mobile} />
-              <PublicRoute path="/course/:id" component={CourseDetail} />
+              <Route path="/web" component={Web} />
+              <Route path="/mobile" component={Mobile} />
+              <Route path="/course/:id" component={CourseDetail} />
               <PrivateRoute path="/student" component={Student} />
               <TeacherRouter path="/teacher" component={Teacher} />
               <Redirect from="/" to="/dashboard" />

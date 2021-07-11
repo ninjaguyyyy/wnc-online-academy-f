@@ -11,8 +11,8 @@ import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import authApi from 'api/authUser'
-import { signIn } from 'store/signSlice'
 import { ToastContainer } from 'react-toastify'
+import { saveToken,saveUserInfo } from 'store/userSlice'
 const schema = yup.object().shape({
   userName: yup.string().required(),
   passWord: yup.string().required(),
@@ -65,8 +65,10 @@ function Login(props) {
   }
   const dispatch=useDispatch()
   const onSubmit = async(data) => {
-    await authApi.signIn(data).then(res=>{
-      dispatch(signIn(res))
+    await authApi.signInApi(data).then(res=>{
+      console.log(res)
+      dispatch(saveUserInfo(res.user))
+      dispatch(saveToken(res.accessToken))
       if(res.accessToken)
         if(res.user.role===3)
           props.history.push('/dashboard')
