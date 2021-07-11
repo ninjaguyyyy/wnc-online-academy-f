@@ -68,7 +68,12 @@ function Login(props) {
     await authApi.signIn(data).then(res=>{
       dispatch(signIn(res))
       if(res.accessToken)
-        props.history.push('/student')
+        if(res.user.role===3)
+          props.history.push('/dashboard')
+        if(res.user.role===2)
+          props.history.push('/teacher')
+        if(res.user.role===1)
+          props.history.push('/admin')
     })
   }
   return (

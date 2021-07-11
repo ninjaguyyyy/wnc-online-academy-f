@@ -5,6 +5,7 @@ import Login from 'features/Auth/Login'
 import Register from 'features/Auth/Register'
 import PublicRoute from 'components/PublicRoute'
 import PrivateRoute from 'components/PrivateRoute'
+import TeacherRouter from 'components/PrivateRoute/TeacherRouter'
 import ResetPassword from 'features/Auth/ResetPassword'
 import Dashboard from 'features/Dashboard'
 import Student from 'features/Student'
@@ -28,8 +29,8 @@ function App() {
               <PublicRoute path="/mobile" component={Mobile} />
               <PublicRoute path="/course/:id" component={CourseDetail} />
               <PrivateRoute path="/student" component={Student} />
-              <PrivateRoute path="/teacher" component={Teacher} />
-              <Redirect from="/" to="/student" />
+              <TeacherRouter path="/teacher" component={Teacher} />
+              <Redirect from="/" to="/dashboard" />
             </Switch>
           </Layout>
         </Switch>
