@@ -9,7 +9,6 @@ import * as yup from 'yup'
 import { Button, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Formstyle,Form,LoginContainer,Role,Input} from './../Login/index'
-import { ToastContainer } from 'react-toastify';
 import { useSelector,useDispatch } from 'react-redux'
 import {  signUp } from 'store/signSlice'
 import authApi from 'api/authUser'
@@ -41,11 +40,6 @@ function Register() {
       roleNum: 2,
       icon: <IconTeacher />
     },
-    {
-      role: 'Admin',
-      roleNum: 1,
-      icon: <IconTeacher />
-    }
   ]
   const onSubmit = async (data) =>{
     const submitdata={
@@ -74,8 +68,6 @@ function Register() {
     })
   }
   const displayRole = (role) => {
-    if (role === 1)
-      return 'Admin'
     if (role === 2)
       return 'Teacher'
     if (role === 3)
@@ -112,7 +104,6 @@ function Register() {
               Sign up
             </Button>
           </div>
-          <ToastContainer autoClose={2000} />
           <div className='login__signup'>
             <Link className='login__signupbtn' to='/login'>Login </Link>
             <Link className='login__signupbtn' to='/dashboard'>Dashboard </Link>

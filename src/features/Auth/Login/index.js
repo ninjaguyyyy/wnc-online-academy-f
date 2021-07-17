@@ -11,8 +11,9 @@ import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import authApi from 'api/authUser'
-import { ToastContainer } from 'react-toastify'
 import { saveToken,saveUserInfo } from 'store/userSlice'
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 const schema = yup.object().shape({
   userName: yup.string().required(),
   passWord: yup.string().required(),
@@ -34,11 +35,6 @@ function Login(props) {
       roleNum: 2,
       icon: <IconTeacher />
     },
-    {
-      role: 'Admin',
-      roleNum: 1,
-      icon: <IconTeacher />
-    }
   ]
   const displayList = (role) => {
     return List.map((item, i) => {
@@ -56,8 +52,6 @@ function Login(props) {
     })
   }
   const displayRole = (role) => {
-    if (role === 1)
-      return 'Admin'
     if (role === 2)
       return 'Teacher'
     if (role === 3)
@@ -66,21 +60,18 @@ function Login(props) {
   const dispatch=useDispatch()
   const onSubmit = async(data) => {
     await authApi.signInApi(data).then(res=>{
-      console.log(res)
-      dispatch(saveUserInfo(res.user))
-      dispatch(saveToken(res.accessToken))
-      if(res.accessToken)
-        if(res.user.role===3)
-          props.history.push('/dashboard')
-        if(res.user.role===2)
+      if(res.errorCode){
+        toast.error(res.msg)
+      }else{
+        dispatch(saveUserInfo(res.user))
+        dispatch(saveToken(res.accessToken))
+        if(res.accessToken&&res.user.role===2)
           props.history.push('/teacher')
-        if(res.user.role===1)
-          props.history.push('/admin')
+      }
     })
   }
   return (
     <LoginContainer>
-      <ToastContainer autoClose={2000} />
       <Formstyle>
         <h3 style={{ paddingTop: '50px' }}>
           Login as {displayRole(role)}

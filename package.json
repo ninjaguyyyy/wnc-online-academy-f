@@ -2,7 +2,7 @@
   "name": "onlineacademy",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:3001/",
+  "proxy": "http://localhost:3001/",
   "dependencies": {
     "@hookform/resolvers": "^2.5.1",
     "@material-ui/core": "^4.11.4",
@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "react": "^17.0.2",

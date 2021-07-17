@@ -14,10 +14,12 @@ import Layout from 'components/Layout'
 import Web from 'features/Course/Web'
 import Mobile from 'features/Course/Mobile'
 import CourseDetail from 'features/Course/CourseDetail'
+import { ToastContainer } from 'react-toastify'
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
+        <ToastContainer autoClose={2000} />
         <Switch>
           <Route path="/dashboard" component={Dashboard} />
           <PublicRoute path="/login" component={Login} />
@@ -30,6 +32,8 @@ function App() {
               <Route path="/course/:id" component={CourseDetail} />
               <PrivateRoute path="/student" component={Student} />
               <TeacherRouter path="/teacher" component={Teacher} />
+              <TeacherRouter path="/teacher/profile" component={Teacher} />
+              <Redirect from="/" to="/dashboard" />
               <Redirect from="/" to="/dashboard" />
             </Switch>
           </Layout>

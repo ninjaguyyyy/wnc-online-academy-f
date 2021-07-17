@@ -19,11 +19,9 @@ function NavbarLayout(props) {
   const history= useHistory()
   const checkRole= (role) =>{
     if(role===3)
-      history.push('/student')
+      history.push('/student/profile')
     if(role===2)
       history.push('/teacher')
-    if(role===1)
-      history.push('/admin')
   }
   return (
     <Navbar bg="light" expand="lg" className='navbar__custom'>
@@ -39,7 +37,7 @@ function NavbarLayout(props) {
           </Form>
         </Nav>
         {!token&&<Link to='/login' className='navbar__link' style={{ marginRight:'70px'}}>Login</Link>}
-        {!token&&<Link to='/register' className='navbar__link'>Register</Link>}
+        {!token&&<Link to='/register' className='navbar__link' style={{ marginRight:'70px'}}>Register</Link>}
         {token&&<NavDropdown title={userInfo.userName} id="basic-nav-dropdown" className='navbar__userIcon'>
           <NavDropdown.Item onClick={()=>checkRole(userInfo.role)}>Profile</NavDropdown.Item>
           <NavDropdown.Divider />
