@@ -19,7 +19,7 @@ function NavbarLayout(props) {
   const history= useHistory()
   const checkRole= (role) =>{
     if(role===3)
-      history.push('/student/profile')
+      history.push('/student')
     if(role===2)
       history.push('/teacher')
   }

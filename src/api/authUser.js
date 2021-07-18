@@ -7,6 +7,14 @@ const authApi = {
   signInApi: (data)=>{
     const url = '/users/login'
     return axiosClient.post(url,data)
+  },
+  changePassword: (data)=>{
+    const url='/users/change-password'
+    const submitdata={
+      oldPassword:data.oldPassword,
+      newPassword:data.newPassword
+    }
+    return axiosClient.post(url,submitdata)
   }
 };
 export default authApi;

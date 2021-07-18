@@ -37,6 +37,9 @@ const userSlice = createSlice({
       state.userInfo.lastName=action.payload.user.lastName
       localStorage.setItem('userInfo', JSON.stringify(state.userInfo))
       toast.success('Successfully update')
+    },
+    changePassword: (state) => {
+      toast.success('Successfully update')
     }
   },
 });
@@ -45,6 +48,7 @@ const { reducer, actions } = userSlice
 export const { saveToken, 
   removeToken, 
   saveUserInfo,
-  updateProfile 
+  updateProfile,
+  changePassword
 } = actions
 export default reducer;

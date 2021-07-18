@@ -1,25 +1,9 @@
 import React from 'react'
-
+import Profile from 'features/Profile'
 function Student() {
   return (
-    <div>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-      <h1>Student Page</h1>
-    </div>
+    <Profile />
   )
 }
+
 export default Student
