@@ -7,7 +7,9 @@ function Teacher() {
   return (
     <Container>
       <Profile />
-      <Button onClick={()=>history.push('/teacher/course')}>My Course</Button>
+      <div style={{ display: 'flex' , alginItems:'center',justifyContent:'center', marginTop:'30px'}}>
+        <Button onClick={()=>history.push('/teacher/courses')}>My Course</Button>
+      </div>
     </Container>
   )
 }

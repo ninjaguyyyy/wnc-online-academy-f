@@ -21,7 +21,7 @@ function Profile() {
   return (
     <Container>
       <div style={{ marginLeft:'20%'}}>
-      <h1>User Profile</h1>
+      <h2>User Profile</h2>
       <Formik
         validationSchema={schema}
         onSubmit={
@@ -96,7 +96,7 @@ function Profile() {
           </Form>
         )}
       </Formik>
-      <h1 style={{ marginTop:'60px'}}>Change Password</h1>
+      <h2 style={{ marginTop:'60px'}}>Change Password</h2>
       <Formik
         validationSchema={schema1}
         onSubmit={
