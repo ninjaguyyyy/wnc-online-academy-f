@@ -59,6 +59,7 @@ function AddNewCourse() {
                     value={values.title}
                     onChange={handleChange}
                     isValid={touched.title && !errors.title}
+                    isInvalid={!!errors.title}
                   />
                 </Form.Group>
                 <Form.Group
@@ -91,11 +92,9 @@ function AddNewCourse() {
                       name="originPrice"
                       value={values.originPrice}
                       onChange={handleChange}
+                      isValid={touched.originPrice && !errors.originPrice}
                       isInvalid={!!errors.originPrice}
                     />
-                    <Form.Control.Feedback type="invalid" tooltip>
-                      {errors.originPrice}
-                    </Form.Control.Feedback>
                   </InputGroup>
                 </Form.Group>
               </Row>
@@ -106,6 +105,7 @@ function AddNewCourse() {
                   required
                   name="avatar"
                   onChange={handleChange}
+                  isValid={touched.originPrice && !errors.avatar}
                   isInvalid={!!errors.avatar}
                 />
               </Form.Group>
@@ -123,12 +123,9 @@ function AddNewCourse() {
                     name="appliedPromotions"
                     value={values.appliedPromotions}
                     onChange={handleChange}
+                    isValid={touched.appliedPromotions && !errors.appliedPromotions}
                     isInvalid={!!errors.appliedPromotions}
                   />
-
-                  <Form.Control.Feedback type="invalid" tooltip>
-                    {errors.city}
-                  </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group
                   as={Col}
@@ -143,14 +140,11 @@ function AddNewCourse() {
                     name="sections"
                     value={values.sections}
                     onChange={handleChange}
+                    isValid={touched.sections && !errors.sections}
                     isInvalid={!!errors.sections}
                   />
-                  <Form.Control.Feedback type="invalid" tooltip>
-                    {errors.sections}
-                  </Form.Control.Feedback>
                 </Form.Group>
               </Row>
-
               <Button type="submit">Submit form</Button>
             </Form>
           )}
