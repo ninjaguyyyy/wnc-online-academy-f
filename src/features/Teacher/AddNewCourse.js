@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState, useEffect} from 'react'
 import {
   Form,
   Button,
@@ -7,13 +7,16 @@ import {
   Col,
   InputGroup,
   Dropdown,
+  DropdownButton,
+
 } from "react-bootstrap";
 import teacherApi from "api/teacherApi";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
+import { useDispatch,useSelector } from 'react-redux';
+import { categories } from 'store/teacherSlice'
 const schema = yup.object().shape({
   title: yup.string().required(),
   category: yup.string(),
@@ -21,9 +24,29 @@ const schema = yup.object().shape({
   avatar: yup.string(),
   fullDescription: yup.string(),
   appliedPromotions: yup.string().required(),
-  sections: yup.mixed().required(),
-});
+  // sections: yup.mixed(),
+  shortDescription:yup.string(),
+  longDescription:yup.string()
+})
 function AddNewCourse() {
+  const [short, setshort] = useState('')
+  const [long, setLong] = useState('')
+  const [category, setCategory] = useState([])
+  const dispatch = useDispatch()
+  const categoriesSelect = e=>{
+    console.log(ListCategories.filter(item=>item._id===e))
+    setCategory(ListCategories.filter(item=>item._id===e)[0])
+  }
+  const ListCategories= useSelector(state=>state.teacher.categories)
+  useEffect(() => {
+    teacherApi.categoriesTree().then(res=>{
+       if(res.success===true) {
+        if(res.categories){
+          dispatch(categories(res.categories))
+        }
+      }
+    })
+  }, [dispatch])
   return (
     <Container>
       <div style={{ marginLeft: "20%" }}>
@@ -31,10 +54,18 @@ function AddNewCourse() {
         <Formik
           validationSchema={schema}
           onSubmit={async (data) => {
+            data.category=category._id
+            data.shortDescription=short
+            data.fullDescription=long
             await teacherApi
               .upLoad(data.avatar)
-              .then((res) => console.log(res));
-            // teacherApi.createCourses(data)
+              .then((res) =>{
+                if(res.success===true) {
+                  data.avatar=res.files[0].filename
+                  console.log('data',data)
+                  teacherApi.createCourses(data)
+                }
+              });
           }}
           initialValues={{
             title: "",
@@ -44,7 +75,7 @@ function AddNewCourse() {
             shortDescription: "",
             fullDescription: "",
             appliedPromotions: null,
-            sections: "",
+            // sections: "",
           }}
         >
           {({
@@ -79,28 +110,23 @@ function AddNewCourse() {
                   controlId="validationFormik102"
                   className="position-relative"
                 >
-                  <Form.Label>Category</Form.Label>
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      id="dropdown-button-dark-example1"
-                      variant="secondary"
-                      name="category"
-                    >
-                      Category
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu variant="dark">
-                      <Dropdown.Item
-                        eventKey="2"
-                        onSelect={(e) => console.log("asd", e)}
-                        name="category"
-                        onClick={() => handleChange}
-                      >
-                        Action
+                <Form.Label>Category</Form.Label>
+                {ListCategories!=null&&
+                <DropdownButton 
+                  id='dropdown-basic-button'
+                  title={category.name?category.name:'Category'}
+                  md="3"
+                  onSelect={categoriesSelect}
+                >
+                  {ListCategories.map(item=>{
+                    return(
+                      <Dropdown.Item eventKey={item._id}>
+                        {item.name}
                       </Dropdown.Item>
-                      <Dropdown.Item eventKey="3">Another action</Dropdown.Item>
-                      <Dropdown.Item eventKey="4">Something else</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+                    )
+                  })}
+                </DropdownButton>}
+                 
                 </Form.Group>
                 <Form.Group
                   as={Col}
@@ -152,7 +178,7 @@ function AddNewCourse() {
                     isInvalid={!!errors.appliedPromotions}
                   />
                 </Form.Group>
-                <Form.Group
+                {/* <Form.Group
                   as={Col}
                   md="6"
                   controlId="validationFormik104"
@@ -168,24 +194,41 @@ function AddNewCourse() {
                     isValid={touched.sections && !errors.sections}
                     isInvalid={!!errors.sections}
                   />
-                </Form.Group>
+                </Form.Group> */}
               </Row>
-
-              <Form.Label>Descriptions:</Form.Label>
-
+              <Form.Label> Short Descriptions:</Form.Label>
               <Editor
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"
+                onChange={e=>setshort(e.blocks[0].text)}
               >
                 <Form.Control
                   type="text"
-                  placeholder="Sections"
+                  placeholder="shortDescription"
                   name="shortDescription"
-                  value={values.shortDescription}
+                  value={short}
                   onChange={handleChange}
                   isValid={touched.shortDescription && !errors.shortDescription}
                   isInvalid={!!errors.shortDescription}
+                />
+              </Editor>
+              <Form.Label> Full Descriptions:</Form.Label>
+              <Editor
+                value={values.fullDescription}
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                onChange={e=>setLong(e.blocks[0].text)}
+              >
+                <Form.Control
+                  type="text"
+                  placeholder="fullDescription"
+                  name="fullDescription"
+                  value={long}
+                  onChange={handleChange}
+                  isValid={touched.fullDescription && !errors.fullDescription}
+                  isInvalid={!!errors.fullDescription}
                 />
               </Editor>
               <Button type="submit">Submit form</Button>

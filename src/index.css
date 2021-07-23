@@ -4,3 +4,10 @@ a:hover{
 *:focus {
   outline: none;
 }
+div.editorClassName.rdw-editor-main{
+  border:1px solid black;
+  margin-bottom: 30px;
+}
+button#dropdown-basic-button{
+  width:100%;
+}

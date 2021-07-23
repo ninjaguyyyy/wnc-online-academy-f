@@ -27,6 +27,10 @@ const teacherApi = {
         "Content-type": "multipart/form-data",
       }
     })
+  },
+  categoriesTree:()=>{
+    const url=`${ApiUrl}categories/tree`
+    return axiosClient.get(url)
   }
 };
 export default teacherApi;
