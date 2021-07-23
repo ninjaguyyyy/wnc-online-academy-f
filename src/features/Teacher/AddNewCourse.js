@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Form,
   Button,
@@ -31,10 +31,9 @@ function AddNewCourse() {
         <Formik
           validationSchema={schema}
           onSubmit={async (data) => {
-            console.log('data',data)
             await teacherApi
               .upLoad(data.avatar)
-              .then((res) => console.log(res))
+              .then((res) => console.log(res));
             // teacherApi.createCourses(data)
           }}
           initialValues={{
@@ -48,7 +47,14 @@ function AddNewCourse() {
             sections: "",
           }}
         >
-          {({ handleSubmit, handleChange, values, touched, errors }) => (
+          {({
+            handleSubmit,
+            handleChange,
+            values,
+            touched,
+            errors,
+            setFieldValue,
+          }) => (
             <Form noValidate onSubmit={handleSubmit}>
               <Row className="mb-3">
                 <Form.Group
@@ -118,13 +124,12 @@ function AddNewCourse() {
               </Row>
               <Form.Group className="position-relative mb-3">
                 <Form.Label>Avatar</Form.Label>
-                <Form.Control
+                <input
                   type="file"
-                  required
                   name="avatar"
-                  onChange={handleChange}
-                  isValid={touched.originPrice && !errors.avatar}
-                  isInvalid={!!errors.avatar}
+                  onChange={(event) => {
+                    setFieldValue("avatar", event.target.files[0]);
+                  }}
                 />
               </Form.Group>
               <Row className="mb-3">
@@ -165,7 +170,7 @@ function AddNewCourse() {
                   />
                 </Form.Group>
               </Row>
-              
+
               <Form.Label>Descriptions:</Form.Label>
 
               <Editor
@@ -173,15 +178,15 @@ function AddNewCourse() {
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"
               >
-              <Form.Control
-                type="text"
-                placeholder="Sections"
-                name="shortDescription"
-                value={values.shortDescription}
-                onChange={handleChange}
-                isValid={touched.shortDescription && !errors.shortDescription}
-                isInvalid={!!errors.shortDescription}
-              />
+                <Form.Control
+                  type="text"
+                  placeholder="Sections"
+                  name="shortDescription"
+                  value={values.shortDescription}
+                  onChange={handleChange}
+                  isValid={touched.shortDescription && !errors.shortDescription}
+                  isInvalid={!!errors.shortDescription}
+                />
               </Editor>
               <Button type="submit">Submit form</Button>
             </Form>
