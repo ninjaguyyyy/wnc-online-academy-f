@@ -6,9 +6,10 @@ import {
   Row,
   Col,
   InputGroup,
-  Dropdown,
-  DropdownButton,
-
+  OverlayTrigger,
+  Popover,
+  Accordion,
+  Card
 } from "react-bootstrap";
 import teacherApi from "api/teacherApi";
 import * as yup from "yup";
@@ -24,19 +25,15 @@ const schema = yup.object().shape({
   avatar: yup.string(),
   fullDescription: yup.string(),
   appliedPromotions: yup.string().required(),
-  // sections: yup.mixed(),
   shortDescription:yup.string(),
   longDescription:yup.string()
 })
 function AddNewCourse() {
+  const [show,setShow]= useState(false)
   const [short, setshort] = useState('')
   const [long, setLong] = useState('')
   const [category, setCategory] = useState([])
   const dispatch = useDispatch()
-  const categoriesSelect = e=>{
-    console.log(ListCategories.filter(item=>item._id===e))
-    setCategory(ListCategories.filter(item=>item._id===e)[0])
-  }
   const ListCategories= useSelector(state=>state.teacher.categories)
   useEffect(() => {
     teacherApi.categoriesTree().then(res=>{
@@ -47,6 +44,51 @@ function AddNewCourse() {
       }
     })
   }, [dispatch])
+  const popover = (
+    <Popover id="popover-positioned-bottom" >
+      {ListCategories!=null&&
+      ListCategories.map((item,i)=>(
+        <Accordion>
+        <Card>
+          <Card.Header>
+          <Accordion.Toggle as={Button} eventKey="menu" >
+            <i className="fas fa-plus "/>
+            </Accordion.Toggle>
+            <Button 
+              onClick={e =>{
+                setCategory(item)
+                setShow(!show)
+              }} 
+              value={item._id} style={{ marginLeft:'5px'}}
+            >
+             {item.name}
+            </Button>
+          </Card.Header>
+          <Accordion.Collapse eventKey="menu">
+            <Card.Body>
+              <Accordion style={{ display: 'inline-grid' }}>
+                  {item.child.map((course,i)=>(
+                    <Button variant="secondary" 
+                      key={i}
+                      style={{ marginBottom: '10px'}} 
+                      onClick={e=>{
+                        setCategory(course)
+                        setShow(!show)
+                      }} 
+                      value={course.parent+'.'+course._id}
+                    >
+                      {course.name}
+                    </Button>
+                  ))}
+              </Accordion>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
+      ))
+      }
+    </Popover>
+  );
   return (
     <Container>
       <div style={{ marginLeft: "20%" }}>
@@ -62,7 +104,6 @@ function AddNewCourse() {
               .then((res) =>{
                 if(res.success===true) {
                   data.avatar=res.files[0].filename
-                  console.log('data',data)
                   teacherApi.createCourses(data)
                 }
               });
@@ -75,7 +116,6 @@ function AddNewCourse() {
             shortDescription: "",
             fullDescription: "",
             appliedPromotions: null,
-            // sections: "",
           }}
         >
           {({
@@ -109,23 +149,20 @@ function AddNewCourse() {
                   md="3"
                   controlId="validationFormik102"
                   className="position-relative"
+                  style={{ display:'grid'}}
                 >
                 <Form.Label>Category</Form.Label>
                 {ListCategories!=null&&
-                <DropdownButton 
-                  id='dropdown-basic-button'
-                  title={category.name?category.name:'Category'}
-                  md="3"
-                  onSelect={categoriesSelect}
+                <OverlayTrigger 
+                  show={show}
+                  trigger="click" 
+                  placement="bottom" 
+                  overlay={popover}
                 >
-                  {ListCategories.map(item=>{
-                    return(
-                      <Dropdown.Item eventKey={item._id}>
-                        {item.name}
-                      </Dropdown.Item>
-                    )
-                  })}
-                </DropdownButton>}
+                  <Button variant="success" onClick={()=>setShow(!show)}>
+                    {category.name?category.name:'Category'}
+                  </Button>
+                </OverlayTrigger>}
                  
                 </Form.Group>
                 <Form.Group

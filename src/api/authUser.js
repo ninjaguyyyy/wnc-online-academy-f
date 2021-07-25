@@ -16,6 +16,10 @@ const authApi = {
       newPassword:data.newPassword
     }
     return axiosClient.post(url,submitdata)
+  },
+  refreshToken:(data)=>{
+    const url=`${ApiUrl}users/refresh-token`
+    return axiosClient.post(url,data)
   }
 };
 export default authApi;
