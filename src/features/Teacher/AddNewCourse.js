@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from "react";
 import {
   Form,
   Button,
@@ -9,84 +9,85 @@ import {
   OverlayTrigger,
   Popover,
   Accordion,
-  Card
+  Card,
 } from "react-bootstrap";
 import teacherApi from "api/teacherApi";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { useDispatch,useSelector } from 'react-redux';
-import { categories } from 'store/teacherSlice'
+import { useDispatch, useSelector } from "react-redux";
+import { categories } from "store/teacherSlice";
 const schema = yup.object().shape({
   title: yup.string().required(),
   category: yup.string(),
   originPrice: yup.number().positive().required(),
   avatar: yup.string(),
   fullDescription: yup.string(),
-  appliedPromotions: yup.string().required(),
-  shortDescription:yup.string(),
-  longDescription:yup.string()
-})
+  // appliedPromotions: yup.string().required(),
+  shortDescription: yup.string(),
+  longDescription: yup.string(),
+});
 function AddNewCourse() {
-  const [show,setShow]= useState(false)
-  const [short, setshort] = useState('')
-  const [long, setLong] = useState('')
-  const [category, setCategory] = useState([])
-  const dispatch = useDispatch()
-  const ListCategories= useSelector(state=>state.teacher.categories)
+  const [show, setShow] = useState(false);
+  const [short, setshort] = useState("");
+  const [long, setLong] = useState("");
+  const [category, setCategory] = useState([]);
+  const dispatch = useDispatch();
+  const ListCategories = useSelector((state) => state.teacher.categories);
   useEffect(() => {
-    teacherApi.categoriesTree().then(res=>{
-       if(res.success===true) {
-        if(res.categories){
-          dispatch(categories(res.categories))
+    teacherApi.categoriesTree().then((res) => {
+      if (res.success === true) {
+        if (res.categories) {
+          dispatch(categories(res.categories));
         }
       }
-    })
-  }, [dispatch])
+    });
+  }, [dispatch]);
   const popover = (
-    <Popover id="popover-positioned-bottom" >
-      {ListCategories!=null&&
-      ListCategories.map((item,i)=>(
-        <Accordion>
-        <Card>
-          <Card.Header>
-          <Accordion.Toggle as={Button} eventKey="menu" >
-            <i className="fas fa-plus "/>
-            </Accordion.Toggle>
-            <Button 
-              onClick={e =>{
-                setCategory(item)
-                setShow(!show)
-              }} 
-              value={item._id} style={{ marginLeft:'5px'}}
-            >
-             {item.name}
-            </Button>
-          </Card.Header>
-          <Accordion.Collapse eventKey="menu">
-            <Card.Body>
-              <Accordion style={{ display: 'inline-grid' }}>
-                  {item.child.map((course,i)=>(
-                    <Button variant="secondary" 
-                      key={i}
-                      style={{ marginBottom: '10px'}} 
-                      onClick={e=>{
-                        setCategory(course)
-                        setShow(!show)
-                      }} 
-                      value={course.parent+'.'+course._id}
-                    >
-                      {course.name}
-                    </Button>
-                  ))}
-              </Accordion>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
-      ))
-      }
+    <Popover id="popover-positioned-bottom">
+      {ListCategories != null &&
+        ListCategories.map((item, i) => (
+          <Accordion>
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} eventKey="menu">
+                  <i className="fas fa-plus " />
+                </Accordion.Toggle>
+                <Button
+                  onClick={(e) => {
+                    setCategory(item);
+                    setShow(!show);
+                  }}
+                  value={item._id}
+                  style={{ marginLeft: "5px" }}
+                >
+                  {item.name}
+                </Button>
+              </Card.Header>
+              <Accordion.Collapse eventKey="menu">
+                <Card.Body>
+                  <Accordion style={{ display: "inline-grid" }}>
+                    {item.child.map((course, i) => (
+                      <Button
+                        variant="secondary"
+                        key={i}
+                        style={{ marginBottom: "10px" }}
+                        onClick={(e) => {
+                          setCategory(course);
+                          setShow(!show);
+                        }}
+                        value={course.parent + "." + course._id}
+                      >
+                        {course.name}
+                      </Button>
+                    ))}
+                  </Accordion>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+        ))}
     </Popover>
   );
   return (
@@ -96,17 +97,23 @@ function AddNewCourse() {
         <Formik
           validationSchema={schema}
           onSubmit={async (data) => {
-            data.category=category._id
-            data.shortDescription=short
-            data.fullDescription=long
-            await teacherApi
-              .upLoad(data.avatar)
-              .then((res) =>{
-                if(res.success===true) {
-                  data.avatar=res.files[0].filename
-                  teacherApi.createCourses(data)
-                }
-              });
+            console.log("vo");
+            data.category = category._id;
+            data.shortDescription = short;
+            data.fullDescription = long;
+
+            if (data.avatar) {
+              const uploadRes = await teacherApi.upLoad(data.avatar);
+              data.avatar = uploadRes.files[0].filename;
+            }
+            const createRes = await teacherApi.createCourses(data);
+            console.log("data", createRes);
+            // await teacherApi.upLoad(data.avatar).then((res) => {
+            //   if (res.success === true) {
+            //     data.avatar = res.files[0].filename;
+            //     teacherApi.createCourses(data);
+            //   }
+            // });
           }}
           initialValues={{
             title: "",
@@ -115,7 +122,7 @@ function AddNewCourse() {
             avatar: "",
             shortDescription: "",
             fullDescription: "",
-            appliedPromotions: null,
+            // appliedPromotions: null,
           }}
         >
           {({
@@ -149,21 +156,21 @@ function AddNewCourse() {
                   md="3"
                   controlId="validationFormik102"
                   className="position-relative"
-                  style={{ display:'grid'}}
+                  style={{ display: "grid" }}
                 >
-                <Form.Label>Category</Form.Label>
-                {ListCategories!=null&&
-                <OverlayTrigger 
-                  show={show}
-                  trigger="click" 
-                  placement="bottom" 
-                  overlay={popover}
-                >
-                  <Button variant="success" onClick={()=>setShow(!show)}>
-                    {category.name?category.name:'Category'}
-                  </Button>
-                </OverlayTrigger>}
-                 
+                  <Form.Label>Category</Form.Label>
+                  {ListCategories != null && (
+                    <OverlayTrigger
+                      show={show}
+                      trigger="click"
+                      placement="bottom"
+                      overlay={popover}
+                    >
+                      <Button variant="success" onClick={() => setShow(!show)}>
+                        {category.name ? category.name : "Category"}
+                      </Button>
+                    </OverlayTrigger>
+                  )}
                 </Form.Group>
                 <Form.Group
                   as={Col}
@@ -196,7 +203,7 @@ function AddNewCourse() {
                 />
               </Form.Group>
               <Row className="mb-3">
-                <Form.Group
+                {/* <Form.Group
                   as={Col}
                   md="6"
                   controlId="validationFormik103"
@@ -214,7 +221,7 @@ function AddNewCourse() {
                     }
                     isInvalid={!!errors.appliedPromotions}
                   />
-                </Form.Group>
+                </Form.Group> */}
                 {/* <Form.Group
                   as={Col}
                   md="6"
@@ -238,7 +245,7 @@ function AddNewCourse() {
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"
-                onChange={e=>setshort(e.blocks[0].text)}
+                onChange={(e) => setshort(e.blocks[0].text)}
               >
                 <Form.Control
                   type="text"
@@ -256,7 +263,7 @@ function AddNewCourse() {
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"
-                onChange={e=>setLong(e.blocks[0].text)}
+                onChange={(e) => setLong(e.blocks[0].text)}
               >
                 <Form.Control
                   type="text"
