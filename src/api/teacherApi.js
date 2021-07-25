@@ -24,5 +24,9 @@ const teacherApi = {
     const url = `${ApiUrl}categories/tree`;
     return axiosClient.get(url);
   },
+  courses: ()=>{
+    const url= `${ApiUrl}courses`
+    return axiosClient.get(url)
+  }
 };
 export default teacherApi;

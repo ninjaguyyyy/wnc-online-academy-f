@@ -4,8 +4,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-  categories:null
-
+  categories:null,
+  courses:null
 };
 
 const userSlice = createSlice({
@@ -15,9 +15,12 @@ const userSlice = createSlice({
     categories:(state, action)=>{
       state.categories=action.payload
     },
+    courses: (state,action)=>{
+      state.courses=action.payload
+    }
   }
 });
 
 const { reducer, actions } = userSlice
-export const { categories } = actions
+export const { categories,courses } = actions
 export default reducer;
