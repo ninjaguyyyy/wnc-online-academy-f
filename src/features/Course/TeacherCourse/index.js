@@ -45,7 +45,6 @@ function Courses() {
                               <span key={1*i}>⭐️</span>
                             ))}
                         </span>
-
                       </Card.Text>
                     </Card.Body>
                   </Card>

@@ -10,14 +10,17 @@ import {
   Popover,
   Accordion,
   Card,
+  Dropdown,
+  DropdownButton
 } from "react-bootstrap";
+import { toast } from "react-toastify";
 import teacherApi from "api/teacherApi";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useDispatch, useSelector } from "react-redux";
-import { categories } from "store/teacherSlice";
+import { categories,promotions } from "store/teacherSlice";
 const schema = yup.object().shape({
   title: yup.string().required(),
   category: yup.string(),
@@ -33,8 +36,10 @@ function AddNewCourse() {
   const [short, setshort] = useState("");
   const [long, setLong] = useState("");
   const [category, setCategory] = useState([]);
+  const [promotion, setPromotion] = useState(null)
   const dispatch = useDispatch();
-  const ListCategories = useSelector((state) => state.teacher.categories);
+  const ListCategories = useSelector((state) => state.teacher.categories)
+  const ListPromotions = useSelector((state) => state.teacher.promotions)
   useEffect(() => {
     teacherApi.categoriesTree().then((res) => {
       if (res.success === true) {
@@ -42,8 +47,13 @@ function AddNewCourse() {
           dispatch(categories(res.categories));
         }
       }
-    });
-  }, [dispatch]);
+    })
+    teacherApi.promotions().then(res=>{
+      if(res.success === true){
+        dispatch(promotions(res.promotions))
+      }
+    })
+  }, [dispatch])
   const popover = (
     <Popover id="popover-positioned-bottom">
       {ListCategories != null &&
@@ -89,7 +99,10 @@ function AddNewCourse() {
           </Accordion>
         ))}
     </Popover>
-  );
+  )
+  const SelectPromotion= (data)=>{
+    setPromotion(ListPromotions.filter(e=>e._id===data)[0])
+  }
   return (
     <Container>
       <div style={{ marginLeft: "20%" }}>
@@ -97,23 +110,19 @@ function AddNewCourse() {
         <Formik
           validationSchema={schema}
           onSubmit={async (data) => {
-            console.log("vo");
-            data.category = category._id;
-            data.shortDescription = short;
-            data.fullDescription = long;
-
+            data.category = category._id
+            data.shortDescription = short
+            data.fullDescription = long
+            data.promotion=promotion
             if (data.avatar) {
               const uploadRes = await teacherApi.upLoad(data.avatar);
               data.avatar = uploadRes.files[0].filename;
             }
-            const createRes = await teacherApi.createCourses(data);
-            console.log("data", createRes);
-            // await teacherApi.upLoad(data.avatar).then((res) => {
-            //   if (res.success === true) {
-            //     data.avatar = res.files[0].filename;
-            //     teacherApi.createCourses(data);
-            //   }
-            // });
+            await teacherApi.createCourses(data).then(res=>{
+              if(res.success === true){
+                toast.success("Successfully create cousrse")
+              }
+            });
           }}
           initialValues={{
             title: "",
@@ -122,7 +131,6 @@ function AddNewCourse() {
             avatar: "",
             shortDescription: "",
             fullDescription: "",
-            // appliedPromotions: null,
           }}
         >
           {({
@@ -203,42 +211,25 @@ function AddNewCourse() {
                 />
               </Form.Group>
               <Row className="mb-3">
-                {/* <Form.Group
+                <Form.Group
                   as={Col}
                   md="6"
                   controlId="validationFormik103"
                   className="position-relative"
                 >
                   <Form.Label>Promotions</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Promotions"
-                    name="appliedPromotions"
-                    value={values.appliedPromotions}
-                    onChange={handleChange}
-                    isValid={
-                      touched.appliedPromotions && !errors.appliedPromotions
-                    }
-                    isInvalid={!!errors.appliedPromotions}
-                  />
-                </Form.Group> */}
-                {/* <Form.Group
-                  as={Col}
-                  md="6"
-                  controlId="validationFormik104"
-                  className="position-relative"
-                >
-                  <Form.Label>Sections</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Sections"
-                    name="sections"
-                    value={values.sections}
-                    onChange={handleChange}
-                    isValid={touched.sections && !errors.sections}
-                    isInvalid={!!errors.sections}
-                  />
-                </Form.Group> */}
+                    {ListPromotions!=null&&
+                    <DropdownButton variant="success" id="dropdown-basic" 
+                      title={promotion?promotion.title:'Promotions'} 
+                      onSelect={SelectPromotion} style={{ width:'100%'}
+                    }>
+                      {ListPromotions.map((e,i)=>(
+                        <Dropdown.Item eventKey={e._id} key={i}>
+                          {e.title}
+                        </Dropdown.Item>
+                      ))}
+                    </DropdownButton>}
+                </Form.Group>
               </Row>
               <Form.Label> Short Descriptions:</Form.Label>
               <Editor

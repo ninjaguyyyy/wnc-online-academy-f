@@ -27,6 +27,10 @@ const teacherApi = {
   courses: ()=>{
     const url= `${ApiUrl}courses`
     return axiosClient.get(url)
+  },
+  promotions:()=>{
+    const url = `${ApiUrl}promotions`
+    return axiosClient.get(url)
   }
 };
 export default teacherApi;
