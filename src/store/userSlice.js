@@ -10,6 +10,8 @@ const userInfoInit = userInfoLocalStorage ? JSON.parse(userInfoLocalStorage) : n
 const initialState = {
   token: cookies.get('token') || null,
   userInfo: userInfoInit,
+  courses:null,
+  course:null,
 };
 
 const userSlice = createSlice({
@@ -40,6 +42,9 @@ const userSlice = createSlice({
     },
     changePassword: (state) => {
       toast.success('Successfully update')
+    },
+    course:(state, action) => {
+      state.course=action.payload;
     }
   },
 });
@@ -49,6 +54,7 @@ export const { saveToken,
   removeToken, 
   saveUserInfo,
   updateProfile,
-  changePassword
+  changePassword,
+  course
 } = actions
 export default reducer;

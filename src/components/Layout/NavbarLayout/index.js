@@ -41,6 +41,8 @@ function NavbarLayout(props) {
         {token&&<NavDropdown title={userInfo.userName} id="basic-nav-dropdown" className='navbar__userIcon'>
           <NavDropdown.Item onClick={()=>checkRole(userInfo.role)}>Profile</NavDropdown.Item>
           <NavDropdown.Divider />
+          {userInfo.role===2&&<NavDropdown.Item onClick={()=>history.push('/teacher/courses')}>My Course</NavDropdown.Item>}
+          {userInfo.role===2&&<NavDropdown.Divider />}
           {userInfo.role===2&&<NavDropdown.Item onClick={()=>history.push('/teacher/courses/add-course')}>Add Course</NavDropdown.Item>}
           {userInfo.role===2&&<NavDropdown.Divider />}
           <NavDropdown.Item onClick={()=>{

@@ -20,6 +20,10 @@ const authApi = {
   refreshToken:(data)=>{
     const url=`${ApiUrl}users/refresh-token`
     return axiosClient.post(url,data)
+  },
+  getCourseById: (id)=>{
+    const url=`${ApiUrl}courses/${id}`
+    return axiosClient.get(url)
   }
 };
 export default authApi;

@@ -24,12 +24,16 @@ const teacherApi = {
     const url = `${ApiUrl}categories/tree`;
     return axiosClient.get(url);
   },
-  courses: ()=>{
-    const url= `${ApiUrl}courses`
-    return axiosClient.get(url)
-  },
+  // courses: ()=>{
+  //   const url= `${ApiUrl}courses`
+  //   return axiosClient.get(url)
+  // },
   promotions:()=>{
     const url = `${ApiUrl}promotions`
+    return axiosClient.get(url)
+  },
+  myCourses:()=>{
+    const url = `${ApiUrl}users/me/own-courses`
     return axiosClient.get(url)
   }
 };

@@ -4,19 +4,20 @@ import { useHistory,Link} from 'react-router-dom'
 import { useDispatch,useSelector } from 'react-redux'
 import teacherApi from "api/teacherApi"
 import { courses } from 'store/teacherSlice'
-import no1 from 'assets/image/5.jpg'
-
+import {course} from 'store/userSlice'
+import {ApiUrl} from 'api/authUser'
 function Courses() {
   const history=useHistory()
   const dispatch= useDispatch()
   const Courses= useSelector(state => state.teacher.courses)
   useEffect(()=>{
-    teacherApi.courses()
+    teacherApi.myCourses()
       .then(res=>{
         if(res.success===true){
           dispatch(courses(res.courses))
         }
       })
+    
   },[dispatch])
   return (
     <Container>
@@ -29,17 +30,17 @@ function Courses() {
       {Courses!==null&&<Row xs={1} md={2} >
           {Courses.map((item, idx) => (
             <div key={1*idx}>
-              <Link to={`/course/${item.id}`} >
+              <Link to={`/course/${item._id}`} onClick={() =>dispatch(course(null))}>
                 <Col style={{ padding: '20px' }}>
                   <Card >
-                    <Card.Img variant="top" src={no1} />
+                    <Card.Img variant="top" src={`${ApiUrl}resources/image/${item.avatar}`} className="imgCourse"/>
                     <Card.Body>
                       <Card.Title>{item.name}</Card.Title>
-                      <Card.Title>Teacher</Card.Title>
+                      <Card.Title>Teacher:</Card.Title>
                       <Card.Text style={{ display:'flex', justifyContent:'space-between'}}>
-                        {item.title}
+                        {item.shortDescription}
                         <span style={{display:'flex' }}>
-                          {Array(4)
+                          {Array(item.rating)
                             .fill()
                             .map((_, i) => (
                               <span key={1*i}>⭐️</span>
