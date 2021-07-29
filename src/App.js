@@ -16,6 +16,7 @@ import Mobile from 'features/Course/Mobile'
 import CourseDetail from 'features/Course/CourseDetail'
 import TeacherCourse from 'features/Course/TeacherCourse'
 import AddNewCourse from 'features/Teacher/AddNewCourse'
+import EditCourse from 'features/Teacher/EditCourse'
 import { ToastContainer } from 'react-toastify'
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
               <TeacherRouter exact path='/teacher' component={Teacher} />
               <TeacherRouter exact path='/teacher/courses' component={TeacherCourse} />
               <TeacherRouter exact path='/teacher/courses/add-course' component={AddNewCourse} />
+              <TeacherRouter exact path='/teacher/editcourse/:id' component={EditCourse} />
               <Redirect from='/' to='/dashboard' />
             </Switch>
           </Layout>

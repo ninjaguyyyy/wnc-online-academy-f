@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link,useHistory } from "react-router-dom"
 import ReactPlayer from "react-player"
 import { Button, Tabs, Tab, Card } from "react-bootstrap"
 import Accordion from "react-bootstrap/Accordion"
@@ -11,6 +11,7 @@ import { ApiUrl } from 'api/authUser'
 import  loading from 'assets/image/loading.svg'
 function CourseDetail(props) {
   const dispatch= useDispatch()
+  const history= useHistory()
   useEffect(()=>{
     authApi.getCourseById(props.match.params.id).then(res=>{
       if(res.success===true)
@@ -23,7 +24,10 @@ function CourseDetail(props) {
     return (
       <div>
         <Link to="/dashboard">Home</Link>
-        {role?.role===2&&<Link to="/dashboard">Edit</Link>}
+        {role?.role===2&&<Button onClick={()=>history.push(`/teacher/editcourse/${props.match.params.id}`)}>
+          Edit Course
+          </Button>
+        }
         <h2>{Course.title}</h2>
         <div style={{ display: "flex" }}>
           <ReactPlayer
