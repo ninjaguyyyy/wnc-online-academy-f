@@ -13,6 +13,8 @@ import {
   Dropdown,
   DropdownButton
 } from "react-bootstrap";
+import loading from 'assets/image/loading.svg'
+
 import { toast } from "react-toastify";
 import teacherApi from "api/teacherApi";
 import * as yup from "yup";
@@ -21,6 +23,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useDispatch, useSelector } from "react-redux";
 import { categories,promotions } from "store/teacherSlice";
+import {setLoading } from 'store/userSlice'
 const schema = yup.object().shape({
   title: yup.string().required(),
   category: yup.string(),
@@ -40,16 +43,20 @@ function AddNewCourse() {
   const dispatch = useDispatch();
   const ListCategories = useSelector((state) => state.teacher.categories)
   const ListPromotions = useSelector((state) => state.teacher.promotions)
+  const isLoading = useSelector((state) => state.user.loading)
   useEffect(() => {
+    dispatch(setLoading(true))
     teacherApi.categoriesTree().then((res) => {
       if (res.success === true) {
         if (res.categories) {
+          dispatch(setLoading(false))
           dispatch(categories(res.categories));
         }
       }
     })
     teacherApi.promotions().then(res=>{
       if(res.success === true){
+        dispatch(setLoading(false))
         dispatch(promotions(res.promotions))
       }
     })
@@ -105,6 +112,7 @@ function AddNewCourse() {
   }
   return (
     <Container>
+      {!isLoading&&
       <div style={{ marginLeft: "20%" }}>
         <h2>Add New Course</h2>
         <Formik
@@ -270,7 +278,11 @@ function AddNewCourse() {
             </Form>
           )}
         </Formik>
-      </div>
+      </div>}
+      {isLoading&&
+      <div className="userloading">
+        <img src={loading} className="loading" alt="loading" />
+      </div>}
     </Container>
   );
 }

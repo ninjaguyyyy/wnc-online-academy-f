@@ -8,6 +8,7 @@ import authApi from "api/authUser"
 import {course} from 'store/userSlice'
 import { useDispatch, useSelector } from "react-redux"
 import { ApiUrl } from 'api/authUser'
+import  loading from 'assets/image/loading.svg'
 function CourseDetail(props) {
   const dispatch= useDispatch()
   useEffect(()=>{
@@ -17,10 +18,12 @@ function CourseDetail(props) {
     })
   },[props.match.params.id,dispatch])
   const Course= useSelector(state=>state.user.course)
+  const role= useSelector(state=>state.user.userInfo)
   if(Course!=null){
     return (
       <div>
         <Link to="/dashboard">Home</Link>
+        {role?.role===2&&<Link to="/dashboard">Edit</Link>}
         <h2>{Course.title}</h2>
         <div style={{ display: "flex" }}>
           <ReactPlayer
@@ -149,7 +152,9 @@ function CourseDetail(props) {
   }
   else{
     return(
-      <div>Loading....</div>
+      <div>
+        <img src={loading} className="loading" alt="loading" />
+      </div>
     )
   }
    

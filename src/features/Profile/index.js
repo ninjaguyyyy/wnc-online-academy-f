@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as yup from 'yup';
 import { Formik } from 'formik'
 import teacherApi from 'api/teacherApi'
-import { updateProfile,changePassword } from 'store/userSlice'
+import { updateProfile,changePassword,setLoading } from 'store/userSlice'
 import  authApi  from 'api/authUser'
+
 const schema = yup.object().shape({
   firstName: yup.string().required(),
   lastName: yup.string().required(),
@@ -25,8 +26,14 @@ function Profile() {
       <Formik
         validationSchema={schema}
         onSubmit={
-          data => teacherApi.updateProfile(data)
-            .then(res=>dispatch(updateProfile(res)))
+          data => {
+            dispatch(setLoading(true))
+            teacherApi.updateProfile(data)
+            .then(res=>{
+              dispatch(setLoading(false))
+              dispatch(updateProfile(res))
+            })
+          }
 
         }
         initialValues={{
@@ -99,10 +106,14 @@ function Profile() {
       <h2 style={{ marginTop:'60px'}}>Change Password</h2>
       <Formik
         validationSchema={schema1}
-        onSubmit={
-          data => authApi.changePassword(data).then(
-            ()=>dispatch(changePassword())
-          )
+        onSubmit={data => {
+          dispatch(setLoading(true))
+          authApi.changePassword(data).then(
+            ()=>{
+              dispatch(setLoading(false))
+              dispatch(changePassword())
+            }
+          )}
         }
         initialValues={{
           oldPassword: '',
@@ -114,7 +125,6 @@ function Profile() {
           handleSubmit,
           handleChange,
           values,
-          touched,
           errors,
         }) => (
           <Form noValidate onSubmit={handleSubmit}>

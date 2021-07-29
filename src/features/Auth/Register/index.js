@@ -6,12 +6,14 @@ import  background from 'assets/image/backgroundSignUp.jpg'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
-import { Button, Spinner } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Formstyle,Form,LoginContainer,Role,Input} from './../Login/index'
 import { useSelector,useDispatch } from 'react-redux'
-import {  signUp } from 'store/signSlice'
+import {  signUp, setLoadingSignUp } from 'store/signSlice'
 import authApi from 'api/authUser'
+import  loading from 'assets/image/loading.svg'
+
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   userName: yup.string().required(),
@@ -42,6 +44,7 @@ function Register() {
     },
   ]
   const onSubmit = async (data) =>{
+    dispatch(setLoadingSignUp(true))
     const submitdata={
       role: data.role,
       email: data.email,
@@ -50,7 +53,10 @@ function Register() {
       firstName: data.firstName,
       lastName: data.lastName
     }
-    await authApi.registerApi(submitdata).then(res=>dispatch(signUp(res)))
+    await authApi.registerApi(submitdata).then(res=>{
+      dispatch(setLoadingSignUp(false))
+      dispatch(signUp(res))
+    })
   }
   const displayList = (role) => {
     return List.map((item, i) => {
@@ -75,7 +81,7 @@ function Register() {
   }
   return (
     <LoginContainer style={{ backgroundImage: `url(${background})`}}>
-      <Formstyle style={{ margin:'unset'}}>
+      {!isLoading&&<Formstyle style={{ margin:'unset'}}>
         <h3 style={{ paddingTop: '30px' }}>
           Sign up as {displayRole(role)}
         </h3>
@@ -100,7 +106,6 @@ function Register() {
               className='login__button' type='submit' 
               style={{ margin:'unset', marginTop:'40px'}}
             >
-              {isLoading&& <Spinner animation="border" />}
               Sign up
             </Button>
           </div>
@@ -109,7 +114,8 @@ function Register() {
             <Link className='login__signupbtn' to='/dashboard'>Dashboard </Link>
           </div>
         </Form>
-      </Formstyle>
+      </Formstyle>}
+      {isLoading&&<img src={loading} className="loading" alt="loading" />}
     </LoginContainer>
   )
 }

@@ -6,14 +6,19 @@ import teacherApi from "api/teacherApi"
 import { courses } from 'store/teacherSlice'
 import {course} from 'store/userSlice'
 import {ApiUrl} from 'api/authUser'
+import {setLoading } from 'store/userSlice'
+import loading from 'assets/image/loading.svg'
 function Courses() {
   const history=useHistory()
   const dispatch= useDispatch()
   const Courses= useSelector(state => state.teacher.courses)
+  const isLoading = useSelector((state) => state.user.loading)
   useEffect(()=>{
+    dispatch(setLoading(true))
     teacherApi.myCourses()
       .then(res=>{
         if(res.success===true){
+          dispatch(setLoading(false))
           dispatch(courses(res.courses))
         }
       })
@@ -21,13 +26,13 @@ function Courses() {
   },[dispatch])
   return (
     <Container>
-      <div style={{ marginBottom:'30px'}}>
+      {!isLoading&&<div style={{ marginBottom:'30px'}}>
         <Button onClick={()=>history.push('/teacher/courses/add-course')}>
           Add new Course
         </Button>
-      </div>
-      <h2>My Course</h2>
-      {Courses!==null&&<Row xs={1} md={2} >
+      </div>}
+      {!isLoading&&<h2>My Course</h2>}
+      {!isLoading&&Courses!==null&&<Row xs={1} md={2} >
           {Courses.map((item, idx) => (
             <div key={1*idx}>
               <Link to={`/course/${item._id}`} onClick={() =>dispatch(course(null))}>
@@ -54,6 +59,10 @@ function Courses() {
             </div>
           ))}
         </Row>}
+        {isLoading&&
+      <div className="userloading">
+        <img src={loading} className="loading" alt="loading" />
+      </div>}
     </Container>
   )
 }

@@ -5,6 +5,10 @@ const initialState = {
   signUp:{
     loading:false,
     err:null
+  },
+  signIn:{
+    loading:false,
+    err:null
   }
 };
 const sign = createSlice({
@@ -18,9 +22,18 @@ const sign = createSlice({
       else
         toast.success("Successfully register")
     },
+    setLoadingSignIn:(state,{payload})=>{
+      state.signIn.loading=payload
+    },
+    setLoadingSignUp:(state,{payload})=>{
+      state.signIn.loading=payload
+    }
   }
 });
 
 const { reducer, actions } = sign;
-export const { signUp } = actions;
+export const { signUp,
+  setLoadingSignIn,
+  setLoadingSignUp 
+} = actions;
 export default reducer;

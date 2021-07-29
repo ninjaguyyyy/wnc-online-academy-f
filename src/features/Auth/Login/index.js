@@ -9,17 +9,20 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
 import authApi from 'api/authUser'
 import { saveToken,saveUserInfo } from 'store/userSlice'
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
+import loading from 'assets/image/loading.svg'
+import {setLoadingSignIn } from 'store/signSlice'
 const schema = yup.object().shape({
   userName: yup.string().required(),
   passWord: yup.string().required(),
   role: yup.number().required(),
 })
 function Login(props) {
+  const isLoading= useSelector(state=>state.sign.signIn.loading)
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
@@ -59,10 +62,13 @@ function Login(props) {
   }
   const dispatch=useDispatch()
   const onSubmit = async(data) => {
+    dispatch(setLoadingSignIn(true))
     await authApi.signInApi(data).then(res=>{
       if(res.errorCode){
+        dispatch(setLoadingSignIn(false))
         toast.error(res.msg)
       }else{
+        dispatch(setLoadingSignIn(false))
         dispatch(saveUserInfo(res.user))
         dispatch(saveToken(res.accessToken))
         if(res.accessToken&&res.user.role===2)
@@ -72,7 +78,7 @@ function Login(props) {
   }
   return (
     <LoginContainer>
-      <Formstyle>
+      {!isLoading&&<Formstyle>
         <h3 style={{ paddingTop: '50px' }}>
           Login as {displayRole(role)}
         </h3>
@@ -97,7 +103,8 @@ function Login(props) {
             <Link to='/dashobard'>Dashboard</Link>
           </div>
         </Form>
-      </Formstyle>
+      </Formstyle>}
+      {isLoading&&<img src={loading} className="loading" alt="loading" />}
     </LoginContainer>
   )
 }

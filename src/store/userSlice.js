@@ -12,6 +12,7 @@ const initialState = {
   userInfo: userInfoInit,
   courses:null,
   course:null,
+  loading:false,
 };
 
 const userSlice = createSlice({
@@ -45,7 +46,10 @@ const userSlice = createSlice({
     },
     course:(state, action) => {
       state.course=action.payload;
-    }
+    },
+    setLoading:(state, action) => {
+      state.loading=action.payload;
+    },
   },
 });
 
@@ -55,6 +59,7 @@ export const { saveToken,
   saveUserInfo,
   updateProfile,
   changePassword,
-  course
+  course,
+  setLoading
 } = actions
 export default reducer;
