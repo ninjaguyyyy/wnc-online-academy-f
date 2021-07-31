@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import authApi from 'api/authUser'
 import {useDispatch, useSelector} from 'react-redux'
 import { course,setLoading} from 'store/userSlice'
@@ -22,6 +22,8 @@ const schema = yup.object().shape({
 });
 function EditCourse(props) {
   const dispatch = useDispatch()
+  const [short, setshort] = useState("");
+  const [long, setLong] = useState("");
   const cousrse=useSelector(state=>state.user.course)
   const isLoading = useSelector((state) => state.user.loading)
 
@@ -38,26 +40,26 @@ function EditCourse(props) {
   }, [cousrse,props.match.params.id,dispatch])
   return (
     <div>
-      {!isLoading&&
+      {!isLoading&&cousrse!=null&&
       <Container>
         <h2>Edit Course</h2>
         <Formik
           validationSchema={schema}
           onSubmit={async (data) => {
-            data.shortDescription = 'asd'
-            data.fullDescription = 'qe'
-            if (data.avatar) {
-              console.log('asd')
-              // const uploadRes = await teacherApi.upLoad(data.avatar);
-              // data.avatar = uploadRes.files[0].filename;
-            }
+            data.shortDescription = short
+            data.fullDescription = long
+            // if (data.avatar) {
+            //   // const uploadRes = await teacherApi.upLoad(data.avatar);
+            //   data.avatar = uploadRes.files[0].filename;
+            // }
+            console.log(data)
           }}
           initialValues={{
-            title: "",
-            originPrice: "",
+            title: cousrse.title,
+            originPrice: cousrse.originPrice,
             avatar: "",
-            shortDescription: "",
-            fullDescription: "",
+            shortDescription: 'cousrse.shortDescription',
+            fullDescription: cousrse.fullDescription,
           }}
         >
           {({
@@ -123,13 +125,14 @@ function EditCourse(props) {
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"
-                // onChange={(e) => setshort(e.blocks[0].text)}
+                value={values.shortDescription}
+                onChange={(e) => setshort(e.blocks[0].text)}
               >
                 <Form.Control
                   type="text"
                   placeholder="shortDescription"
                   name="shortDescription"
-                  // value={short}
+                  value={short}
                   onChange={handleChange}
                   isValid={touched.shortDescription && !errors.shortDescription}
                   isInvalid={!!errors.shortDescription}
@@ -141,13 +144,13 @@ function EditCourse(props) {
                 toolbarClassName="toolbarClassName"
                 wrapperClassName="wrapperClassName"
                 editorClassName="editorClassName"
-                // onChange={(e) => setLong(e.blocks[0].text)}
+                onChange={(e) => setLong(e.blocks[0].text)}
               >
                 <Form.Control
                   type="text"
                   placeholder="fullDescription"
                   name="fullDescription"
-                  // value={long}
+                  value={long}
                   onChange={handleChange}
                   isValid={touched.fullDescription && !errors.fullDescription}
                   isInvalid={!!errors.fullDescription}

@@ -9,6 +9,7 @@ import TeacherRouter from 'components/PrivateRoute/TeacherRouter'
 import ResetPassword from 'features/Auth/ResetPassword'
 import Dashboard from 'features/Dashboard'
 import Student from 'features/Student'
+import WishList from 'features/Student/wishlist'
 import Teacher from 'features/Teacher'
 import Layout from 'components/Layout'
 import Web from 'features/Course/Web'
@@ -34,6 +35,7 @@ function App() {
               <Route path='/mobile' component={Mobile} />
               <Route path='/course/:id' component={CourseDetail} />
               <PrivateRoute exact path='/student' component={Student} />
+              <PrivateRoute exact path='/student/wishlist' component={WishList} />
               <TeacherRouter exact path='/teacher' component={Teacher} />
               <TeacherRouter exact path='/teacher/courses' component={TeacherCourse} />
               <TeacherRouter exact path='/teacher/courses/add-course' component={AddNewCourse} />

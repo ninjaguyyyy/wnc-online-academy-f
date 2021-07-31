@@ -209,7 +209,7 @@ function AddNewCourse() {
                 </Form.Group>
               </Row>
               <Form.Group className="position-relative mb-3">
-                <Form.Label>Avatar</Form.Label>
+                <Form.Label style={{marginRight:'10px'}}>Avatar</Form.Label>
                 <input
                   type="file"
                   name="avatar"

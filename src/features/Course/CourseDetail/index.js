@@ -44,10 +44,15 @@ function CourseDetail(props) {
             <div>RECENT REVIEWS:Very Positive (9,289)</div>
             <div>RECENT REVIEWS:Very Positive (9,289)</div>
             <div>RECENT REVIEWS:Very Positive (9,289)</div>
+            <div>RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)
+              RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive 
+              (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive 
+              (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)</div>
+
           </div>
         </div>
-        <div>
-          <Button variant="primary" size="lg">
+        <div style={{ margin:'30px 0 150px 0'}}>
+          <Button variant="primary" size="lg" style={{ marginRight:'30px'}}>
             Add to your wishlist
           </Button>
           <Button variant="primary" size="lg">
@@ -57,11 +62,22 @@ function CourseDetail(props) {
             defaultActiveKey="profile"
             id="uncontrolled-tab-example"
             className="mb-3"
+            style={{ marginTop:'30px'}}
           >
             <Tab eventKey="home" title="Home">
-              <div>RECENT REVIEWS:Very Positive (9,289)</div>
+            <Card style={{ width: "18rem" }}>
+                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Body>
+                  <Card.Title>Card Title</Card.Title>
+                  <Card.Text>
+                    Some quick example text to build on the card title and make up
+                    the bulk of the card's content.
+                  </Card.Text>
+                  <Button variant="primary">Go somewhere</Button>
+                </Card.Body>
+              </Card>
             </Tab>
-            <Tab eventKey="profile" title="Profile">
+            <Tab eventKey="Videos" title="Videos">
               <Accordion>
                 <Card>
                   <Card.Header>
@@ -136,18 +152,9 @@ function CourseDetail(props) {
                 </Card>
               </Accordion>
             </Tab>
-            <Tab eventKey="contact" title="Contact">
-              <Card style={{ width: "18rem" }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
-                <Card.Body>
-                  <Card.Title>Card Title</Card.Title>
-                  <Card.Text>
-                    Some quick example text to build on the card title and make up
-                    the bulk of the card's content.
-                  </Card.Text>
-                  <Button variant="primary">Go somewhere</Button>
-                </Card.Body>
-              </Card>
+            <Tab eventKey="Comments" title="Comments">
+              <div>RECENT REVIEWS:Very Positive (9,289)</div>
+              
             </Tab>
           </Tabs>
         </div>

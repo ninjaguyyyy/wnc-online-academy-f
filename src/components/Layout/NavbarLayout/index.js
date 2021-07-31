@@ -45,6 +45,8 @@ function NavbarLayout(props) {
           {userInfo.role===2&&<NavDropdown.Divider />}
           {userInfo.role===2&&<NavDropdown.Item onClick={()=>history.push('/teacher/courses/add-course')}>Add Course</NavDropdown.Item>}
           {userInfo.role===2&&<NavDropdown.Divider />}
+          {userInfo.role===3&&<NavDropdown.Item onClick={()=>history.push('/student/wishlist')}>Wishlist</NavDropdown.Item>}
+          {userInfo.role===3&&<NavDropdown.Divider />}
           <NavDropdown.Item onClick={()=>{
             history.push('/dashboard')
             dispatch(removeToken())

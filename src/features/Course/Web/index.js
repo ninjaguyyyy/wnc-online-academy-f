@@ -34,7 +34,7 @@ function index() {
   return (
     <Container style={{ display: 'flex' }}>
       <div>
-        <div style={{ width: '200px'}}>Sort by</div>
+        <div style={{ width: '200px', marginBottom:'20px'}}>Sort by</div>
         <Tab.Container id="left-tabs-example" defaultActiveKey="first" >
           <Row>
             <Col sm={4}>
