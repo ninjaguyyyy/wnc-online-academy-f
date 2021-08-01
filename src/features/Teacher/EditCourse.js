@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import authApi from "api/authUser";
 import { useDispatch, useSelector } from "react-redux";
 import { course, setLoading } from "store/userSlice";
+import {setSections } from 'store/teacherSlice'
 import loading from "assets/image/loading.svg";
 import {
   Container,
@@ -29,11 +30,17 @@ const schema = yup.object().shape({
 });
 function EditCourse(props) {
   const dispatch = useDispatch();
+  const [show1, setShow1] = useState(false);
+  const handleClose1 = () => setShow1(false);
+  const handleShow1 = () => setShow1(true);
   const [show, setShow] = useState(false);
+  const [chapter, setChapter] = useState('');
   const [short, setshort] = useState("");
   const [long, setLong] = useState("");
   const cousrse = useSelector((state) => state.user.course);
   const isLoading = useSelector((state) => state.user.loading);
+  const sections = useSelector((state) => state.teacher.sections);
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   useEffect(() => {
@@ -131,13 +138,44 @@ function EditCourse(props) {
                   />
                 </Form.Group>
                 <Form.Group className="position-relative mb-3">
-                  <Button variant="primary">Add Chapter</Button>
-                </Form.Group>
-                <Form.Group className="position-relative mb-3">
-                  <Button variant="info" onClick={handleShow}>
-                    Lecture
+                  <Button variant="primary" onClick={handleShow1}>
+                    Add Chapter
                   </Button>
                 </Form.Group>
+                {sections.length>0&&
+                <Form.Group className="position-relative mb-3">
+                  {sections.map((e,i)=>(
+                    <div style={{ margin:'15px 0'}}>
+                      <Button variant="info" onClick={handleShow}>{e.name}</Button>
+                    </div>
+                  ))}
+                </Form.Group>}
+                <Modal show={show1} onHide={handleClose1}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Chapter name:</Modal.Title>
+                  </Modal.Header>
+                  <Form.Group as={Col} md="12" className="position-relative">
+                    <Form.Control
+                      type="text"
+                      name="section"
+                      onChange={(e) => setChapter(e.target.value)}
+                    />
+                  </Form.Group>
+
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose1}>
+                      Close
+                    </Button>
+                    <Button variant="primary" 
+                      onClick={()=>{
+                        dispatch(setSections(chapter))
+                        handleClose1()
+                      }}
+                    >
+                      Save Chapter
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
                 <Modal show={show} onHide={handleClose}>
                   <Modal.Header closeButton>
                     <Modal.Title>Lecture detail</Modal.Title>
@@ -159,25 +197,7 @@ function EditCourse(props) {
                         isInvalid={!!errors.title}
                       />
                     </Form.Group>
-                    <Form.Group
-                      as={Col}
-                      md="12"
-                      controlId="validationFormikUsername2"
-                    >
-                      <Form.Label>Text</Form.Label>
-                      <InputGroup hasValidation>
-                        <Form.Control
-                          type="text"
-                          placeholder="Origin Price"
-                          aria-describedby="inputGroupPrepend"
-                          name="originPrice"
-                          value={values.originPrice}
-                          onChange={handleChange}
-                          isValid={touched.originPrice && !errors.originPrice}
-                          isInvalid={!!errors.originPrice}
-                        />
-                      </InputGroup>
-                    </Form.Group>
+
                     <Form.Group
                       as={Col}
                       md="12"

@@ -6,7 +6,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   categories:null,
   courses:null,
-  promotions:null
+  promotions:null,
+  sections:[]
 };
 
 const userSlice = createSlice({
@@ -22,9 +23,16 @@ const userSlice = createSlice({
     promotions:(state,action)=>{
       state.promotions=action.payload
     },
+    setSections: (state,action)=>{
+      let obj ={
+        name: action.payload,
+        lecture: null,
+      }
+      state.sections.push(obj)
+    }
   }
 });
 
 const { reducer, actions } = userSlice
-export const { categories,courses,promotions } = actions
+export const { categories,courses,promotions,setSections } = actions
 export default reducer;
