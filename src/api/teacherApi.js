@@ -12,7 +12,9 @@ const teacherApi = {
   },
   upLoad: (data) => {
     var formData = new FormData();
-    formData.append("files", data);
+    for(let i=0;i<data.length;i++) {
+      formData.append("files", data[i]);
+    }
     const url = `${ApiUrl}upload`;
     return axiosClient.post(url, formData, {
       headers: {

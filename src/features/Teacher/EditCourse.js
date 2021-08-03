@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import authApi from "api/authUser";
 import { useDispatch, useSelector } from "react-redux";
 import { course, setLoading } from "store/userSlice";
-import {setSections } from 'store/teacherSlice'
+import {setSections,sections,addLecture,selectChapter } from 'store/teacherSlice'
 import loading from "assets/image/loading.svg";
 import {
   Container,
@@ -14,9 +14,9 @@ import {
   Modal,
 } from "react-bootstrap";
 import { Editor } from "react-draft-wysiwyg";
-
 import { Formik } from "formik";
 import * as yup from "yup";
+import teacherApi from './../../api/teacherApi';
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -35,28 +35,32 @@ function EditCourse(props) {
   const handleShow1 = () => setShow1(true);
   const [show, setShow] = useState(false);
   const [chapter, setChapter] = useState('');
+  const [title, setTitle] = useState('');
+  const [video, setVideo] = useState(null);
   const [short, setshort] = useState("");
   const [long, setLong] = useState("");
-  const cousrse = useSelector((state) => state.user.course);
+  const Course = useSelector((state) => state.user.course);
   const isLoading = useSelector((state) => state.user.loading);
-  const sections = useSelector((state) => state.teacher.sections);
-
+  const Sections = useSelector((state) => state.teacher.sections);
+  const SelectChapter = useSelector((state) => state.teacher.selectChapter);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   useEffect(() => {
-    if (cousrse == null) {
+    if (Course == null) {
       dispatch(setLoading(true));
       authApi.getCourseById(props.match.params.id).then((res) => {
         if (res.success === true) {
           dispatch(setLoading(false));
           dispatch(course(res.course));
+          dispatch(sections(res.course.sections))
         }
       });
     }
-  }, [cousrse, props.match.params.id, dispatch]);
+
+  }, [Course, props.match.params.id, dispatch]);
   return (
     <div>
-      {!isLoading && cousrse != null && (
+      {!isLoading && course != null && (
         <Container>
           <h2>Edit Course</h2>
           <Formik
@@ -71,11 +75,11 @@ function EditCourse(props) {
               console.log(data);
             }}
             initialValues={{
-              title: cousrse.title,
-              originPrice: cousrse.originPrice,
+              title: course.title,
+              originPrice: course.originPrice,
               avatar: "",
-              shortDescription: "cousrse.shortDescription",
-              fullDescription: cousrse.fullDescription,
+              shortDescription: course.shortDescription,
+              fullDescription: course.fullDescription,
             }}
           >
             {({
@@ -142,11 +146,19 @@ function EditCourse(props) {
                     Add Chapter
                   </Button>
                 </Form.Group>
-                {sections.length>0&&
+                {Sections.length>0&&
                 <Form.Group className="position-relative mb-3">
-                  {sections.map((e,i)=>(
+                  {Sections.map((e,i)=>(
                     <div style={{ margin:'15px 0'}}>
-                      <Button variant="info" onClick={handleShow}>{e.name}</Button>
+                      <Button variant="info" 
+                        onClick={()=>{
+                          handleShow()
+                          dispatch(selectChapter(i))
+                        }
+                      }
+                      >
+                        {e.name}
+                      </Button>
                     </div>
                   ))}
                 </Form.Group>}
@@ -191,10 +203,7 @@ function EditCourse(props) {
                       <Form.Control
                         type="text"
                         name="title"
-                        value={values.title}
-                        onChange={handleChange}
-                        isValid={touched.title && !errors.title}
-                        isInvalid={!!errors.title}
+                        onChange={e=>setTitle(e.target.value)}
                       />
                     </Form.Group>
 
@@ -211,7 +220,7 @@ function EditCourse(props) {
                         name="avatar"
                         multiple
                         onChange={(event) => {
-                          setFieldValue("avatar", event.target.files[0]);
+                          setVideo(event.target.files)
                         }}
                       />
                     </Form.Group>
@@ -220,8 +229,25 @@ function EditCourse(props) {
                     <Button variant="secondary" onClick={handleClose}>
                       Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                      Save Changes
+                    <Button variant="primary" 
+                      onClick={()=>{
+                        handleClose()
+                        dispatch(setLoading(true))
+                        teacherApi.upLoad(video).then(res=>{
+                          if(res.success&& res.files.length>0){
+                            let payload={
+                              title:title,
+                              video:res.files,
+                              id:SelectChapter
+                            }
+                            dispatch(addLecture(payload))
+                            dispatch(setLoading(false))
+                          }
+                        })
+                      }
+                      }
+                    >
+                      Save Lecture 
                     </Button>
                   </Modal.Footer>
                 </Modal>

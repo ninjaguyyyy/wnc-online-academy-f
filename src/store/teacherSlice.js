@@ -7,7 +7,8 @@ const initialState = {
   categories:null,
   courses:null,
   promotions:null,
-  sections:[]
+  sections:[],
+  selectChapter:null,
 };
 
 const userSlice = createSlice({
@@ -26,13 +27,35 @@ const userSlice = createSlice({
     setSections: (state,action)=>{
       let obj ={
         name: action.payload,
-        lecture: null,
+        lecture: [],
       }
       state.sections.push(obj)
-    }
+    },
+    sections:(state,action)=>{
+      state.sections=action.payload
+    },
+    addLecture:(state,action)=>{
+      console.log('action',action.payload)
+      let lecture ={
+        title:action.payload.title,
+        video:action.payload.video,
+      }
+      state.sections[action.payload.id].lecture.push(lecture)
+    },
+    selectChapter:(state,action)=>{
+      state.selectChapter=action.payload
+
+    },
   }
 });
 
 const { reducer, actions } = userSlice
-export const { categories,courses,promotions,setSections } = actions
+export const { categories,
+  courses,
+  promotions,
+  setSections,
+  sections,
+  addLecture,
+  selectChapter
+} = actions
 export default reducer;

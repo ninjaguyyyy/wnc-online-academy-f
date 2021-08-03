@@ -6,6 +6,7 @@ import Accordion from "react-bootstrap/Accordion"
 import "./detailCourse.css"
 import authApi from "api/authUser"
 import {course} from 'store/userSlice'
+import {sections} from 'store/teacherSlice'
 import { useDispatch, useSelector } from "react-redux"
 import { ApiUrl } from 'api/authUser'
 import  loading from 'assets/image/loading.svg'
@@ -16,6 +17,7 @@ function CourseDetail(props) {
     authApi.getCourseById(props.match.params.id).then(res=>{
       if(res.success===true)
         dispatch(course(res.course))
+        dispatch(sections(res.course.sections))
     })
   },[props.match.params.id,dispatch])
   const Course= useSelector(state=>state.user.course)
@@ -46,7 +48,6 @@ function CourseDetail(props) {
             <div>RECENT REVIEWS:Very Positive (9,289)</div>
             <div>RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)
               RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive 
-              (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive 
               (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)RECENT REVIEWS:Very Positive (9,289)</div>
 
           </div>

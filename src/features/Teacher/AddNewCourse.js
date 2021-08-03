@@ -123,6 +123,7 @@ function AddNewCourse() {
             data.fullDescription = long
             data.promotion=promotion
             if (data.avatar) {
+              console.log(data.avatar)
               const uploadRes = await teacherApi.upLoad(data.avatar);
               data.avatar = uploadRes.files[0].filename;
             }
