@@ -1,11 +1,12 @@
-import { configureStore } from '@reduxjs/toolkit';
-import sign from './signSlice'
-import user from './userSlice'
-import teacher from './teacherSlice'
+import { configureStore } from "@reduxjs/toolkit";
+import sign from "./signSlice";
+import user from "./userSlice";
+import teacher from "./teacherSlice";
+
 const rootReducer = {
-    sign,
-    user,
-    teacher
+  sign,
+  user,
+  teacher,
 };
 
 const store = configureStore({
