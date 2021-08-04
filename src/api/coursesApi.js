@@ -2,9 +2,9 @@ import axiosClient from "./axiosClient";
 import { ApiUrl } from "./authUser";
 
 const coursesAPI = {
-  getAll: () => {
+  getAll: (params) => {
     const url = `${ApiUrl}courses/`;
-    return axiosClient.get(url);
+    return axiosClient.get(url, { params });
   },
 };
 

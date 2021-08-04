@@ -4,12 +4,18 @@ import { Link } from "react-router-dom";
 import no1 from "assets/image/5.jpg";
 import Pagination from "react-bootstrap/Pagination";
 import coursesAPI from "api/coursesApi";
+import { useQuery } from "App";
 
 function CoursesList() {
+  const query = useQuery();
   const [courses, setCourses] = useState([]);
+
   useEffect(() => {
     (async () => {
-      const { success, courses } = await coursesAPI.getAll();
+      const params = {
+        category: query.get("category"),
+      };
+      const { success, courses } = await coursesAPI.getAll(params);
       success && setCourses(courses);
     })();
 
