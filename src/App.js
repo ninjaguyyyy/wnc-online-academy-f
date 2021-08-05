@@ -1,12 +1,6 @@
 import { Provider } from "react-redux";
 import store from "./store/rootstore";
-import {
-  BrowserRouter,
-  Redirect,
-  Switch,
-  Route,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter, Redirect, Switch, Route, useLocation } from "react-router-dom";
 import Login from "features/Auth/Login";
 import Register from "features/Auth/Register";
 import PublicRoute from "components/PublicRoute";
@@ -22,6 +16,7 @@ import Web from "features/Course/Web";
 import Mobile from "features/Course/Mobile";
 import CourseDetail from "features/Course/CourseDetail";
 import TeacherCourse from "features/Course/TeacherCourse";
+import MyCourses from "features/Student/MyCourses";
 import AddNewCourse from "features/Teacher/AddNewCourse";
 import EditCourse from "features/Teacher/EditCourse";
 import { ToastContainer } from "react-toastify";
@@ -46,27 +41,12 @@ function App() {
               <Route path="/mobile" component={Mobile} />
               <Route path="/course/:id" component={CourseDetail} />
               <PrivateRoute exact path="/student" component={Student} />
-              <PrivateRoute
-                exact
-                path="/student/wishlist"
-                component={WishList}
-              />
+              <PrivateRoute exact path="/student/wishlist" component={WishList} />
+              <PrivateRoute exact path="/student/my-courses" component={MyCourses} />
               <TeacherRouter exact path="/teacher" component={Teacher} />
-              <TeacherRouter
-                exact
-                path="/teacher/courses"
-                component={TeacherCourse}
-              />
-              <TeacherRouter
-                exact
-                path="/teacher/courses/add-course"
-                component={AddNewCourse}
-              />
-              <TeacherRouter
-                exact
-                path="/teacher/editcourse/:id"
-                component={EditCourse}
-              />
+              <TeacherRouter exact path="/teacher/courses" component={TeacherCourse} />
+              <TeacherRouter exact path="/teacher/courses/add-course" component={AddNewCourse} />
+              <TeacherRouter exact path="/teacher/editcourse/:id" component={EditCourse} />
               <Redirect from="/" to="/dashboard" />
             </Switch>
           </Layout>

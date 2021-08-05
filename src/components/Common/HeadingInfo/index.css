@@ -1,0 +1,15 @@
+.heading-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0 80px 0;
+}
+.breadcrumb {
+  margin-top: 10px;
+  background-color: transparent;
+  justify-content: center;
+}
+
+a {
+  text-decoration: none;
+}

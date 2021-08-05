@@ -60,9 +60,7 @@ function index() {
             <img className="carousel__img" src={no3} alt="Third slide" />
             <Carousel.Caption className="carousel__text">
               <h3>Third slide label</h3>
-              <p>
-                Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-              </p>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
             </Carousel.Caption>
           </Link>
         </Carousel.Item>

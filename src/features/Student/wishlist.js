@@ -1,5 +1,6 @@
 import userAPi from "api/userApi";
 import CourseCard from "components/Common/CourseCard";
+import HeadingInfo from "components/Common/HeadingInfo";
 import React, { useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 
@@ -15,6 +16,9 @@ function WishList() {
 
   return (
     <Container>
+      <Row>
+        <HeadingInfo title="Wish List" paths={[{ label: "Home", ref: "/" }, { label: "Wish List" }]} />
+      </Row>
       <Row>
         {favoriteCourses.map((course) => (
           <CourseCard course={course} />
