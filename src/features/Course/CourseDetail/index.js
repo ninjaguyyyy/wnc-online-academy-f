@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { Link,useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 import ReactPlayer from "react-player"
 import { Button, Tabs, Tab, Card } from "react-bootstrap"
 import Accordion from "react-bootstrap/Accordion"
@@ -25,10 +25,13 @@ function CourseDetail(props) {
   if(Course!=null){
     return (
       <div>
-        <Link to="/dashboard">Home</Link>
-        {role?.role===2&&<Button onClick={()=>history.push(`/teacher/editcourse/${props.match.params.id}`)}>
+        {role?.role===2&&
+        <Button 
+          onClick={()=>history.push(`/teacher/editcourse/${props.match.params.id}`)}
+          style={{ marginBottom:'20px'}}
+        >
           Edit Course
-          </Button>
+        </Button>
         }
         <h2>{Course.title}</h2>
         <div style={{ display: "flex" }}>

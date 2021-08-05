@@ -38,7 +38,7 @@ const userSlice = createSlice({
       console.log('action',action.payload)
       let lecture ={
         title:action.payload.title,
-        video:action.payload.video,
+        video:action.payload.video[0].filename,
       }
       state.sections[action.payload.id].lecture.push(lecture)
     },

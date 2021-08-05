@@ -16,15 +16,12 @@ import {
 import { Editor } from "react-draft-wysiwyg";
 import { Formik } from "formik";
 import * as yup from "yup";
-import teacherApi from './../../api/teacherApi';
+import teacherApi from 'api/teacherApi';
 
 const schema = yup.object().shape({
   title: yup.string().required(),
-  category: yup.string(),
   originPrice: yup.number().positive().required(),
-  avatar: yup.string(),
   fullDescription: yup.string(),
-  // appliedPromotions: yup.string().required(),
   shortDescription: yup.string(),
   longDescription: yup.string(),
 });
@@ -37,7 +34,7 @@ function EditCourse(props) {
   const [chapter, setChapter] = useState('');
   const [title, setTitle] = useState('');
   const [video, setVideo] = useState(null);
-  const [short, setshort] = useState("");
+  const [short, setShort] = useState("");
   const [long, setLong] = useState("");
   const Course = useSelector((state) => state.user.course);
   const isLoading = useSelector((state) => state.user.loading);
@@ -53,33 +50,35 @@ function EditCourse(props) {
           dispatch(setLoading(false));
           dispatch(course(res.course));
           dispatch(sections(res.course.sections))
+          setShort(res.course.shortDescription)
+          setLong(res.course.fullDescription)
         }
       });
     }
-
+    else{
+      setShort(Course.shortDescription)
+      setLong(Course.fullDescription)
+    }
   }, [Course, props.match.params.id, dispatch]);
   return (
     <div>
-      {!isLoading && course != null && (
+      {!isLoading && Course != null && (
         <Container>
           <h2>Edit Course</h2>
           <Formik
             validationSchema={schema}
             onSubmit={async (data) => {
-              data.shortDescription = short;
-              data.fullDescription = long;
-              // if (data.avatar) {
-              //   // const uploadRes = await teacherApi.upLoad(data.avatar);
-              //   data.avatar = uploadRes.files[0].filename;
-              // }
-              console.log(data);
+              data.shortDescription = short
+              data.fullDescription = long
+              data.sections=Sections
+              teacherApi.editCourses(data,Course._id)
             }}
             initialValues={{
-              title: course.title,
-              originPrice: course.originPrice,
-              avatar: "",
-              shortDescription: course.shortDescription,
-              fullDescription: course.fullDescription,
+              title: Course.title,
+              originPrice: Course.originPrice,
+              sections: null,
+              shortDescription: Course.shortDescription,
+              fullDescription: Course.fullDescription,
             }}
           >
             {({
@@ -88,7 +87,6 @@ function EditCourse(props) {
               values,
               touched,
               errors,
-              setFieldValue,
             }) => (
               <Form noValidate onSubmit={handleSubmit}>
                 <Row className="mb-3">
@@ -128,19 +126,7 @@ function EditCourse(props) {
                     </InputGroup>
                   </Form.Group>
                 </Row>
-                <Form.Group className="position-relative mb-3">
-                  <Form.Label style={{ marginRight: "10px" }}>
-                    Videos:
-                  </Form.Label>
-                  <input
-                    type="file"
-                    name="avatar"
-                    multiple
-                    onChange={(event) => {
-                      setFieldValue("avatar", event.target.files[0]);
-                    }}
-                  />
-                </Form.Group>
+            
                 <Form.Group className="position-relative mb-3">
                   <Button variant="primary" onClick={handleShow1}>
                     Add Chapter
@@ -257,7 +243,7 @@ function EditCourse(props) {
                   wrapperClassName="wrapperClassName"
                   editorClassName="editorClassName"
                   value={values.shortDescription}
-                  onChange={(e) => setshort(e.blocks[0].text)}
+                  onChange={(e) => setShort(e.blocks[0].text)}
                 >
                   <Form.Control
                     type="text"

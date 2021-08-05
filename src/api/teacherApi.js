@@ -33,6 +33,10 @@ const teacherApi = {
   myCourses:()=>{
     const url = `${ApiUrl}users/me/own-courses`
     return axiosClient.get(url)
+  },
+  editCourses:(data, id)=>{
+    const url = `${ApiUrl}courses/${id}`
+    return axiosClient.patch(url,data)
   }
 };
 export default teacherApi;
