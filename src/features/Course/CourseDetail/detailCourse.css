@@ -1,5 +1,25 @@
-.img_course{
-  width:325px;
-  height:200px;
+.img_course {
+  width: 325px;
+  height: 200px;
   object-fit: cover;
+}
+
+.short-des {
+  color: #656464;
+}
+
+.rounded-full {
+  border-radius: 50%;
+  border: 1px #656464;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+  align-items: center;
+}
+
+.info-value {
+  color: #656464;
 }

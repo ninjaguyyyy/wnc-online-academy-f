@@ -65,14 +65,18 @@ function CoursesList() {
         {courses.map((course, idx) => (
           <CourseCard course={course} />
         ))}
+        {!courses.length && <h3 className="text-center mt-5">Not Have Courses</h3>}
       </Row>
-      <Pagination style={{ justifyContent: "center" }}>
-        <Pagination.Prev />
-        <Pagination.Item>{1}</Pagination.Item>
-        <Pagination.Item>{2}</Pagination.Item>
-        <Pagination.Item>{3}</Pagination.Item>
-        <Pagination.Next />
-      </Pagination>
+
+      {courses.length && (
+        <Pagination className="mt-4" style={{ justifyContent: "center" }}>
+          <Pagination.Prev />
+          <Pagination.Item>{1}</Pagination.Item>
+          <Pagination.Item>{2}</Pagination.Item>
+          <Pagination.Item>{3}</Pagination.Item>
+          <Pagination.Next />
+        </Pagination>
+      )}
     </Container>
   );
 }

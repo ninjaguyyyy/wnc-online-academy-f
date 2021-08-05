@@ -1,5 +1,5 @@
 import React from "react";
-import { Breadcrumb } from "react-bootstrap";
+import DynamicBreadcrumb from "../DynamicBreadcrumb";
 import "./index.css";
 
 export default function HeadingInfo({ title, paths }) {
@@ -7,13 +7,9 @@ export default function HeadingInfo({ title, paths }) {
     <div className="heading-info">
       <div>
         <h2>{title}</h2>
-        <Breadcrumb>
-          {paths.map((path) => (
-            <Breadcrumb.Item href={path.ref} active={!!!path.ref}>
-              {path.label}
-            </Breadcrumb.Item>
-          ))}
-        </Breadcrumb>
+        <div style={{ width: "150px", margin: "auto" }}>
+          <DynamicBreadcrumb paths={paths} />
+        </div>
       </div>
     </div>
   );

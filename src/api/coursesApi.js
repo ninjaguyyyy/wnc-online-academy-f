@@ -6,6 +6,11 @@ const coursesAPI = {
     const url = `${ApiUrl}courses/`;
     return axiosClient.get(url, { params });
   },
+
+  getById: (id) => {
+    const url = `${ApiUrl}courses/${id}`;
+    return axiosClient.get(url);
+  },
 };
 
 export default coursesAPI;
