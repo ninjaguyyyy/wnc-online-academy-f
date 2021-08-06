@@ -17,82 +17,77 @@ export default function TabsInfo({ course }) {
     </Tabs>
   );
 }
-
-// <Tabs className="mb-3" style={{ marginTop: "30px" }}>
-//       <Tab eventKey="home" title="Home">
-//         <Card style={{ width: "18rem" }}>
-//           {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
-//           <Card.Body>
-//             <Card.Title>Card Title</Card.Title>
-//             <Card.Text>Some quick example text to build on the card title and make up the bulk of the card's content.</Card.Text>
-//             <Button variant="primary">Go somewhere</Button>
-//           </Card.Body>
-//         </Card>
-//       </Tab>
-//       <Tab eventKey="Videos" title="Videos">
-//         <Accordion>
-//           <Card>
-//             <Card.Header>
-//               <Accordion.Toggle as={Button} eventKey="menu">
-//                 Click me
-//               </Accordion.Toggle>
-//             </Card.Header>
-//             <Accordion.Collapse eventKey="menu">
-//               <Card.Body>
-//                 <Accordion>
-//                   <Card>
-//                     <Card.Header>
-//                       <Accordion.Toggle as={Button} eventKey="1">
-//                         Ep1
-//                       </Accordion.Toggle>
-//                     </Card.Header>
-//                     <Accordion.Collapse eventKey="1">
-//                       <Card.Body>
-//                         <h2>Title</h2>
-//                         <h2>Clip</h2>
-//                         {/* <ReactPlayer url="https://www.youtube.com/watch?v=ysz5S6PUM-U" style={{ width: "600px" }} controls={true} /> */}
-//                       </Card.Body>
-//                     </Accordion.Collapse>
-//                   </Card>
-//                 </Accordion>
-//                 <Accordion>
-//                   <Card>
-//                     <Card.Header>
-//                       <Accordion.Toggle as={Button} eventKey="ep2">
-//                         Ep2
-//                       </Accordion.Toggle>
-//                     </Card.Header>
-//                     <Accordion.Collapse eventKey="ep2">
-//                       <Card.Body>
-//                         <h2>Title</h2>
-//                         <h2>Clip</h2>
-//                         {/* <ReactPlayer url="https://www.youtube.com/watch?v=ysz5S6PUM-U" style={{ width: "600px" }} controls={true} /> */}
-//                       </Card.Body>
-//                     </Accordion.Collapse>
-//                   </Card>
-//                 </Accordion>
-//                 <Accordion>
-//                   <Card>
-//                     <Card.Header>
-//                       <Accordion.Toggle as={Button} eventKey="ep3">
-//                         Ep3
-//                       </Accordion.Toggle>
-//                     </Card.Header>
-//                     <Accordion.Collapse eventKey="ep3">
-//                       <Card.Body>
-//                         <h2>Title</h2>
-//                         <h2>Clip</h2>
-//                         {/* <ReactPlayer url="https://www.youtube.com/watch?v=ysz5S6PUM-U" style={{ width: "600px" }} controls={true} /> */}
-//                       </Card.Body>
-//                     </Accordion.Collapse>
-//                   </Card>
-//                 </Accordion>
-//               </Card.Body>
-//             </Accordion.Collapse>
-//           </Card>
-//         </Accordion>
-//       </Tab>
-//       <Tab eventKey="Comments" title="Comments">
-//         <div>RECENT REVIEWS:Very Positive (9,289)</div>
-//       </Tab>
-//     </Tabs>
+{
+  /* <Tabs
+            defaultActiveKey="profile"
+            id="uncontrolled-tab-example"
+            className="mb-3"
+            style={{ marginTop:'30px'}}
+          >
+            <Tab eventKey="home" title="Home">
+            <Card style={{ width: "18rem" }}>
+                <Card.Img variant="top" src="holder.js/100px180" />
+                <Card.Body>
+                  <Card.Title>Card Title</Card.Title>
+                  <Card.Text>
+                    Some quick example text to build on the card title and make up
+                    the bulk of the card's content.
+                  </Card.Text>
+                  <Button variant="primary">Go somewhere</Button>
+                </Card.Body>
+              </Card>
+            </Tab>
+            <Tab eventKey="Videos" title="Videos">
+              <Accordion>
+                <Card>
+                  <Card.Body>
+                  {Course.sections.length > 0&&
+                  Course.sections.map((item,i)=>(
+                    <Accordion key={i}>
+                    <Card>
+                      <Card.Body>
+                        <Accordion.Toggle as={Button} eventKey={item._id}>
+                          {item.name}
+                        </Accordion.Toggle>
+                      </Card.Body>
+                      <Accordion.Collapse eventKey={item._id}>
+                        <Card>
+                          <Card.Body>
+                            {Course.sections[i].lectures.length>0&&
+                            Course.sections[i].lectures.map((lecture,j)=>(
+                              <Accordion key={lecture._id}>
+                                <Card>
+                                  <Card.Body>
+                                    <Accordion.Toggle as={Button} eventKey={lecture._id}>
+                                      {lecture.title}
+                                    </Accordion.Toggle>
+                                  </Card.Body>
+                                  <Accordion.Collapse eventKey={lecture._id}>
+                                    <Card.Body>
+                                      <h2>{lecture.title}</h2>
+                                      <h2>Clip</h2>
+                                      <ReactPlayer
+                                        url='https://wnc-online-academy-21.herokuapp.com/resources/video/wnc21-wfcD6WlQ9e.mp4'
+                                        style={{ width: "600px" }}
+                                        controls={true}
+                                      />
+                                    </Card.Body>
+                                  </Accordion.Collapse>
+                                </Card>
+                              </Accordion>
+                            ))}
+                          </Card.Body>
+                        </Card>
+                      </Accordion.Collapse>
+                    </Card>
+                  </Accordion>
+                  ))}
+                  </Card.Body>
+                </Card>
+              </Accordion>
+            </Tab>
+            <Tab eventKey="Comments" title="Comments">
+              <div>RECENT REVIEWS:Very Positive (9,289)</div>
+            </Tab>
+          </Tabs> */
+}
