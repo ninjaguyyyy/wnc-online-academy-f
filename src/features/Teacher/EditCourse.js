@@ -71,7 +71,12 @@ function EditCourse(props) {
               data.shortDescription = short
               data.fullDescription = long
               data.sections=Sections
-              teacherApi.editCourses(data,Course._id)
+              dispatch(setLoading(true))
+              teacherApi.editCourses(data,Course._id).then(res=>{
+                console.log(res)
+                dispatch(setLoading(false))
+                dispatch(course(res.course))
+              })
             }}
             initialValues={{
               title: Course.title,
