@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 export default function CourseCard({ course }) {
   const { avatar, title, lecturer, category, _id } = course;
-  console.log(course);
   return (
     <Col sm={4} style={{ padding: "20px" }}>
       <Card>

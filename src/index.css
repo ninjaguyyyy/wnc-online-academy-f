@@ -1,29 +1,33 @@
-a:hover{
+a:hover {
   text-decoration: none !important;
 }
 *:focus {
   outline: none;
 }
-div.editorClassName.rdw-editor-main{
-  border:1px solid black;
+div.editorClassName.rdw-editor-main {
+  border: 1px solid black;
   margin-bottom: 30px;
 }
-button#dropdown-basic-button{
-  width:100%;
-}
-button#dropdown-basic{
+button#dropdown-basic-button {
   width: 100%;
 }
-.imgCourse{
+button#dropdown-basic {
+  width: 100%;
+}
+.imgCourse {
   width: 530px;
-  height:230px;
+  height: 230px;
   object-fit: cover;
 }
-.loading{
-  width:70px;
+.loading {
+  width: 70px;
 }
-.userloading{
-  height:80vh;
-  display:flex;
-  justify-content:center;
+.userloading {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  font-family: "Jost", sans-serif;
 }

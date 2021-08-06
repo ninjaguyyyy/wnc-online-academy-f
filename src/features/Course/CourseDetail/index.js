@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import coursesAPI from "api/coursesApi";
 import DynamicBreadcrumb from "components/Common/DynamicBreadcrumb";
 import TabsInfo from "./components/TabsInfo";
+import CardPaymentInfo from "./components/CardPaymentInfo";
 
 function CourseDetail() {
   const dispatch = useDispatch();
@@ -28,7 +29,6 @@ function CourseDetail() {
       const { success, course } = await coursesAPI.getById(id);
       success && setCourse(course);
       // setLoading(false);
-      console.log(course);
     })();
   }, []);
 
@@ -83,15 +83,7 @@ function CourseDetail() {
             <TabsInfo course={course} />
           </Col>
           <Col sm={4}>
-            <img src={`${ApiUrl}resources/image/${course.avatar}`} alt="img" className="img_course" />
-            <div style={{ margin: "30px 0 150px 0" }}>
-              <Button variant="primary" size="lg" style={{ marginRight: "30px" }} onClick={handleAddToFavorite}>
-                Add to your wishlist
-              </Button>
-              <Button variant="primary" size="lg">
-                Assign
-              </Button>
-            </div>
+            <CardPaymentInfo course={course} />
           </Col>
         </Row>
       )}

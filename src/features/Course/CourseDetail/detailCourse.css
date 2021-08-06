@@ -23,3 +23,21 @@
 .info-value {
   color: #656464;
 }
+
+.lecture {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  padding: 13px 18px;
+}
+
+.accordion-header button {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.nav-item button {
+  color: #2f2d51;
+  font-weight: 400;
+  font-size: 1.2rem;
+}
