@@ -8,9 +8,11 @@ import coursesAPI from "api/coursesApi";
 import { useQuery } from "App";
 import CourseCard from "../../../components/Common/CourseCard";
 import HeadingInfo from "components/Common/HeadingInfo";
+import { useLocation } from "react-router-dom";
 
 function CoursesList() {
   const query = useQuery();
+  const location = useLocation();
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ function CoursesList() {
       const { success, courses } = await coursesAPI.getAll(params);
       success && setCourses(courses);
     })();
-  }, []);
+  }, [location]);
 
   return (
     <Container>

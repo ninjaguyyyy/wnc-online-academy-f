@@ -70,19 +70,23 @@ function Login(props) {
     if (role === 3) return "Student";
   };
   const dispatch = useDispatch();
+
   const onSubmit = async (data) => {
     dispatch(setLoadingSignIn(true));
-    await authApi.signInApi(data).then((res) => {
-      if (res.errorCode) {
-        dispatch(setLoadingSignIn(false));
-        toast.error(res.msg);
-      } else {
-        dispatch(setLoadingSignIn(false));
-        dispatch(saveUserInfo(res.user));
-        dispatch(saveToken(res.accessToken));
-        if (res.accessToken && res.user.role === 2) props.history.push("/teacher");
-      }
-    });
+    const { errorCode, msg, user, accessToken, refreshToken } = await authApi.signInApi(data);
+
+    if (errorCode) {
+      dispatch(setLoadingSignIn(false));
+      toast.error(msg);
+      return;
+    }
+
+    if (accessToken) {
+      dispatch(setLoadingSignIn(false));
+      dispatch(saveUserInfo(user));
+      dispatch(saveToken(accessToken));
+      user.role === 2 && props.history.push("/teacher");
+    }
   };
   return (
     <LoginContainer>

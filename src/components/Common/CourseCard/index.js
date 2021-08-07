@@ -6,12 +6,29 @@ import "./index.css";
 import { BsPerson, BsStarFill, BsStar, BsHeartFill, BsHeart } from "react-icons/bs";
 import { BiBookReader } from "react-icons/bi";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import userAPi from "api/userApi";
 
 export default function CourseCard({ course }) {
   const { avatar, title, lecturer, category, _id } = course;
+
   const token = useSelector((state) => state.user.token);
-  const user = useSelector((state) => state.user);
-  console.log(user);
+  const favoriteCourses = useSelector((state) => state.user.favoriteCourses);
+
+  console.log(favoriteCourses);
+  const isFavorite = favoriteCourses.includes(course._id);
+
+  const handleAddToFavorite = async () => {
+    if (!token) {
+      return toast.info("Please login to use this feature!");
+    }
+    if (isFavorite) {
+      return toast.error("This course has been added !");
+    }
+
+    const { success, msg } = await userAPi.addCoursesToFavorite({ courseId: course._id });
+    success && toast.success("Successfully add to favorite");
+  };
 
   return (
     <Col sm={4} style={{ padding: "20px" }}>
@@ -39,8 +56,12 @@ export default function CourseCard({ course }) {
             </div>
 
             <div className="fav">
-              <a href="javascript:void">
-                <BsHeart className="fav_icon" color="rgb(220 73 52)" size={20} />
+              <a href="javascript:void" onClick={handleAddToFavorite}>
+                {token && isFavorite ? (
+                  <BsHeartFill className="fav_icon" color="rgb(220 73 52)" size={20} />
+                ) : (
+                  <BsHeart className="fav_icon" color="rgb(220 73 52)" size={20} />
+                )}
               </a>
             </div>
           </div>
