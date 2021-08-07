@@ -34,15 +34,6 @@ function CourseDetail() {
 
   const token = useSelector((state) => state.user.token);
 
-  const handleAddToFavorite = async () => {
-    if (!token) {
-      return history.push("/login");
-    }
-    const { success, msg } = await userAPi.addCoursesToFavorite({ courseId: id });
-    success && toast.success("Successfully add to favorite");
-    msg && toast.error("This course has been added !");
-  };
-
   return (
     <Container>
       <Row className="mb-4">

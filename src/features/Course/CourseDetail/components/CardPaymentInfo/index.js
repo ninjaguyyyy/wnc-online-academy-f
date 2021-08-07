@@ -3,9 +3,31 @@ import React from "react";
 import { Card, Button, Badge } from "react-bootstrap";
 import "./index.css";
 import { BsHeart, BsClockHistory } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import userAPi from "api/userApi";
 
 export default function CardPaymentInfo({ course }) {
-  console.log(course);
+  const token = useSelector((state) => state.user.token);
+
+  const handleAddToFavorite = async () => {
+    if (!token) {
+      return toast.info("Please login to use this feature!");
+    }
+    const { success, msg } = await userAPi.addCoursesToFavorite({ courseId: course._id });
+    success && toast.success("Successfully add to favorite");
+    msg && toast.error("This course has been added !");
+  };
+
+  const handleBuy = async () => {
+    if (!token) {
+      return toast.info("Please login to use this feature!");
+    }
+    const { success, msg } = await userAPi.addCoursesToFavorite({ courseId: course._id });
+    success && toast.success("Successfully add to favorite");
+    msg && toast.error("This course has been added !");
+  };
+
   return (
     <Card>
       <Card.Body>
@@ -22,7 +44,7 @@ export default function CardPaymentInfo({ course }) {
             </h5>
           </div>
           <div className="register-action">
-            <Button variant="primary" size="lg" className="buy-button">
+            <Button variant="primary" size="lg" className="buy-button" onClick={handleBuy}>
               Buy this course
             </Button>
           </div>
@@ -57,7 +79,7 @@ export default function CardPaymentInfo({ course }) {
             </li>
           </ul>
           <div className="d-flex justify-content-center">
-            <Button variant="outline-warning">
+            <Button variant="outline-warning" onClick={() => handleAddToFavorite()}>
               <BsHeart /> Add To Favorite
             </Button>
           </div>
