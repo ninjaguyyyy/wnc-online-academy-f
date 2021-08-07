@@ -6,7 +6,16 @@ a:hover {
 }
 div.editorClassName.rdw-editor-main {
   border: 1px solid black;
+  padding: 10px 15px;
+  height: 150px;
+  overflow-y: hidden;
+}
+.fullDes.rdw-editor-main {
+  border: 1px solid black;
+  padding: 0px 15px;
   margin-bottom: 30px;
+  height: 150px;
+  overflow-y: hidden;
 }
 button#dropdown-basic-button {
   width: 100%;

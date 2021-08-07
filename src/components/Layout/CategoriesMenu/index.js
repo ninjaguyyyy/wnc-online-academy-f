@@ -11,10 +11,6 @@ export default function CategoriesMenu() {
       const { success, categories } = await categoriesAPI.getTree();
       success && setCategories(categories);
     })();
-
-    return () => {
-      // cleanup
-    };
   }, []);
 
   return (
