@@ -2,19 +2,14 @@ import React from "react";
 import { Button, Card, Tab, Tabs } from "react-bootstrap";
 import Accordion from "react-bootstrap/Accordion";
 import { BsFileEarmarkText, BsPlay } from "react-icons/bs";
+import ReviewTabItem from "./components/ReviewTabItem";
+import TeacherTabItem from "./components/TeacherTabItem";
 
 export default function TabsInfo({ course }) {
   return (
     <Tabs id="uncontrolled-tab-example" className="mb-3" style={{ marginTop: "30px" }}>
       <Tab eventKey="Overview" title="Overview">
-        <Card style={{ width: "18rem" }}>
-          <Card.Img variant="top" src="holder.js/100px180" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>Some quick example text to build on the card title and make up the bulk of the card's content.</Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
+        <h5 className="mt-4">Course Description</h5>
       </Tab>
       <Tab eventKey="Curriculum" title="Curriculum">
         {course.sections.length > 0 &&
@@ -74,17 +69,10 @@ export default function TabsInfo({ course }) {
           ))}
       </Tab>
       <Tab eventKey="Instructor" title="Instructor">
-        <Card style={{ width: "18rem" }}>
-          <Card.Img variant="top" src="holder.js/100px180" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>Some quick example text to build on the card title and make up the bulk of the card's content.</Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
+        <TeacherTabItem />
       </Tab>
       <Tab eventKey="Reviews" title="Reviews">
-        <div>RECENT REVIEWS:Very Positive (9,289)</div>
+        <ReviewTabItem />
       </Tab>
     </Tabs>
   );

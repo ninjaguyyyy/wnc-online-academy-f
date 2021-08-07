@@ -1,37 +1,68 @@
-import React, { useState, useEffect } from "react";
-import { Container, Card, Row, Col, Tab, Nav, Form, InputGroup, FormControl, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import no1 from "assets/image/5.jpg";
-import { BsSearch } from "react-icons/bs";
-import Pagination from "react-bootstrap/Pagination";
+import categoriesAPI from "api/categoriesApi";
 import coursesAPI from "api/coursesApi";
 import { useQuery } from "App";
-import CourseCard from "../../../components/Common/CourseCard";
 import HeadingInfo from "components/Common/HeadingInfo";
-import { useLocation } from "react-router-dom";
+import qs from "query-string";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Container, Form, FormControl, InputGroup, Row, Spinner } from "react-bootstrap";
+import Pagination from "react-bootstrap/Pagination";
+import { BsSearch } from "react-icons/bs";
+import { useLocation, useHistory } from "react-router-dom";
+import CourseCard from "../../../components/Common/CourseCard";
 
 function CoursesList() {
   const query = useQuery();
   const location = useLocation();
+  const history = useHistory();
+
   const [courses, setCourses] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  const [chosenCategory, setChosenCategory] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // history.push({
+
+    //   pathname: "/dresses",
+    //   search: "?color=blue",
+    // });
+    const queryParams = { category: chosenCategory };
+    if (!chosenCategory) {
+      delete queryParams.category;
+    }
+    const searchString = qs.stringify(queryParams);
+    console.log(searchString);
+    console.log(location);
+    history.push({ pathname: "/web", search: `?${searchString}` });
+  }, [chosenCategory]);
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       const params = {
         category: query.get("category"),
       };
       const { success, courses } = await coursesAPI.getAll(params);
       success && setCourses(courses);
+      setLoading(false);
     })();
   }, [location]);
+
+  useEffect(() => {
+    (async () => {
+      const { success, categories } = await categoriesAPI.getAll();
+      success && setCategories(categories);
+    })();
+  }, []);
 
   return (
     <Container>
       <Row>
-        <HeadingInfo title="Courses by Categories" paths={[{ label: "Home", ref: "/" }, { label: "Courses" }]} />
+        <HeadingInfo title="List of Courses" paths={[{ label: "Home", ref: "/" }, { label: "Courses" }]} />
       </Row>
       <Row>
-        <Col sm={5}>
+        <Col sm={4}>
           <Form.Text className="text-muted ml-3">Showing 1–9 of 10 courses available for you</Form.Text>
         </Col>
         <Col sm={3}>
@@ -42,35 +73,45 @@ function CoursesList() {
             </Button>
           </InputGroup>
         </Col>
-        <Col sm={2}>
+        <Col sm={3}>
           <InputGroup size="sm">
-            <InputGroup.Text id="inputGroup-sizing-default">Sort Price: </InputGroup.Text>
-            <Form.Select style={{ paddingRight: "2.5rem" }}>
-              <option value="1">Default</option>
-              <option value="2">Ascending</option>
-              <option value="3">Descending</option>
+            <InputGroup.Text id="inputGroup-sizing-default">Category: </InputGroup.Text>
+            <Form.Select value={chosenCategory} onChange={(e) => setChosenCategory(e.target.value)} style={{ paddingRight: "2.5rem" }}>
+              <option value="">Default</option>
+              {categories.map((category) => (
+                <option value={category._id}>{category.name}</option>
+              ))}
             </Form.Select>
           </InputGroup>
         </Col>
         <Col sm={2}>
           <InputGroup size="sm">
-            <InputGroup.Text id="inputGroup-sizing-default">Sort Price: </InputGroup.Text>
+            <InputGroup.Text id="inputGroup-sizing-default">Sort by: </InputGroup.Text>
             <Form.Select style={{ paddingRight: "2.5rem" }}>
               <option value="1">Default</option>
-              <option value="2">Ascending</option>
-              <option value="3">Descending</option>
+              <option value="2">Price ➚</option>
+              <option value="3">Price ➘</option>
+              <option value="3">Rating ➚</option>
+              <option value="3">Rating ➘</option>
             </Form.Select>
           </InputGroup>
         </Col>
       </Row>
       <Row>
-        {courses.map((course, idx) => (
-          <CourseCard course={course} />
-        ))}
-        {!courses.length && <h3 className="text-center mt-5">Not Have Courses</h3>}
+        {!loading ? (
+          courses.length ? (
+            courses.map((course, idx) => <CourseCard course={course} />)
+          ) : (
+            <h3 className="text-center mt-5">Not Have Courses</h3>
+          )
+        ) : (
+          <div className="d-flex justify-content-center mt-5 mb-5">
+            <Spinner animation="border" variant="info" size="lg" />
+          </div>
+        )}
       </Row>
 
-      {courses.length && (
+      {courses.length ? (
         <Pagination className="mt-4" style={{ justifyContent: "center" }}>
           <Pagination.Prev />
           <Pagination.Item>{1}</Pagination.Item>
@@ -78,7 +119,7 @@ function CoursesList() {
           <Pagination.Item>{3}</Pagination.Item>
           <Pagination.Next />
         </Pagination>
-      )}
+      ) : null}
     </Container>
   );
 }

@@ -47,9 +47,9 @@ function CourseDetail() {
       </Row>
       {course && (
         <Row>
-          <Col sm={8}>
+          <Col sm={8} style={{ paddingRight: "150px" }}>
             <h2>{course.title}</h2>
-            <div className="short-des mt-3 mb-4">{course.shortDescription}</div>
+            <div className="short-des mt-3 mb-4 ">{course.shortDescription}</div>
             <div className="info mb-5">
               <img
                 className="rounded-full"
