@@ -31,3 +31,15 @@ button#dropdown-basic {
 body {
   font-family: "Jost", sans-serif;
 }
+.h2css{
+  font-weight: 700;
+  font-size:1.5rem;
+}
+.CourseCard:hover{
+  opacity: 0.7;
+}
+.popovercss{
+  position: absolute;
+  /* top: -110px !important; */
+  height:367px;
+}

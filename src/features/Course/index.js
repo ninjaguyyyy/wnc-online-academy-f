@@ -5,34 +5,50 @@ import { Link } from "react-router-dom";
 import no1 from "assets/image/5.jpg";
 import no2 from "assets/image/17.png";
 import no3 from "assets/image/36.jpg";
+import CourseCard from 'components/Common/CourseCard'
 function index() {
-  const items = [
+  const coursesdata=[
     {
-      id: 1,
-      name: "no1",
-      title: "text no1",
+      avatar: 'wnc21-vldjdcmOl0.jpg',
+      title: 'Reactjs',
+      lecturer: {
+        firstName:'Hoa',
+        lastName:'Nguyen'
+      },
+      category:'category',
+      _id:1
     },
     {
-      id: 2,
-      name: "no2",
-      title: "text no2",
+      avatar: 'wnc21-vldjdcmOl0.jpg',
+      title: 'Nodejs',
+      lecturer: {
+        firstName:'Hoa1',
+        lastName:'Nguyen'
+      },
+      category:'category',
+      _id:2
     },
     {
-      id: 3,
-      name: "no3",
-      title: "text no3",
+      avatar: 'wnc21-vldjdcmOl0.jpg',
+      title: 'Java',
+      lecturer: {
+        firstName:'Hoa2',
+        lastName:'Nguyen'
+      },
+      category:'category',
+      _id:1
     },
-    {
-      id: 4,
-      name: "no4",
-      title: "text no4",
-    },
-    {
-      id: 5,
-      name: "no5",
-      title: "text no5 ",
-    },
-  ];
+        {
+      avatar: 'wnc21-vldjdcmOl0.jpg',
+      title: 'PHP',
+      lecturer: {
+        firstName:' Hoa3',
+        lastName:'Nguyen'
+      },
+      category:'category',
+      _id:1
+    }
+  ]
   return (
     <Container className="course" id="carousel__course">
       <h2>Top 4 popular course</h2>
@@ -65,8 +81,13 @@ function index() {
           </Link>
         </Carousel.Item>
       </Carousel>
-      <h2>Top 10 most views course</h2>
-      <Container fluid>
+      <h2 className='h2css'>Top 10 most views course</h2>
+      <Row xs={1} md={4} style={{ marginBottom:'100px' }}>
+        {coursesdata.map((item,i)=>(
+          <CourseCard course={item} key={i} />
+        ))}
+      </Row>
+      {/* <Container fluid>
         <Row xs={1} md={2}>
           {items.map((item, idx) => (
             <div key={1 * idx}>
@@ -175,7 +196,7 @@ function index() {
             </div>
           ))}
         </Row>
-      </Container>
+      </Container> */}
     </Container>
   );
 }
