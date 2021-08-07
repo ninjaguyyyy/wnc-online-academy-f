@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col,OverlayTrigger,Popover } from "react-bootstrap";
+import { Card, Col } from "react-bootstrap";
 import { generateURLGetImageResource } from "helpers";
 import { Link } from "react-router-dom";
 import "./index.css";
@@ -7,14 +7,7 @@ import { BsPerson, BsStarFill, BsStar, BsHeartFill, BsHeart } from "react-icons/
 import { BiBookReader } from "react-icons/bi";
 import { useSelector } from "react-redux";
 
-const popover = (
-  <Popover id="popover-basic" className="popovercss">
-    <Popover.Header as="h3">2021 Complete Python Bootcamp From Zero to Hero in Python</Popover.Header>
-    <Popover.Body>
-      <h4>Build, test, and deploy Docker applications with Kubernetes while learning production-style development workflows</h4>
-    </Popover.Body>
-  </Popover>
-);
+
 
 export default function CourseCard({ course }) {
   const { avatar, title, lecturer, category, _id } = course;
@@ -23,14 +16,8 @@ export default function CourseCard({ course }) {
   console.log(user);
 
   return (
-    <OverlayTrigger 
-      placement="right"
-      overlay={popover}
-    >
-      {({ ref, ...triggerHandler })=>(
- <Col sm={4} style={{ padding: "20px" }} className='d-inline-flex align-items-center CourseCard' variant="light"
- {...triggerHandler} >
- <Card ref={ref}>
+ <Col sm={4} style={{ padding: "20px" }} className='CourseCard' >
+ <Card>
    <Card.Body>
      <Card.Img variant="top" style={{ width: "100%", height: "200px" }} src={generateURLGetImageResource(avatar)} />
      <a href="#" className="card__category mt-3 mb-2">
@@ -77,7 +64,5 @@ export default function CourseCard({ course }) {
    </Card.Body>
  </Card>
 </Col>
-      )}
-    </OverlayTrigger>
-  );
+);
 }

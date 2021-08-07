@@ -9,7 +9,7 @@ import CourseCard from 'components/Common/CourseCard'
 function index() {
   const coursesdata=[
     {
-      avatar: 'wnc21-vldjdcmOl0.jpg',
+      avatar: 'wnc21-S8VsSqBMVI.jpg',
       title: 'Reactjs',
       lecturer: {
         firstName:'Hoa',
@@ -19,7 +19,7 @@ function index() {
       _id:1
     },
     {
-      avatar: 'wnc21-vldjdcmOl0.jpg',
+      avatar: 'wnc21-S8VsSqBMVI.jpg',
       title: 'Nodejs',
       lecturer: {
         firstName:'Hoa1',
@@ -29,7 +29,7 @@ function index() {
       _id:2
     },
     {
-      avatar: 'wnc21-vldjdcmOl0.jpg',
+      avatar: 'wnc21-S8VsSqBMVI.jpg',
       title: 'Java',
       lecturer: {
         firstName:'Hoa2',
@@ -39,7 +39,7 @@ function index() {
       _id:1
     },
         {
-      avatar: 'wnc21-vldjdcmOl0.jpg',
+      avatar: 'wnc21-S8VsSqBMVI.jpg',
       title: 'PHP',
       lecturer: {
         firstName:' Hoa3',
