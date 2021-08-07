@@ -1,46 +1,53 @@
-import { Provider } from 'react-redux'
-import store from './store/rootstore'
-import { BrowserRouter, Redirect, Switch,Route } from 'react-router-dom'
-import Login from 'features/Auth/Login'
-import Register from 'features/Auth/Register'
-import PublicRoute from 'components/PublicRoute'
-import PrivateRoute from 'components/PrivateRoute'
-import TeacherRouter from 'components/PrivateRoute/TeacherRouter'
-import ResetPassword from 'features/Auth/ResetPassword'
-import Dashboard from 'features/Dashboard'
-import Student from 'features/Student'
-import WishList from 'features/Student/wishlist'
-import Teacher from 'features/Teacher'
-import Layout from 'components/Layout'
-import Web from 'features/Course/Web'
-import Mobile from 'features/Course/Mobile'
-import CourseDetail from 'features/Course/CourseDetail'
-import TeacherCourse from 'features/Course/TeacherCourse'
-import AddNewCourse from 'features/Teacher/AddNewCourse'
-import EditCourse from 'features/Teacher/EditCourse'
-import { ToastContainer } from 'react-toastify'
+import { Provider } from "react-redux";
+import store from "./store/rootstore";
+import { BrowserRouter, Redirect, Switch, Route, useLocation } from "react-router-dom";
+import Login from "features/Auth/Login";
+import Register from "features/Auth/Register";
+import PublicRoute from "components/PublicRoute";
+import PrivateRoute from "components/PrivateRoute";
+import TeacherRouter from "components/PrivateRoute/TeacherRouter";
+import ResetPassword from "features/Auth/ResetPassword";
+import Dashboard from "features/Dashboard";
+import Student from "features/Student";
+import WishList from "features/Student/wishlist";
+import Teacher from "features/Teacher";
+import Layout from "components/Layout";
+import Web from "features/Course/Web";
+import Mobile from "features/Course/Mobile";
+import CourseDetail from "features/Course/CourseDetail";
+import TeacherCourse from "features/Course/TeacherCourse";
+import MyCourses from "features/Student/MyCourses";
+import AddNewCourse from "features/Teacher/AddNewCourse";
+import EditCourse from "features/Teacher/EditCourse";
+import { ToastContainer } from "react-toastify";
+
+export function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
         <ToastContainer autoClose={1000} />
         <Switch>
-          <Route path='/dashboard' component={Dashboard} />
-          <PublicRoute path='/login' component={Login} />
-          <PublicRoute path='/register' component={Register} />
-          <PublicRoute path='/forgot-password' component={ResetPassword} />
+          <Route path="/dashboard" component={Dashboard} />
+          <PublicRoute path="/login" component={Login} />
+          <PublicRoute path="/register" component={Register} />
+          <PublicRoute path="/forgot-password" component={ResetPassword} />
           <Layout>
             <Switch>
-              <Route path='/web' component={Web} />
-              <Route path='/mobile' component={Mobile} />
-              <Route path='/course/:id' component={CourseDetail} />
-              <PrivateRoute exact path='/student' component={Student} />
-              <PrivateRoute exact path='/student/wishlist' component={WishList} />
-              <TeacherRouter exact path='/teacher' component={Teacher} />
-              <TeacherRouter exact path='/teacher/courses' component={TeacherCourse} />
-              <TeacherRouter exact path='/teacher/courses/add-course' component={AddNewCourse} />
-              <TeacherRouter exact path='/teacher/editcourse/:id' component={EditCourse} />
-              <Redirect from='/' to='/dashboard' />
+              <Route path="/web" component={Web} />
+              <Route path="/mobile" component={Mobile} />
+              <Route path="/course/:id" component={CourseDetail} />
+              <PrivateRoute exact path="/student" component={Student} />
+              <PrivateRoute exact path="/student/wishlist" component={WishList} />
+              <PrivateRoute exact path="/student/my-courses" component={MyCourses} />
+              <TeacherRouter exact path="/teacher" component={Teacher} />
+              <TeacherRouter exact path="/teacher/courses" component={TeacherCourse} />
+              <TeacherRouter exact path="/teacher/courses/add-course" component={AddNewCourse} />
+              <TeacherRouter exact path="/teacher/editcourse/:id" component={EditCourse} />
+              <Redirect from="/" to="/dashboard" />
             </Switch>
           </Layout>
         </Switch>

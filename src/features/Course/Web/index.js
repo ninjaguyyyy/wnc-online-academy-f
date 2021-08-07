@@ -1,99 +1,84 @@
-import React from 'react'
-import { Container, Card, Row, Col, Tab, Nav } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-import no1 from 'assets/image/5.jpg'
-import Pagination from 'react-bootstrap/Pagination'
-function index() {
-  const items = [
-    {
-      id: 1,
-      name: 'no1',
-      title: 'text no1'
-    },
-    {
-      id: 2,
-      name: 'no2',
-      title: 'text no2'
-    },
-    {
-      id: 3,
-      name: 'no3',
-      title: 'text no3'
-    },
-    {
-      id: 4,
-      name: 'no4',
-      title: 'text no4'
-    },
-    {
-      id: 5,
-      name: 'no5',
-      title: 'text no5 '
-    }
-  ]
+import React, { useState, useEffect } from "react";
+import { Container, Card, Row, Col, Tab, Nav, Form, InputGroup, FormControl, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import no1 from "assets/image/5.jpg";
+import { BsSearch } from "react-icons/bs";
+import Pagination from "react-bootstrap/Pagination";
+import coursesAPI from "api/coursesApi";
+import { useQuery } from "App";
+import CourseCard from "../../../components/Common/CourseCard";
+import HeadingInfo from "components/Common/HeadingInfo";
+
+function CoursesList() {
+  const query = useQuery();
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const params = {
+        category: query.get("category"),
+      };
+      const { success, courses } = await coursesAPI.getAll(params);
+      success && setCourses(courses);
+    })();
+  }, []);
+
   return (
-    <Container style={{ display: 'flex' }}>
-      <div>
-        <div style={{ width: '200px', marginBottom:'20px'}}>Sort by</div>
-        <Tab.Container id="left-tabs-example" defaultActiveKey="first" >
-          <Row>
-            <Col sm={4}>
-              <Nav variant="pills" className="flex-column">
-                <Nav.Item>
-                  <Nav.Link eventKey="first"style={{ width: '200px'}}>NAME</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="second"style={{ width: '200px'}}>PRICE</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="thirst"style={{ width: '200px'}}>REVIEW</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Col>
-          </Row>
-        </Tab.Container>
-      </div>
-      <div style={{ flexDirection: 'column' }}>
-        {<Container fluid>
-          <Row xs={1} md={1} >
-            {items.map((item, idx) => (
-              <Link to={`/course/${item.id}`} key={idx}>
-                <Col style={{ padding: '20px' }}>
-                  <Card style={{ flexDirection: 'row' }}>
-                    <Card.Img variant="top" src={no1} className='card__item__img' />
-                    <Card.Body>
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Title>Teacher</Card.Title>
-                      <Card.Text style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        {item.title}
-                        <span style={{ display: 'flex' }}>
-                          {Array(4)
-                            .fill()
-                            .map((_, i) => (
-                              <span key={i}>⭐️</span>
-                            ))}
-                        </span>
+    <Container>
+      <Row>
+        <HeadingInfo title="Courses by Categories" paths={[{ label: "Home", ref: "/" }, { label: "Courses" }]} />
+      </Row>
+      <Row>
+        <Col sm={5}>
+          <Form.Text className="text-muted ml-3">Showing 1–9 of 10 courses available for you</Form.Text>
+        </Col>
+        <Col sm={3}>
+          <InputGroup size="sm" className="mb-3">
+            <FormControl placeholder="Search courses ..." aria-label="Recipient's username" aria-describedby="basic-addon2" />
+            <Button variant="outline-secondary" id="button-addon2">
+              <BsSearch />
+            </Button>
+          </InputGroup>
+        </Col>
+        <Col sm={2}>
+          <InputGroup size="sm">
+            <InputGroup.Text id="inputGroup-sizing-default">Sort Price: </InputGroup.Text>
+            <Form.Select style={{ paddingRight: "2.5rem" }}>
+              <option value="1">Default</option>
+              <option value="2">Ascending</option>
+              <option value="3">Descending</option>
+            </Form.Select>
+          </InputGroup>
+        </Col>
+        <Col sm={2}>
+          <InputGroup size="sm">
+            <InputGroup.Text id="inputGroup-sizing-default">Sort Price: </InputGroup.Text>
+            <Form.Select style={{ paddingRight: "2.5rem" }}>
+              <option value="1">Default</option>
+              <option value="2">Ascending</option>
+              <option value="3">Descending</option>
+            </Form.Select>
+          </InputGroup>
+        </Col>
+      </Row>
+      <Row>
+        {courses.map((course, idx) => (
+          <CourseCard course={course} />
+        ))}
+        {!courses.length && <h3 className="text-center mt-5">Not Have Courses</h3>}
+      </Row>
 
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Link>
-
-            ))}
-          </Row>
-        </Container>}
-        <Pagination style={{ justifyContent: 'center' }}>
+      {courses.length && (
+        <Pagination className="mt-4" style={{ justifyContent: "center" }}>
           <Pagination.Prev />
           <Pagination.Item>{1}</Pagination.Item>
           <Pagination.Item>{2}</Pagination.Item>
           <Pagination.Item>{3}</Pagination.Item>
           <Pagination.Next />
         </Pagination>
-      </div>
-
+      )}
     </Container>
-  )
+  );
 }
 
-export default index
+export default CoursesList;

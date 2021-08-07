@@ -1,0 +1,54 @@
+.info-card {
+  margin: 20px;
+}
+.price {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.price .origin {
+  font-size: 2rem;
+  font-weight: 500;
+}
+.price .discount {
+  height: fit-content;
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 0;
+}
+.buy-button {
+  width: 100%;
+  text-transform: uppercase;
+  background: #090761;
+  outline: none;
+  border-color: #090761;
+  margin: 20px 0;
+}
+.buy-button:hover,
+.buy-button:active,
+.buy-button:focus {
+  background: #06043d !important;
+  border-color: #06043d !important;
+  box-shadow: none !important;
+}
+
+.list-info {
+  list-style: none;
+  padding: 10px 0;
+}
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e7e7ec;
+  padding: 10px 0;
+}
+.tail {
+  color: #949da6;
+}
+.head__label {
+  color: #2f2d51;
+  font-weight: 500;
+}
+.head__icon {
+  font-weight: bold;
+}

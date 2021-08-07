@@ -1,0 +1,24 @@
+.card__category,
+.card__category:hover {
+  color: gray;
+  display: block;
+}
+
+.card__title {
+  color: #000;
+}
+.card__statistics {
+  color: gray;
+  font-size: 0.9rem;
+}
+.card__lecture {
+  color: gray;
+}
+.card__prices {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+.card__prices del {
+  font-size: 1.1rem;
+  color: gray;
+}

@@ -1,8 +1,9 @@
 a.navbar__link:hover {
   text-decoration: none !important;
 }
-a.navbar__link{
-  margin-right:10px;
+a.navbar__link {
+  margin-right: 10px;
+  text-decoration: none;
 }
 .navbar__logo {
   width: 60px;
@@ -12,17 +13,12 @@ a.navbar__link{
 }
 .navbar__search {
   width: 100%;
-  margin-left: 50px !important;
 }
 .navbar__custom {
   position: fixed;
   top: 0;
   width: 100%;
-  padding-left: 180px;
   z-index: 100;
-}
-.navbar__userIcon {
-  margin-right: 80px;
 }
 .navbar__right {
   justify-content: flex-end;
