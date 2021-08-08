@@ -74,10 +74,11 @@ export default function CourseCard({ course }) {
           </Card.Title>
           <div className="reviews d-flex justify-content-between align-items-center mb-4 mt-3">
             <div className="rating d-flex align-items-center">
-              <RatingStars point={rating} color="#FFC78B" size={16} className="mr-1" />
+              {/* {console.lo} */}
+              {/* <RatingStars point={rating} color="#FFC78B" size={16} className="mr-1" /> */}
 
               <div className="card__statistics ml-3">
-                {rating} ({feedbacks.length} reviews)
+                {rating} ({feedbacks?.length} reviews)
               </div>
             </div>
 
