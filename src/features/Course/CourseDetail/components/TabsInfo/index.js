@@ -9,7 +9,8 @@ export default function TabsInfo({ course }) {
   return (
     <Tabs id="uncontrolled-tab-example" className="mb-3" style={{ marginTop: "30px" }}>
       <Tab eventKey="Overview" title="Overview">
-        <h5 className="mt-4">Course Description</h5>
+        <h5 className="mt-4 mb-2">Course Description</h5>
+        <div className="full-des" dangerouslySetInnerHTML={{ __html: course.fullDescription }}></div>
       </Tab>
       <Tab eventKey="Curriculum" title="Curriculum">
         {course.sections.length > 0 &&
