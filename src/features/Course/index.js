@@ -1,6 +1,6 @@
 import React from "react";
 import "./Course.css";
-import { Card, Carousel, Row, Col, Container,Pagination } from "react-bootstrap";
+import { Carousel, Row, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import no1 from "assets/image/5.jpg";
 import no2 from "assets/image/17.png";
@@ -87,123 +87,7 @@ function index() {
           <CourseCard course={item} key={i} />
         ))}
       </Row>
-      <Pagination className="paginationcss">
-        <Pagination.Item>{1}</Pagination.Item>
-        <Pagination.Item>{10}</Pagination.Item>
-        <Pagination.Item>{11}</Pagination.Item>
-      </Pagination>
-      {/* <Container fluid>
-        <Row xs={1} md={2}>
-          {items.map((item, idx) => (
-            <div key={1 * idx}>
-              <Link to={`/course/${item.id}`}>
-                <Col style={{ padding: "20px" }}>
-                  <Card>
-                    <Card.Img variant="top" src={no1} />
-                    <Card.Body>
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Title>Teacher</Card.Title>
-                      <Card.Text
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        {item.title}
-                        <span style={{ display: "flex" }}>
-                          {Array(4)
-                            .fill()
-                            .map((_, i) => (
-                              <span key={1 * i}>⭐️</span>
-                            ))}
-                        </span>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Link>
-            </div>
-          ))}
-        </Row>
-      </Container>
-      <h2>Top 10 most views course</h2>
-      <Container fluid>
-        <Row xs={1} md={2}>
-          {items.map((item, idx) => (
-            <div key={2 * idx}>
-              <Link to={`/course/${item.id}`}>
-                <Col style={{ padding: "20px" }}>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Text>{item.title}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Link>
-            </div>
-          ))}
-        </Row>
-      </Container>
-      <h2>Top 10 news course</h2>
-      <Container fluid>
-        <Row xs={1} md={2}>
-          {items.map((item, idx) => (
-            <div key={3 * idx}>
-              <Link to={`/course/${item.id}`} key={idx}>
-                <Col style={{ padding: "20px" }}>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Text>{item.title}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Link>
-            </div>
-          ))}
-        </Row>
-      </Container>
-      <h2>Top 10 most views</h2>
-      <Container fluid>
-        <Row xs={1} md={2}>
-          {items.map((item, idx) => (
-            <div key={4 * idx}>
-              <Link to={`/course/${item.id}`} key={idx}>
-                <Col style={{ padding: "20px" }}>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Text>{item.title}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Link>
-            </div>
-          ))}
-        </Row>
-      </Container>
-      <h2>Top categories subcribe</h2>
-      <Container fluid>
-        <Row xs={1} md={3}>
-          {items.map((item, idx) => (
-            <div key={5 * idx}>
-              <Link to={`/course/${item.id}`} key={idx}>
-                <Col style={{ padding: "20px" }}>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Text>{item.title}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Link>
-            </div>
-          ))}
-        </Row>
-      </Container> */}
     </Container>
   );
 }
-
 export default index;
