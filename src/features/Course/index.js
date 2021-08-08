@@ -1,6 +1,6 @@
 import React from "react";
 import "./Course.css";
-import { Card, Carousel, Row, Col, Container } from "react-bootstrap";
+import { Card, Carousel, Row, Col, Container,Pagination } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import no1 from "assets/image/5.jpg";
 import no2 from "assets/image/17.png";
@@ -87,6 +87,11 @@ function index() {
           <CourseCard course={item} key={i} />
         ))}
       </Row>
+      <Pagination className="paginationcss">
+        <Pagination.Item>{1}</Pagination.Item>
+        <Pagination.Item>{10}</Pagination.Item>
+        <Pagination.Item>{11}</Pagination.Item>
+      </Pagination>
       {/* <Container fluid>
         <Row xs={1} md={2}>
           {items.map((item, idx) => (

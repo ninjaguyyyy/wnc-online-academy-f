@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
-import { Container, Button, Row, Col, Card,Pagination } from "react-bootstrap";
-import { useHistory, Link } from "react-router-dom";
+import { Container, Button, Row, Pagination } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import teacherApi from "api/teacherApi";
 import { courses } from "store/teacherSlice";
-import { course } from "store/userSlice";
-import { ApiUrl } from "api/authUser";
 import { setLoading } from "store/userSlice";
 import loading from "assets/image/loading.svg";
 import CourseCard from 'components/Common/CourseCard'

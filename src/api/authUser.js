@@ -23,5 +23,9 @@ const authApi = {
     const url = `${ApiUrl}users/refresh-token`;
     return axiosClient.post(url, data);
   },
+  getCourseById:(data)=>{
+    const url = `${ApiUrl}courses/${data}`;
+    return axiosClient.get(url);
+  }
 };
 export default authApi;

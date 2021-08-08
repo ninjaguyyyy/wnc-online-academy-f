@@ -3,22 +3,30 @@ import { Card, Col,Button } from "react-bootstrap";
 import { generateURLGetImageResource } from "helpers";
 import { useHistory,Link } from "react-router-dom";
 import "./index.css";
-import { BsPerson, BsStarFill, BsStar, BsHeartFill, BsHeart } from "react-icons/bs";
+import {  BsStarFill, BsStar, BsHeart } from "react-icons/bs";
 import { BiBookReader } from "react-icons/bi";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
+import { course as CourseRedux  }  from "store/userSlice";
+
 export default function CourseCard({ course }) {
   const { avatar, title, lecturer, category, _id } = course;
-  const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user);
+  const courses= useSelector(state=>state.teacher.courses)
   const history = useHistory();
+  const dispatch = useDispatch();
   return (
     <Col sm={4} style={{ padding: "20px" }} className='CourseCard' >
       <Card>
         <Card.Body>
           <Card.Img variant="top" style={{ width: "100%", height: "200px" }} src={generateURLGetImageResource(avatar)} />
-          {user.userInfo.role===2&&window.location.href.includes('teacher/courses')&&
+          {user.userInfo!==null&&user.userInfo.role===2&&window.location.href.includes('teacher/courses')&&
           <Button 
-            onClick={() => history.push(`/teacher/editcourse/${course._id}`)} 
+            onClick={() => {
+              let temp = courses.filter(item=>item._id===course._id)
+              dispatch(CourseRedux(temp[0]))
+              history.push(`/teacher/editcourse/${course._id}`)
+
+            }} 
             className='editbtncss'
           >
             Edit course
@@ -44,9 +52,9 @@ export default function CourseCard({ course }) {
             </div>
 
             <div className="fav">
-              <a href="javascript:void">
+              <span>
                 <BsHeart className="fav_icon" color="rgb(220 73 52)" size={20} />
-              </a>
+              </span>
             </div>
           </div>
           <Card.Text
