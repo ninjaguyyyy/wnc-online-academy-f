@@ -16,7 +16,7 @@ import Web from "features/Course/Web";
 import Mobile from "features/Course/Mobile";
 import CourseDetail from "features/Course/CourseDetail";
 import TeacherCourse from "features/Course/TeacherCourse";
-import MyCourses from "features/Student/MyCourses";
+import AttendedCourses from "features/Student/AttendedCourses";
 import AddNewCourse from "features/Teacher/AddNewCourse";
 import EditCourse from "features/Teacher/EditCourse";
 import { ToastContainer } from "react-toastify";
@@ -29,7 +29,7 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <ToastContainer autoClose={1000} />
+        <ToastContainer autoClose={3000} closeOnClick={true} hideProgressBar={false} pauseOnHover={true} />
         <Switch>
           <Route path="/dashboard" component={Dashboard} />
           <PublicRoute path="/login" component={Login} />
@@ -42,7 +42,7 @@ function App() {
               <Route path="/course/:id" component={CourseDetail} />
               <PrivateRoute exact path="/student" component={Student} />
               <PrivateRoute exact path="/student/wishlist" component={WishList} />
-              <PrivateRoute exact path="/student/my-courses" component={MyCourses} />
+              <PrivateRoute exact path="/student/my-courses" component={AttendedCourses} />
               <TeacherRouter exact path="/teacher" component={Teacher} />
               <TeacherRouter exact path="/teacher/courses" component={TeacherCourse} />
               <TeacherRouter exact path="/teacher/courses/add-course" component={AddNewCourse} />

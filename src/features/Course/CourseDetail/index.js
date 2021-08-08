@@ -15,6 +15,7 @@ import coursesAPI from "api/coursesApi";
 import DynamicBreadcrumb from "components/Common/DynamicBreadcrumb";
 import TabsInfo from "./components/TabsInfo";
 import CardPaymentInfo from "./components/CardPaymentInfo";
+import RatingStars from "components/Common/RatingStars";
 
 function CourseDetail() {
   const dispatch = useDispatch();
@@ -68,7 +69,13 @@ function CourseDetail() {
               </div>
               <div>
                 <div className="font-weight-bold">Reviews</div>
-                <div className="info-value">⭐️⭐️⭐️⭐️</div>
+                <div className="info-value d-flex align-items-center">
+                  {console.log(course.rating)}
+                  <RatingStars point={course.rating} color="#FFC78B" size={16} className="mr-1" />
+                  <div className="ml-1" style={{ fontSize: "14px" }}>
+                    {course.rating} ({course.feedbacks.length} reviews)
+                  </div>
+                </div>
               </div>
             </div>
             <TabsInfo course={course} />

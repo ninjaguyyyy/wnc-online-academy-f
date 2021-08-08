@@ -4,8 +4,10 @@ import { BsStar, BsStarFill } from "react-icons/bs";
 const MAX_POINT = 5;
 
 export default function RatingStars({ point, color, size, className, style, onClickStar }) {
-  const fillStars = Array(point).fill(point);
-  const emptyStars = Array(MAX_POINT - point).fill(point);
+  const roundPoint = Math.floor(point);
+
+  const fillStars = Array(roundPoint).fill(roundPoint);
+  const emptyStars = Array(MAX_POINT - roundPoint).fill(roundPoint);
 
   return (
     <div>

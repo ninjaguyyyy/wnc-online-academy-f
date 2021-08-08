@@ -18,22 +18,17 @@ function CoursesList() {
   const [courses, setCourses] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  const [chosenCategory, setChosenCategory] = useState("");
+  const getInitialChosenCategory = () => query.get("category") || ""
+  const [chosenCategory, setChosenCategory] = useState(getInitialChosenCategory());
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // history.push({
 
-    //   pathname: "/dresses",
-    //   search: "?color=blue",
-    // });
+  useEffect(() => {
     const queryParams = { category: chosenCategory };
     if (!chosenCategory) {
       delete queryParams.category;
     }
     const searchString = qs.stringify(queryParams);
-    console.log(searchString);
-    console.log(location);
     history.push({ pathname: "/web", search: `?${searchString}` });
   }, [chosenCategory]);
 

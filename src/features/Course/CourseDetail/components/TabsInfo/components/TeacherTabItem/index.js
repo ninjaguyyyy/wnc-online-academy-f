@@ -1,19 +1,21 @@
 import React from "react";
 import { BsGem, BsStar, BsChatDots, BsDisplay } from "react-icons/bs";
 
-export default function TeacherTabItem() {
+export default function TeacherTabItem({ teacher }) {
   return (
     <div className="mt-5">
       <div className="d-flex justify-content-between align-items-center">
         <div className="d-flex align-items-center">
           <div className="teacher-avatar">
             <div className="teacher__avatar">
-              <img className="rounded-full w-100" src={`https://i.pravatar.cc/350?u=${"aa"}`} alt="lecturer" />
+              <img className="rounded-full w-100" src={`https://i.pravatar.cc/350?u=${teacher.userName}`} alt="lecturer" />
             </div>
           </div>
           <div className="teacher-name mr-5 ml-3 " style={{ width: "100px" }}>
-            <h6>Chi Nguyen</h6>
-            <span>Developer</span>
+            <h6 className="text-capitalize">
+              {teacher.firstName} {teacher.lastName}
+            </h6>
+            <span>Teacher</span>
           </div>
         </div>
 

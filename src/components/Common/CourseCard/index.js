@@ -1,39 +1,55 @@
 import React from "react";
-import { Card, Col,Button } from "react-bootstrap";
+import { Card, Col, Button } from "react-bootstrap";
 import { generateURLGetImageResource } from "helpers";
-import { useHistory,Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import "./index.css";
-import {  BsStarFill, BsStar, BsHeart } from "react-icons/bs";
+import { BsStarFill, BsStar, BsHeart } from "react-icons/bs";
 import { BiBookReader } from "react-icons/bi";
-import { useSelector,useDispatch } from "react-redux";
-import { course as CourseRedux  }  from "store/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { course as CourseRedux } from "store/userSlice";
 
 export default function CourseCard({ course }) {
   const { avatar, title, lecturer, category, _id } = course;
   const user = useSelector((state) => state.user);
-  const courses= useSelector(state=>state.teacher.courses)
+  const courses = useSelector((state) => state.teacher.courses);
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const token = useSelector((state) => state.user.token);
+  const favoriteCourses = useSelector((state) => state.user.userInfo.favoriteCourses);
+
+  const isFavorite = favoriteCourses.includes(course._id);
+
+  const handleAddToFavorite = async () => {
+    if (!token) {
+      return toast.info("Please login to use this feature!");
+    }
+    if (isFavorite) {
+      return toast.error("This course has been added !");
+    }
+
+    const { success, msg } = await userAPi.addCoursesToFavorite({ courseId: course._id });
+    success && toast.success("Successfully add to favorite");
+  };
+
   return (
-    <Col sm={4} style={{ padding: "20px" }} className='CourseCard' >
+    <Col sm={4} style={{ padding: "20px" }} className="CourseCard">
       <Card>
         <Card.Body>
           <Card.Img variant="top" style={{ width: "100%", height: "200px" }} src={generateURLGetImageResource(avatar)} />
-          {user.userInfo!==null&&user.userInfo.role===2&&window.location.href.includes('teacher/courses')&&
-          <Button 
-            onClick={() => {
-              let temp = courses.filter(item=>item._id===course._id)
-              dispatch(CourseRedux(temp[0]))
-              history.push(`/teacher/editcourse/${course._id}`)
-
-            }} 
-            className='editbtncss'
-          >
-            Edit course
-          </Button>}
-          <p className="card__category mt-3 mb-2">
-            {category.name}
-          </p>
+          {user.userInfo !== null && user.userInfo.role === 2 && window.location.href.includes("teacher/courses") && (
+            <Button
+              onClick={() => {
+                let temp = courses.filter((item) => item._id === course._id);
+                dispatch(CourseRedux(temp[0]));
+                history.push(`/teacher/editcourse/${course._id}`);
+              }}
+              className="editbtncss"
+            >
+              Edit course
+            </Button>
+          )}
+          <p className="card__category mt-3 mb-2">{category.name}</p>
           <Card.Title>
             <Link className="card__title" to={`/course/${_id}`}>
               {title}

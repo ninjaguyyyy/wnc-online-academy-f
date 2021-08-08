@@ -17,7 +17,7 @@ button#dropdown-basic {
   width: 100%;
 }
 .imgCourse {
-  padding:20px;
+  padding: 20px;
   width: 100%;
   height: 230px;
   object-fit: cover;
@@ -34,20 +34,29 @@ button#dropdown-basic {
 body {
   font-family: "Jost", sans-serif;
 }
-.h2css{
+.h2css {
   font-weight: 700;
-  font-size:1.5rem;
+  font-size: 1.5rem;
 }
-.CourseCard:hover{
+.CourseCard:hover {
   opacity: 0.8;
   cursor: pointer;
 }
 
-.editbtncss{
+.editbtncss {
   margin: 10px 0;
 }
-.paginationcss{
-  display:flex;
+.paginationcss {
+  display: flex;
   align-items: center;
-  justify-content:center;
+  justify-content: center;
+}
+
+.footer-layout {
+  text-align: center;
+  color: gray;
+  padding-top: 30px;
+  border-top: 1px solid lightgray;
+  margin-top: 80px;
+  margin-bottom: 30px;
 }

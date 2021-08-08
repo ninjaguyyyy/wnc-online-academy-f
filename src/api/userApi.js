@@ -22,6 +22,11 @@ const userAPi = {
     return axiosClient.post(url, data);
   },
 
+  attendCourse(data) {
+    const url = `${ApiUrl}users/me/attend-courses`;
+    return axiosClient.post(url, data);
+  },
+
   deleteCoursesFromFavorite(id) {
     const url = `${ApiUrl}users/me/favorite-courses/${id}`;
     return axiosClient.delete(url);
@@ -29,6 +34,11 @@ const userAPi = {
 
   getProfile() {
     const url = `${ApiUrl}users/profile`;
+    return axiosClient.get(url);
+  },
+
+  getAttendedCourses() {
+    const url = `${ApiUrl}users/me/attended-courses`;
     return axiosClient.get(url);
   },
 };

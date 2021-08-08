@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import coursesAPI from "api/coursesApi";
 
-export default function CommentForm({ course }) {
+export default function CommentForm({ course, onAddReview }) {
   const [rateValue, setRateValue] = useState(4);
   const [commentValue, setCommentValue] = useState("");
 
@@ -25,8 +25,12 @@ export default function CommentForm({ course }) {
       return toast.error("Please post a valid comment!");
     }
 
-    const { msg } = await coursesAPI.postReview(course._id, { rating: rateValue, content: commentValue });
+    const { msg, feedbacks, success } = await coursesAPI.postReview(course._id, { rating: rateValue, content: commentValue });
     msg && toast.error(msg);
+    if (success) {
+      onAddReview(feedbacks);
+      setCommentValue("");
+    }
   };
 
   return (
