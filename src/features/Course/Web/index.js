@@ -10,7 +10,7 @@ import { BsSearch } from "react-icons/bs";
 import { useLocation, useHistory } from "react-router-dom";
 import CourseCard from "../../../components/Common/CourseCard";
 
-const PER_PAGE = 2;
+const PER_PAGE = 10;
 
 function CoursesList() {
   const query = useQuery();
@@ -23,13 +23,14 @@ function CoursesList() {
   const getInitialChosenCategory = () => query.get("category") || "";
   const [chosenCategory, setChosenCategory] = useState(getInitialChosenCategory());
   const [sortValue, setSortValue] = useState("");
+  const [searchValue, setSearchValue] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCourses, setTotalCourses] = useState(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const queryParams = { category: chosenCategory, sort: sortValue, page, perPage: PER_PAGE };
+    const queryParams = { category: chosenCategory, sort: sortValue, search: searchValue, page, perPage: PER_PAGE };
 
     if (!chosenCategory) {
       delete queryParams.category;
@@ -39,9 +40,13 @@ function CoursesList() {
       delete queryParams.sort;
     }
 
+    if (!searchValue) {
+      delete queryParams.search;
+    }
+
     const searchString = qs.stringify(queryParams);
     history.push({ pathname: "/web", search: `?${searchString}` });
-  }, [chosenCategory, sortValue, page]);
+  }, [chosenCategory, sortValue, page, searchValue]);
 
   useEffect(() => {
     (async () => {
@@ -49,9 +54,11 @@ function CoursesList() {
       const params = {
         category: query.get("category"),
         sort: query.get("sort"),
+        search: query.get("search"),
         page: query.get("page"),
         perPage: query.get("perPage"),
       };
+      setChosenCategory(params.category);
       const { success, courses, totalCourses, totalPages } = await coursesAPI.getAll(params);
       success && setCourses(courses);
       setTotalCourses(totalCourses);
@@ -90,7 +97,13 @@ function CoursesList() {
         </Col>
         <Col sm={3}>
           <InputGroup size="sm" className="mb-3">
-            <FormControl placeholder="Search courses ..." aria-label="Recipient's username" aria-describedby="basic-addon2" />
+            <FormControl
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              placeholder="Search courses ..."
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
             <Button variant="outline-secondary" id="button-addon2">
               <BsSearch />
             </Button>
