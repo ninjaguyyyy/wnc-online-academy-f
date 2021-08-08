@@ -42,27 +42,27 @@ function EditCourse(props) {
   const SelectChapter = useSelector((state) => state.teacher.selectChapter);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  useEffect(() => {
-    if (Course == null) {
-      dispatch(setLoading(true));
-      authApi.getCourseById(props.match.params.id).then((res) => {
-        if (res.success === true) {
-          dispatch(setLoading(false));
-          dispatch(course(res.course));
-          dispatch(sections(res.course.sections))
-          setShort(res.course.shortDescription)
-          setLong(res.course.fullDescription)
-        }
-      });
-    }
-    else{
-      setShort(Course.shortDescription)
-      setLong(Course.fullDescription)
-    }
-  }, [Course, props.match.params.id, dispatch]);
+  // useEffect(() => {
+  //   if (Course == null) {
+  //     dispatch(setLoading(true));
+  //     authApi.getCourseById(props.match.params.id).then((res) => {
+  //       if (res.success === true) {
+  //         dispatch(setLoading(false));
+  //         dispatch(course(res.course));
+  //         dispatch(sections(res.course.sections))
+  //         setShort(res.course.shortDescription)
+  //         setLong(res.course.fullDescription)
+  //       }
+  //     });
+  //   }
+  //   else{
+  //     setShort(Course.shortDescription)
+  //     setLong(Course.fullDescription)
+  //   }
+  // }, [Course, props.match.params.id, dispatch]);
   return (
     <div>
-      {!isLoading && Course != null && (
+      {/* {!isLoading && Course != null && (
         <Container>
           <h2>Edit Course</h2>
           <Formik
@@ -290,7 +290,8 @@ function EditCourse(props) {
         <div className="userloading">
           <img src={loading} className="loading" alt="loading" />
         </div>
-      )}
+      )} */}
+      hello
     </div>
   );
 }
