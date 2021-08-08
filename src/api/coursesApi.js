@@ -11,6 +11,11 @@ const coursesAPI = {
     const url = `${ApiUrl}courses/${id}`;
     return axiosClient.get(url);
   },
+
+  postReview(courseId, review) {
+    const url = `${ApiUrl}courses/${courseId}/feedback`;
+    return axiosClient.post(url, review);
+  },
 };
 
 export default coursesAPI;

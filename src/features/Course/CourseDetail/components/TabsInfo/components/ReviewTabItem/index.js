@@ -6,7 +6,7 @@ import CommentReview from "./CommentReview";
 import "./index.css";
 import ProgressRating from "./ProgressRating";
 
-export default function ReviewTabItem() {
+export default function ReviewTabItem({ course }) {
   return (
     <div>
       <div className="review-info">
@@ -17,6 +17,7 @@ export default function ReviewTabItem() {
             </h1>
             <div>Course Rating</div>
             <div className="stars">
+              {console.log(course)}
               {Array(4)
                 .fill()
                 .map((_, i) => (
@@ -36,7 +37,7 @@ export default function ReviewTabItem() {
         </div>
       </div>
 
-      <CommentForm />
+      <CommentForm course={course} />
 
       <div className="review-comments mt-5">
         <CommentReview />

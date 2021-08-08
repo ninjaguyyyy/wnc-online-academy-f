@@ -23,9 +23,6 @@ export default function CardPaymentInfo({ course }) {
     if (!token) {
       return toast.info("Please login to use this feature!");
     }
-    const { success, msg } = await userAPi.addCoursesToFavorite({ courseId: course._id });
-    success && toast.success("Successfully add to favorite");
-    msg && toast.error("This course has been added !");
   };
 
   return (

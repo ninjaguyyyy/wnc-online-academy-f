@@ -72,7 +72,7 @@ export default function TabsInfo({ course }) {
         <TeacherTabItem />
       </Tab>
       <Tab eventKey="Reviews" title="Reviews">
-        <ReviewTabItem />
+        <ReviewTabItem course={course} />
       </Tab>
     </Tabs>
   );

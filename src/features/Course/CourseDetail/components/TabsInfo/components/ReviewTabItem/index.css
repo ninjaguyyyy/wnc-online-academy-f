@@ -68,3 +68,7 @@
   display: flex;
   align-items: center;
 }
+
+.choose-rating:hover {
+  cursor: pointer;
+}
