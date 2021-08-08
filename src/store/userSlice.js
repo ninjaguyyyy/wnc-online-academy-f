@@ -38,6 +38,9 @@ const userSlice = createSlice({
     updateUserAttendedCourses(state, action) {
       state.userInfo.attendedCourses = action.payload;
     },
+    updateUserFavoriteCourses(state, action) {
+      state.userInfo.favoriteCourses = action.payload;
+    },
     updateProfile: (state, action) => {
       state.userInfo.firstName = action.payload.user.firstName;
       state.userInfo.lastName = action.payload.user.lastName;
@@ -57,6 +60,15 @@ const userSlice = createSlice({
 });
 
 const { reducer, actions } = userSlice;
-export const { saveToken, removeToken, saveUserInfo, updateProfile, changePassword, course, setLoading, updateUserAttendedCourses } =
-  actions;
+export const {
+  saveToken,
+  removeToken,
+  saveUserInfo,
+  updateProfile,
+  changePassword,
+  course,
+  setLoading,
+  updateUserAttendedCourses,
+  updateUserFavoriteCourses,
+} = actions;
 export default reducer;

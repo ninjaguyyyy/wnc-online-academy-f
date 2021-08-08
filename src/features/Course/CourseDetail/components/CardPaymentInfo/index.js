@@ -7,33 +7,41 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import userAPi from "api/userApi";
 import { useDispatch } from "react-redux";
-import { addAttendedCourse, saveUserInfo, updateUserAttendedCourses } from "store/userSlice";
+import { addAttendedCourse, saveUserInfo, updateUserAttendedCourses, updateUserFavoriteCourses } from "store/userSlice";
 
 export default function CardPaymentInfo({ course }) {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.user.token);
   const attendedCourses = useSelector((state) => state.user.userInfo.attendedCourses);
+  const favoriteCourses = useSelector((state) => state.user.userInfo.favoriteCourses);
 
   const [showPayModal, setShowPayModal] = useState(false);
+
+  const isExistInFavoriteList = favoriteCourses.includes(course._id);
+  const isAttended = attendedCourses.includes(course._id);
 
   const handleAddToFavorite = async () => {
     if (!token) {
       return toast.info("Please login to use this feature!");
     }
-    const { success, msg } = await userAPi.addCoursesToFavorite({ courseId: course._id });
-    success && toast.success("Successfully add to favorite");
-    msg && toast.error("This course has been added !");
+    if (isExistInFavoriteList) {
+      return toast.info("This course is in your favorite courses!");
+    }
+    const { success, msg, updatedFavoriteCourses } = await userAPi.addCoursesToFavorite({ courseId: course._id });
+    if (success) {
+      toast.success("Successfully add to favorite");
+      dispatch(updateUserFavoriteCourses(updatedFavoriteCourses));
+    }
+    msg && toast.error(msg);
   };
-
-  const isAttended = attendedCourses.includes(course._id);
 
   const handleBuy = async () => {
     if (!token) {
       return toast.info("Please login to use this feature!");
     }
     if (isAttended) {
-      return toast.info("You already by this course. Let learn in tab Curriculum!");
+      return toast.info("You already buy this course. Let learn in tab Curriculum!");
     }
     setShowPayModal(true);
   };
