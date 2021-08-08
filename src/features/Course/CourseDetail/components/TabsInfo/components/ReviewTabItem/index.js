@@ -22,7 +22,7 @@ export default function ReviewTabItem({ course }) {
     { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 }
   );
 
-  const averageRating = (reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(2);
+  const averageRating = reviews.length !== 0 ? (reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(2) : 0;
 
   return (
     <div>

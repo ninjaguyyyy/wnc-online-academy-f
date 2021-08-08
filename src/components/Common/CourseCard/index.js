@@ -102,7 +102,8 @@ export default function CourseCard({ course }) {
               <span className="ml-2 text-capitalize">{lecturer.firstName + " " + lecturer.lastName}</span>
             </div>
             <div className="card__prices">
-              <del className="mr-2">${originPrice}</del>
+              {originPrice !== totalPrice && <del className="mr-2">${originPrice}</del>}
+
               <span>${totalPrice}</span>
             </div>
           </Card.Text>

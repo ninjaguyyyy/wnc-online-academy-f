@@ -9,6 +9,9 @@
   background-color: transparent;
 }
 
+.heading__breadcrumb .breadcrumb {
+  justify-content: center;
+}
 a {
   text-decoration: none;
 }

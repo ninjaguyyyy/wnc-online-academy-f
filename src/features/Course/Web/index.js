@@ -10,6 +10,8 @@ import { BsSearch } from "react-icons/bs";
 import { useLocation, useHistory } from "react-router-dom";
 import CourseCard from "../../../components/Common/CourseCard";
 
+const PER_PAGE = 2;
+
 function CoursesList() {
   const query = useQuery();
   const location = useLocation();
@@ -18,28 +20,42 @@ function CoursesList() {
   const [courses, setCourses] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  const getInitialChosenCategory = () => query.get("category") || ""
+  const getInitialChosenCategory = () => query.get("category") || "";
   const [chosenCategory, setChosenCategory] = useState(getInitialChosenCategory());
+  const [sortValue, setSortValue] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalCourses, setTotalCourses] = useState(0);
   const [loading, setLoading] = useState(false);
 
-
   useEffect(() => {
-    const queryParams = { category: chosenCategory };
+    const queryParams = { category: chosenCategory, sort: sortValue, page, perPage: PER_PAGE };
+
     if (!chosenCategory) {
       delete queryParams.category;
     }
+
+    if (!sortValue) {
+      delete queryParams.sort;
+    }
+
     const searchString = qs.stringify(queryParams);
     history.push({ pathname: "/web", search: `?${searchString}` });
-  }, [chosenCategory]);
+  }, [chosenCategory, sortValue, page]);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       const params = {
         category: query.get("category"),
+        sort: query.get("sort"),
+        page: query.get("page"),
+        perPage: query.get("perPage"),
       };
-      const { success, courses } = await coursesAPI.getAll(params);
+      const { success, courses, totalCourses, totalPages } = await coursesAPI.getAll(params);
       success && setCourses(courses);
+      setTotalCourses(totalCourses);
+      setTotalPages(totalPages);
       setLoading(false);
     })();
   }, [location]);
@@ -51,6 +67,18 @@ function CoursesList() {
     })();
   }, []);
 
+  const renderPagingItem = () => {
+    let items = [];
+    for (let number = 1; number <= totalPages; number++) {
+      items.push(
+        <Pagination.Item key={number} active={number === page} onClick={() => setPage(number)}>
+          {number}
+        </Pagination.Item>
+      );
+    }
+    return items;
+  };
+
   return (
     <Container>
       <Row>
@@ -58,7 +86,7 @@ function CoursesList() {
       </Row>
       <Row>
         <Col sm={4}>
-          <Form.Text className="text-muted ml-3">Showing 1–9 of 10 courses available for you</Form.Text>
+          <Form.Text className="text-muted ml-3">Having {totalCourses} courses available for you</Form.Text>
         </Col>
         <Col sm={3}>
           <InputGroup size="sm" className="mb-3">
@@ -72,7 +100,7 @@ function CoursesList() {
           <InputGroup size="sm">
             <InputGroup.Text id="inputGroup-sizing-default">Category: </InputGroup.Text>
             <Form.Select value={chosenCategory} onChange={(e) => setChosenCategory(e.target.value)} style={{ paddingRight: "2.5rem" }}>
-              <option value="">Default</option>
+              <option value="">All Courses</option>
               {categories.map((category) => (
                 <option value={category._id}>{category.name}</option>
               ))}
@@ -82,12 +110,12 @@ function CoursesList() {
         <Col sm={2}>
           <InputGroup size="sm">
             <InputGroup.Text id="inputGroup-sizing-default">Sort by: </InputGroup.Text>
-            <Form.Select style={{ paddingRight: "2.5rem" }}>
-              <option value="1">Default</option>
-              <option value="2">Price ➚</option>
-              <option value="3">Price ➘</option>
-              <option value="3">Rating ➚</option>
-              <option value="3">Rating ➘</option>
+            <Form.Select value={sortValue} onChange={(e) => setSortValue(e.target.value)} style={{ paddingRight: "2.5rem" }}>
+              <option value="">Default</option>
+              <option value="price_asc">Price ➚</option>
+              <option value="price_desc">Price ➘</option>
+              <option value="rating_asc">Rating ➚</option>
+              <option value="rating_desc">Rating ➘</option>
             </Form.Select>
           </InputGroup>
         </Col>
@@ -108,11 +136,19 @@ function CoursesList() {
 
       {courses.length ? (
         <Pagination className="mt-4" style={{ justifyContent: "center" }}>
-          <Pagination.Prev />
-          <Pagination.Item>{1}</Pagination.Item>
-          <Pagination.Item>{2}</Pagination.Item>
-          <Pagination.Item>{3}</Pagination.Item>
-          <Pagination.Next />
+          <Pagination.Prev
+            onClick={() => {
+              const prevPage = page - 1 < 1 ? 1 : page - 1;
+              setPage(prevPage);
+            }}
+          />
+          <Pagination>{renderPagingItem()}</Pagination>
+          <Pagination.Next
+            onClick={() => {
+              const nextPage = page + 1 > totalPages ? totalPages : page + 1;
+              setPage(nextPage);
+            }}
+          />
         </Pagination>
       ) : null}
     </Container>

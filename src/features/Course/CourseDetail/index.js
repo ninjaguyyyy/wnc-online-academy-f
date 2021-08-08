@@ -38,13 +38,7 @@ function CourseDetail() {
   return (
     <Container>
       <Row className="mb-4">
-        <DynamicBreadcrumb
-          paths={[
-            { label: "Home", ref: "/" },
-            { label: "Courses", ref: `/web?category=${course?.category._id}` },
-            { label: course?.title },
-          ]}
-        />
+        <DynamicBreadcrumb paths={[{ label: "Home", ref: "/" }, { label: "Courses", ref: `/web` }, { label: course?.title }]} />
       </Row>
       {course && (
         <Row>
