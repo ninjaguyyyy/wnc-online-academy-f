@@ -64,7 +64,6 @@ function CourseDetail() {
               <div>
                 <div className="font-weight-bold">Reviews</div>
                 <div className="info-value d-flex align-items-center">
-                  {console.log(course.rating)}
                   <RatingStars point={course.rating} color="#FFC78B" size={16} className="mr-1" />
                   <div className="ml-1" style={{ fontSize: "14px" }}>
                     {course.rating} ({course.feedbacks.length} reviews)
