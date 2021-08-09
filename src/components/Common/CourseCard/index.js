@@ -67,7 +67,7 @@ export default function CourseCard({ course }) {
           <Link to={`/web?category=${category._id}`} className="card__category mt-3 mb-2">
             {category.name}
           </Link>
-          <Card.Title>
+          <Card.Title style={{ height:'80px' }}>
             <Link className="card__title" to={`/course/${_id}`}>
               {title}
             </Link>

@@ -6,49 +6,10 @@ import no1 from "assets/image/5.jpg";
 import no2 from "assets/image/17.png";
 import no3 from "assets/image/36.jpg";
 import CourseCard from 'components/Common/CourseCard'
-function index() {
-  const coursesdata=[
-    {
-      avatar: 'wnc21-S8VsSqBMVI.jpg',
-      title: 'Reactjs',
-      lecturer: {
-        firstName:'Hoa',
-        lastName:'Nguyen'
-      },
-      category:'category',
-      _id:1
-    },
-    {
-      avatar: 'wnc21-S8VsSqBMVI.jpg',
-      title: 'Nodejs',
-      lecturer: {
-        firstName:'Hoa1',
-        lastName:'Nguyen'
-      },
-      category:'category',
-      _id:2
-    },
-    {
-      avatar: 'wnc21-S8VsSqBMVI.jpg',
-      title: 'Java',
-      lecturer: {
-        firstName:'Hoa2',
-        lastName:'Nguyen'
-      },
-      category:'category',
-      _id:1
-    },
-        {
-      avatar: 'wnc21-S8VsSqBMVI.jpg',
-      title: 'PHP',
-      lecturer: {
-        firstName:' Hoa3',
-        lastName:'Nguyen'
-      },
-      category:'category',
-      _id:1
-    }
-  ]
+import { useSelector } from 'react-redux';
+
+function Index() {
+  const coursesdata=useSelector(state=>state.user.dashboard.courses)
   return (
     <Container className="course" id="carousel__course">
       <h2>Top 4 popular course</h2>
@@ -83,11 +44,11 @@ function index() {
       </Carousel>
       <h2 className='h2css'>Top 10 most views course</h2>
       <Row xs={1} md={4} style={{ marginBottom:'100px' }}>
-        {coursesdata.map((item,i)=>(
+        {coursesdata?.map((item,i)=>(
           <CourseCard course={item} key={i} />
         ))}
       </Row>
     </Container>
   );
 }
-export default index;
+export default Index;

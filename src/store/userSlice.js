@@ -11,6 +11,9 @@ const initialState = {
   token: cookies.get("token") || null,
   userInfo: userInfoInit,
   loading: false,
+  dashboard:{
+    courses:null,
+  }
 };
 
 const userSlice = createSlice({
@@ -53,6 +56,9 @@ const userSlice = createSlice({
     course: (state, action) => {
       state.course = action.payload;
     },
+    dashboardCourse:(state, action) => {
+      state.dashboard.courses=action.payload
+    },
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
@@ -70,5 +76,6 @@ export const {
   setLoading,
   updateUserAttendedCourses,
   updateUserFavoriteCourses,
+  dashboardCourse
 } = actions;
 export default reducer;
