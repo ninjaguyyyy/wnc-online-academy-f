@@ -14,9 +14,11 @@ import {
   Modal,
 } from "react-bootstrap";
 import { Editor } from "react-draft-wysiwyg";
+import { EditorState, ContentState, convertFromHTML } from 'draft-js'
 import { Formik } from "formik";
 import * as yup from "yup";
 import teacherApi from 'api/teacherApi';
+import EditorDescription from './EditDescription';
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -43,6 +45,13 @@ function EditCourse(props) {
   const SelectChapter = useSelector((state) => state.teacher.selectChapter);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [editorState,setEditorState]= useState('')
+  const getContentShort = (htmlContentProp) => {
+    setShort(htmlContentProp);
+  }
+  const getContentLong = (htmlContentProp) => {
+    setLong(htmlContentProp);
+  }
   useEffect(() => {
     if (Course == null) {
       dispatch(setLoading(true));
@@ -53,6 +62,11 @@ function EditCourse(props) {
           dispatch(sections(res.course.sections))
           setShort(res.course.shortDescription)
           setLong(res.course.fullDescription)
+          // setEditorState(EditorState.createWithContent(
+          //   ContentState.createFromBlockArray(
+          //     convertFromHTML(res.course.shortDescription)
+          //   )
+          // ))
         }
       });
     }else{
@@ -263,23 +277,9 @@ function EditCourse(props) {
                   </Modal.Footer>
                 </Modal>
                 <Form.Label> Short Descriptions:</Form.Label>
-                <Editor
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editor-description"
-                  value={values.shortDescription}
-                  onChange={(e) => setShort(e.blocks[0].text)}
-                >
-                </Editor>
+                <EditorDescription getContent={getContentShort} data={Course.shortDescription}/>
                 <Form.Label style={{ marginTop:'20px'}}> Full Descriptions:</Form.Label>
-                <Editor
-                  value={values.fullDescription}
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editor-description"
-                  onChange={(e) => setLong(e.blocks[0].text)}
-                >
-                </Editor>
+                <EditorDescription getContent={getContentLong} data={Course.fullDescription}/>
                 <Form.Check 
                   type='checkbox'
                   id={`default-checkbox`}

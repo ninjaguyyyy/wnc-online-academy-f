@@ -25,12 +25,7 @@ import { categories, promotions } from "store/teacherSlice";
 import categoriesAPI from "api/categoriesApi";
 import promotionsAPI from "api/promotionsApi";
 import { useHistory } from "react-router-dom";
-
-import { EditorState, convertToRaw } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import draftToHtml from "draftjs-to-html";
-import htmlToDraft from "html-to-draftjs";
-
+import EditorShort from './ShortDescription'
 const schema = yup.object().shape({
   title: yup.string().required(),
   category: yup.string(),
@@ -45,14 +40,17 @@ const schema = yup.object().shape({
 function AddNewCourse() {
   const [categories, setCategories] = useState([]);
   const [promotions, setPromotions] = useState([]);
-
   const [categoryValue, setCategoryValue] = useState("");
   const [promotionValue, setPromotionValue] = useState("");
-
-  const [show, setShow] = useState(false);
   const [shortDescriptionValue, setShortDescriptionValue] = useState("");
   const [fullDescriptionValue, setFullDescriptionValue] = useState("");
-
+  const getContentShort = (htmlContentProp) => {
+    setShortDescriptionValue(htmlContentProp);
+  }
+  const getContentFull = (htmlContentProp) => {
+    setFullDescriptionValue(htmlContentProp);
+  }
+    
   const history = useHistory();
 
   useEffect(() => {
@@ -64,22 +62,20 @@ function AddNewCourse() {
   }, []);
 
   const handleSubmit = async (data) => {
-    console.log(shortDescriptionValue);
-    console.log(fullDescriptionValue);
+    data.shortDescription=shortDescriptionValue
+    data.fullDescription=fullDescriptionValue
     toast.info("Loading ...", { autoClose: 3000 });
     data.category = categoryValue;
-    // data.shortDescription = short;
-    // data.fullDescription = long;
     promotionValue && (data.promotion = promotionValue);
     if (data.avatar) {
       const uploadRes = await teacherApi.upLoad(data.avatar);
       data.avatar = uploadRes.files[0].filename;
     }
-    // const res = await teacherApi.createCourses(data);
-    // if (res.success === true) {
-    //   toast.success("Successfully create course");
-    //   history.push("/teacher/courses");
-    // }
+    const res = await teacherApi.createCourses(data);
+    if (res.success === true) {
+      toast.success("Successfully create course");
+      history.push("/teacher/courses");
+    }
   };
 
   return (
@@ -178,35 +174,13 @@ function AddNewCourse() {
                   </Col>
                   <Col sm={6}>
                     <Form.Label> Short Descriptions:</Form.Label>
-                    <Editor
-                      editorState={shortDescriptionValue}
-                      editorClassName="editor-description"
-                      onEditorStateChange={(editorState) => setShortDescriptionValue(editorState)}
-                    >
-                      <Form.Control
-                        type="textarea"
-                        placeholder="shortDescription"
-                        name="shortDescription"
-                        value={draftToHtml(shortDescriptionValue)}
-                      />
-                    </Editor>
+                    <EditorShort getContent={getContentShort} />
                   </Col>
                 </Row>
 
                 <Form.Label> Full Descriptions:</Form.Label>
-                <Editor
-                  editorState={fullDescriptionValue}
-                  value={values.fullDescription}
-                  editorClassName="editor-description"
-                  onEditorStateChange={(editorState) => setFullDescriptionValue(editorState)}
-                >
-                  <Form.Control
-                    type="textarea"
-                    placeholder="fullDescription"
-                    name="fullDescription"
-                    value={draftToHtml(fullDescriptionValue)}
-                  />
-                </Editor>
+                <EditorShort getContent={getContentFull} />
+                
                 <Button type="submit">Submit form</Button>
               </Form>
             )}
