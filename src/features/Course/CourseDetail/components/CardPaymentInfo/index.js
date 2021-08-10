@@ -1,25 +1,26 @@
 import { ApiUrl } from "api/authUser";
 import React, { useState } from "react";
-import { Card, Button, Badge, Modal } from "react-bootstrap";
+import { Card, Button, Badge, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
 import "./index.css";
-import { BsHeart, BsClockHistory } from "react-icons/bs";
+import { BsHeart, BsClockHistory, BsGift } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import userAPi from "api/userApi";
 import { useDispatch } from "react-redux";
 import { addAttendedCourse, saveUserInfo, updateUserAttendedCourses, updateUserFavoriteCourses } from "store/userSlice";
+import { getFormatDate, getFormatDateTime } from "helpers";
 
 export default function CardPaymentInfo({ course }) {
   const dispatch = useDispatch();
 
   const token = useSelector((state) => state.user.token);
-  const attendedCourses = useSelector((state) => state.user.userInfo.attendedCourses);
-  const favoriteCourses = useSelector((state) => state.user.userInfo.favoriteCourses);
+  const attendedCourses = useSelector((state) => state.user.userInfo?.attendedCourses);
+  const favoriteCourses = useSelector((state) => state.user.userInfo?.favoriteCourses);
 
   const [showPayModal, setShowPayModal] = useState(false);
 
-  const isExistInFavoriteList = favoriteCourses.includes(course._id);
-  const isAttended = attendedCourses.includes(course._id);
+  const isExistInFavoriteList = favoriteCourses && favoriteCourses.includes(course._id);
+  const isAttended = attendedCourses && attendedCourses.includes(course._id);
 
   const handleAddToFavorite = async () => {
     if (!token) {
@@ -63,12 +64,14 @@ export default function CardPaymentInfo({ course }) {
           <div className="info-card">
             <div className="price">
               <div className="d-flex align-items-center">
-                <div className="origin mr-3">${course.originPrice}</div>
-                <del style={{ fontSize: "1.1rem", color: "#77838F" }}>$900</del>
+                <div className="origin mr-3">${course.totalPrice}</div>
+                <del style={{ fontSize: "1.1rem", color: "#77838F" }}>${course.originPrice}</del>
               </div>
 
               <h5 className="discount">
-                <Badge style={{ fontWeight: "400", padding: " 10px 13px", backgroundColor: "#B8B2FD" }}>40$ Off</Badge>
+                <Badge style={{ fontWeight: "400", padding: " 10px 13px", backgroundColor: "#B8B2FD" }}>
+                  {course.promotion.discount * 100}% Off
+                </Badge>
               </h5>
             </div>
             <div className="register-action">
@@ -80,30 +83,36 @@ export default function CardPaymentInfo({ course }) {
               <li className="list-item">
                 <div className="head d-flex align-items-center">
                   <BsClockHistory color="#949DA6" size={15} />
-                  <div className="head__label ml-3">Duration</div>
-                </div>
-                <div className="tail">10</div>
-              </li>
-              <li className="list-item">
-                <div className="head d-flex align-items-center">
-                  <BsClockHistory color="#949DA6" size={15} />
                   <div className="head__label ml-3">Lessons</div>
                 </div>
-                <div className="tail">10</div>
+                <div className="tail">{course.sections.reduce((sum, section) => section.lectures.length + sum, 0)}</div>
               </li>
               <li className="list-item">
                 <div className="head d-flex align-items-center">
                   <BsClockHistory color="#949DA6" size={15} />
                   <div className="head__label ml-3">Enrolled</div>
                 </div>
-                <div className="tail">10</div>
+                <div className="tail">{course.students.length}</div>
+              </li>
+              <li className="list-item">
+                <div className="head d-flex align-items-center">
+                  <BsGift color="#949DA6" size={15} />
+                  <div className="head__label ml-3">Promotion</div>
+                </div>
+                <OverlayTrigger
+                  placement="bottom"
+                  delay={{ show: 250, hide: 300 }}
+                  overlay={<Tooltip id="button-tooltip">{course.promotion.title}</Tooltip>}
+                >
+                  <div className="tail">- {course.promotion.discount * 100}%</div>
+                </OverlayTrigger>
               </li>
               <li className="list-item">
                 <div className="head d-flex align-items-center">
                   <BsClockHistory color="#949DA6" size={15} />
                   <div className="head__label ml-3">Last Update</div>
                 </div>
-                <div className="tail">10</div>
+                <div className="tail">{getFormatDate(course.updatedAt)}</div>
               </li>
             </ul>
             <div className="d-flex justify-content-center">

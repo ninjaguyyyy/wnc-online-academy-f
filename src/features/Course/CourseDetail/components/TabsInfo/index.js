@@ -15,7 +15,7 @@ export default function TabsInfo({ course }) {
         <div className="full-des" dangerouslySetInnerHTML={{ __html: course.fullDescription }}></div>
       </Tab>
       <Tab eventKey="Curriculum" title="Curriculum">
-        <LearnTabItem sections={course.sections} />
+        <LearnTabItem courseId={course._id} sections={course.sections} />
       </Tab>
       <Tab eventKey="Instructor" title="Instructor">
         <TeacherTabItem teacher={course.lecturer} />

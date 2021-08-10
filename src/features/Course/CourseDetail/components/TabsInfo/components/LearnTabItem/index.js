@@ -2,16 +2,22 @@ import React, { useState, useRef } from "react";
 import { Accordion, Modal, Button } from "react-bootstrap";
 import { BsFileEarmarkText, BsPlay, BsLock, BsLockFill } from "react-icons/bs";
 import { toast } from "react-toastify";
-import ReactPlayer from "react-player";
 import "../../../../../../../../node_modules/video-react/dist/video-react.css";
 import { Player } from "video-react";
+import { useSelector } from "react-redux";
 import { ApiUrl } from "api/authUser";
 
-export default function LearnTabItem({ sections }) {
+export default function LearnTabItem({ courseId, sections }) {
   const [showModal, setShowModal] = useState(false);
-  const playerElement = useRef(null);
+  const [selectedLecture, setSelectedLecture] = useState({});
 
-  const handlePlayVideo = () => {
+  const playerElement = useRef(null);
+  const attendedCourses = useSelector((state) => state.user.userInfo?.attendedCourses);
+
+  const isAttended = attendedCourses && attendedCourses.includes(courseId);
+
+  const handlePlayVideo = (lecture) => {
+    setSelectedLecture({ ...lecture });
     setShowModal(true);
   };
 
@@ -19,7 +25,13 @@ export default function LearnTabItem({ sections }) {
     setShowModal(false);
     const { player } = playerElement.current.getState();
     const lastWatchTime = player.currentTime;
-    console.log(lastWatchTime);
+    const duration = player.duration;
+
+    if (duration - lastWatchTime < 5) {
+      localStorage.removeItem(selectedLecture._id);
+      return;
+    }
+    localStorage.setItem(selectedLecture._id, lastWatchTime);
   };
 
   return (
@@ -42,8 +54,8 @@ export default function LearnTabItem({ sections }) {
                         </span>
                       </div>
                       <div>
-                        {lecture.isPreview ? (
-                          <a href="javascript:void" onClick={handlePlayVideo} style={{ color: "#656464" }}>
+                        {lecture.isPreview || isAttended ? (
+                          <a href="javascript:void" onClick={() => handlePlayVideo(lecture)} style={{ color: "#656464" }}>
                             <BsPlay size={22} />
                           </a>
                         ) : (
@@ -73,8 +85,7 @@ export default function LearnTabItem({ sections }) {
           <Modal.Title>Payment</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {/* <source src="https://media.w3.org/2010/05/sintel/trailer_hd.mp4" /> */}
-          <Player ref={playerElement} startTime={20}>
+          <Player ref={playerElement} startTime={localStorage.getItem(selectedLecture._id) || 0}>
             <source src={`${"http://localhost:3001/"}resources/video/wnc21-NDZm7pXF4I.mp4`} type="video/mp4" />
           </Player>
         </Modal.Body>

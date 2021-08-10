@@ -3,7 +3,7 @@ import { Card, Col, Button } from "react-bootstrap";
 import { generateURLGetImageResource } from "helpers";
 import { useHistory, Link } from "react-router-dom";
 import "./index.css";
-import { BsStarFill, BsStar, BsHeart } from "react-icons/bs";
+import { BsStarFill, BsStar, BsHeart, BsHeartFill } from "react-icons/bs";
 import { BiBookReader } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
 import { course as CourseRedux } from "store/userSlice";
