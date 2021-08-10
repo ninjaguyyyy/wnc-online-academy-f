@@ -59,12 +59,40 @@ function Index() {
         </Row>
         </Carousel.Item>
       </Carousel>
-
-      <Row xs={1} md={4} style={{ marginBottom:'100px' }}>
-        {coursesdata?.map((item,i)=>(
-          <CourseCard course={item} key={i} />
-        ))}
-      </Row>
+      <h2 className='h2css'>Top 10 newest course</h2>
+      <Carousel id='course__carousel'>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {coursesdata?.slice(0,4).map((item,i)=>(
+            <CourseCard course={item} key={i} />
+          ))}
+        </Row>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {coursesdata?.slice(2,5).map((item,i)=>(
+            <CourseCard course={item} key={i} />
+          ))}
+        </Row>
+        </Carousel.Item>
+      </Carousel>
+      <h2 className='h2css'>Top 10 Rating course</h2>
+      <Carousel id='course__carousel'>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {coursesdata?.slice(0,4).map((item,i)=>(
+            <CourseCard course={item} key={i} />
+          ))}
+        </Row>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {coursesdata?.slice(2,5).map((item,i)=>(
+            <CourseCard course={item} key={i} />
+          ))}
+        </Row>
+        </Carousel.Item>
+      </Carousel>
     </Container>
   );
 }

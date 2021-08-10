@@ -36,6 +36,7 @@ function EditCourse(props) {
   const [video, setVideo] = useState(null);
   const [short, setShort] = useState("");
   const [long, setLong] = useState("");
+  const [isComplete, setIsComplete] = useState(false);
   const Course = useSelector((state) => state.user.course);
   const isLoading = useSelector((state) => state.user.loading);
   const Sections = useSelector((state) => state.teacher.sections);
@@ -69,13 +70,13 @@ function EditCourse(props) {
               data.shortDescription = short
               data.fullDescription = long
               data.sections=Sections
+              data.isComplete=isComplete
               if (data.avatar) {
                 const uploadRes = await teacherApi.upLoad(data.avatar);
                 data.avatar = uploadRes.files[0].filename;
               }
               dispatch(setLoading(true))
               teacherApi.editCourses(data,Course._id).then(res=>{
-                console.log(res)
                 dispatch(setLoading(false))
                 dispatch(course(res.course))
               })
@@ -265,7 +266,7 @@ function EditCourse(props) {
                 <Editor
                   toolbarClassName="toolbarClassName"
                   wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
+                  editorClassName="editor-description"
                   value={values.shortDescription}
                   onChange={(e) => setShort(e.blocks[0].text)}
                 >
@@ -275,11 +276,17 @@ function EditCourse(props) {
                   value={values.fullDescription}
                   toolbarClassName="toolbarClassName"
                   wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
+                  editorClassName="editor-description"
                   onChange={(e) => setLong(e.blocks[0].text)}
                 >
                 </Editor>
-                <Button type="submit" style={{ marginTop:'20px'}}>Submit form</Button>
+                <Form.Check 
+                  type='checkbox'
+                  id={`default-checkbox`}
+                  label={`Please check this if this course IS COMPLETE`}
+                  onChange={(e) =>setIsComplete(e.target.checked)}
+                />
+                <Button type="submit" style={{ margin:'100px 0'}}>Submit form</Button>
               </Form>
             )}
           </Formik>

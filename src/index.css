@@ -39,7 +39,8 @@ body {
   font-size: 1.5rem;
 }
 .CourseCard:hover {
-  opacity: 0.8;
+  /* opacity: 0.8; */
+  transform: scale(1.03);
   cursor: pointer;
 }
 
