@@ -28,5 +28,9 @@ const authApi = {
     const url = `${ApiUrl}courses/${data}`;
     return axiosClient.get(url);
   },
+  verifyOTP: (data) => {
+    const url = `${ApiUrl}users/otp-verify`;
+    return axiosClient.post(url, data);
+  },
 };
 export default authApi;

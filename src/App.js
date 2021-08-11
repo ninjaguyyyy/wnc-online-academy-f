@@ -1,8 +1,6 @@
 import { Provider } from "react-redux";
 import store from "./store/rootstore";
 import { BrowserRouter, Redirect, Switch, Route, useLocation } from "react-router-dom";
-import Login from "features/Auth/Login";
-import Register from "features/Auth/Register";
 import PublicRoute from "components/PublicRoute";
 import PrivateRoute from "components/PrivateRoute";
 import TeacherRouter from "components/PrivateRoute/TeacherRouter";
@@ -20,6 +18,9 @@ import AttendedCourses from "features/Student/AttendedCourses";
 import AddNewCourse from "features/Teacher/AddNewCourse";
 import EditCourse from "features/Teacher/EditCourse";
 import { ToastContainer } from "react-toastify";
+import Login from "features/Login";
+import Register from "features/Register";
+import VerifyOTP from "features/VerifyOTP";
 
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -34,7 +35,7 @@ function App() {
           <Route path="/dashboard" component={Dashboard} />
           <PublicRoute path="/login" component={Login} />
           <PublicRoute path="/register" component={Register} />
-          <PublicRoute path="/forgot-password" component={ResetPassword} />
+          <PublicRoute path="/verify-otp" component={VerifyOTP} />
           <Layout>
             <Switch>
               <Route path="/web" component={Web} />
