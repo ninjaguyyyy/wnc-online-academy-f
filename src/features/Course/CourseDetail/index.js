@@ -1,27 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
-import ReactPlayer from "react-player";
-import { Button, Tabs, Tab, Container, Card, Row, Col } from "react-bootstrap";
-import Accordion from "react-bootstrap/Accordion";
-import "./detailCourse.css";
-import authApi from "api/authUser";
-import { course } from "store/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { ApiUrl } from "api/authUser";
-import loading from "assets/image/loading.svg";
-import userAPi from "api/userApi";
-import { toast } from "react-toastify";
 import coursesAPI from "api/coursesApi";
 import DynamicBreadcrumb from "components/Common/DynamicBreadcrumb";
-import TabsInfo from "./components/TabsInfo";
-import CardPaymentInfo from "./components/CardPaymentInfo";
 import RatingStars from "components/Common/RatingStars";
+import React, { useEffect, useState } from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import CardPaymentInfo from "./components/CardPaymentInfo";
+import TabsInfo from "./components/TabsInfo";
+import "./detailCourse.css";
+import CourseCard from "../../../components/Common/CourseCard";
 
 function CourseDetail() {
   const dispatch = useDispatch();
   let { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [course, setCourse] = useState(null);
+  const [relativeCourses, setRelativeCourses] = useState([]);
+
   const history = useHistory();
 
   useEffect(() => {
@@ -29,6 +24,12 @@ function CourseDetail() {
       // setLoading(true);
       const { success, course } = await coursesAPI.getById(id);
       success && setCourse(course);
+
+      const { courses } = await coursesAPI.getAll({ category: course.category._id });
+      const sortedCourses = courses.sort((a, b) => b.students.length - a.students.length);
+      const filteredCourses = sortedCourses.filter((course) => course._id !== id);
+      const slicedCourses = filteredCourses.slice(0, 5);
+      setRelativeCourses(slicedCourses);
       // setLoading(false);
     })();
   }, []);
@@ -78,6 +79,14 @@ function CourseDetail() {
           </Col>
         </Row>
       )}
+
+      <Row className="mt-5">
+        <h2>Relative Courses</h2>
+        {console.log(relativeCourses)}
+        {relativeCourses.map((course) => (
+          <CourseCard course={course} />
+        ))}
+      </Row>
     </Container>
   );
 }
