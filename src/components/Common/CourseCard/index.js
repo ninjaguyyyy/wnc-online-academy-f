@@ -1,16 +1,15 @@
-import React from "react";
-import { Card, Col, Button, Badge } from "react-bootstrap";
-import { generateURLGetImageResource, getDayAgo } from "helpers";
-import { useHistory, Link } from "react-router-dom";
-import "./index.css";
-import { BsStarFill, BsStar, BsHeart, BsHeartFill } from "react-icons/bs";
-import { BiBookReader } from "react-icons/bi";
-import { useSelector, useDispatch } from "react-redux";
-import { course as CourseRedux } from "store/userSlice";
-import { toast } from "react-toastify";
 import userAPi from "api/userApi";
-import { updateUserFavoriteCourses } from "store/userSlice";
+import { generateURLGetImageResource, getDayAgo } from "helpers";
+import React from "react";
+import { Badge, Button, Card, Col } from "react-bootstrap";
+import { BiBookReader } from "react-icons/bi";
+import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+import { course as CourseRedux, updateUserFavoriteCourses } from "store/userSlice";
 import RatingStars from "../RatingStars";
+import "./index.css";
 
 export default function CourseCard({ course }) {
   const user = useSelector((state) => state.user);
@@ -98,26 +97,21 @@ export default function CourseCard({ course }) {
           </Card.Title>
           <div className="reviews d-flex justify-content-between align-items-center mb-4 mt-3">
             <div className="rating d-flex align-items-center">
-              <div className="card__statistics ml-3" style={{ display: "flex" }}>
-                <div style={{ display: "flex", minHeight: "35px" }}>
-                  {Array(Math.floor(rating))
-                    .fill()
-                    .map((_, i) => (
-                      <p>⭐️</p>
-                    ))}
-                </div>
-                <div>({feedbacks?.length} reviews)</div>
+              <RatingStars point={rating} color="#FFC78B" size={16} className="mr-1" />
+
+              <div className="card__statistics ml-3">
+                {rating} ({feedbacks?.length} reviews)
               </div>
             </div>
 
             <div className="fav">
-              <a href="javascript:void">
+              <Link>
                 {token && isFavorite ? (
                   <BsHeartFill className="fav_icon" color="rgb(220 73 52)" size={20} onClick={handleRemoveFromFavorite} />
                 ) : (
                   <BsHeart className="fav_icon" color="rgb(220 73 52)" size={20} onClick={handleAddToFavorite} />
                 )}
-              </a>
+              </Link>
             </div>
           </div>
           <Card.Text

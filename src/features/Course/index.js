@@ -5,22 +5,18 @@ import { Link } from "react-router-dom";
 import no1 from "assets/image/5.jpg";
 import no2 from "assets/image/17.png";
 import no3 from "assets/image/36.jpg";
-import CourseCard from 'components/Common/CourseCard'
-import { useSelector } from 'react-redux';
+import CourseCard from "components/Common/CourseCard";
+import { useSelector } from "react-redux";
 
 function Index() {
-  const coursesdata=useSelector(state=>state.user.dashboard.courses)
-  const newestCourse=coursesdata.concat().reverse()
-  const mostViewsCourse=coursesdata.concat().sort(
-    function(a, b) {
-      return b.feedbacks.length-a.feedbacks.length
-    }
-  )
-  const ratingCourse=coursesdata.concat().sort(
-    function(a, b) {
-      return b.rating-a.rating
-    }
-  )
+  const coursesdata = useSelector((state) => state.user.dashboard.courses);
+  const newestCourse = coursesdata?.concat().reverse();
+  const mostViewsCourse = coursesdata?.concat().sort(function (a, b) {
+    return b.feedbacks.length - a.feedbacks.length;
+  });
+  const ratingCourse = coursesdata?.concat().sort(function (a, b) {
+    return b.rating - a.rating;
+  });
 
   return (
     <Container className="course" id="carousel__course">
@@ -54,63 +50,78 @@ function Index() {
           </Link>
         </Carousel.Item>
       </Carousel>
-      <h2 className='h2css'>Top 10 most views course</h2>
-      <Carousel id='course__carousel'>
+      <h2 className="h2css">Top 10 most views course</h2>
+      <Carousel id="course__carousel">
         <Carousel.Item>
-          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {mostViewsCourse?.slice(0,4).map((item,i)=>(
-            <CourseCard course={item} key={i} />
-          ))}
-        </Row>
+          <Row xs={1} md={4} style={{ marginBottom: "100px", backgroundColor: "#f69113" }}>
+            {mostViewsCourse?.slice(0, 4).map((item, i) => (
+              <CourseCard course={item} key={i} />
+            ))}
+          </Row>
         </Carousel.Item>
         <Carousel.Item>
-          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {mostViewsCourse?.slice(4,8).map((item,i)=>(
-            <CourseCard course={item} key={i} />
-          ))}
-        </Row>
+          <Row xs={1} md={4} style={{ marginBottom: "100px", backgroundColor: "#f69113" }}>
+            {mostViewsCourse?.slice(4, 8).map((item, i) => (
+              <CourseCard course={item} key={i} />
+            ))}
+          </Row>
         </Carousel.Item>
         <Carousel.Item>
-          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {mostViewsCourse?.slice(8,10).map((item,i)=>(
-            <CourseCard course={item} key={i} />
-          ))}
-        </Row>
-        </Carousel.Item>
-      </Carousel>
-      <h2 className='h2css'>Top 10 newest course</h2>
-      <Carousel id='course__carousel'>
-        <Carousel.Item>
-          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {newestCourse?.slice(0,4).map((item,i)=>(
-            <CourseCard course={item} key={i} />
-          ))}
-        </Row>
-        </Carousel.Item>
-        <Carousel.Item>
-          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {newestCourse?.slice(4,8).map((item,i)=>(
-            <CourseCard course={item} key={i} />
-          ))}
-        </Row>
-        </Carousel.Item>
-        <Carousel.Item>
-          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {newestCourse?.slice(8,10).map((item,i)=>(
-            <CourseCard course={item} key={i} />
-          ))}
-        </Row>
+          <Row xs={1} md={4} style={{ marginBottom: "100px", backgroundColor: "#f69113" }}>
+            {mostViewsCourse?.slice(8, 10).map((item, i) => (
+              <CourseCard course={item} key={i} />
+            ))}
+          </Row>
         </Carousel.Item>
       </Carousel>
-      <h2 className='h2css'>Top 10 Rating course</h2>
-          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {ratingCourse?.map((item,i)=>(
-            <CourseCard course={item} key={i} />
-          ))}
-        </Row>
-        
-      
-
+      <h2 className="h2css">Top 10 newest course</h2>
+      <Carousel id="course__carousel">
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom: "100px", backgroundColor: "#f69113" }}>
+            {newestCourse?.slice(0, 4).map((item, i) => (
+              <CourseCard course={item} key={i} />
+            ))}
+          </Row>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom: "100px", backgroundColor: "#f69113" }}>
+            {newestCourse?.slice(4, 8).map((item, i) => (
+              <CourseCard course={item} key={i} />
+            ))}
+          </Row>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom: "100px", backgroundColor: "#f69113" }}>
+            {newestCourse?.slice(8, 10).map((item, i) => (
+              <CourseCard course={item} key={i} />
+            ))}
+          </Row>
+        </Carousel.Item>
+      </Carousel>
+      <h2 className="h2css">Top 10 Rating course</h2>
+      <Carousel id="course__carousel">
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom: "100px", backgroundColor: "#f69113" }}>
+            {ratingCourse?.slice(0, 4).map((item, i) => (
+              <CourseCard course={item} key={i} />
+            ))}
+          </Row>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom: "100px", backgroundColor: "#f69113" }}>
+            {ratingCourse?.slice(4, 8).map((item, i) => (
+              <CourseCard course={item} key={i} />
+            ))}
+          </Row>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom: "100px", backgroundColor: "#f69113" }}>
+            {ratingCourse?.slice(8, 10).map((item, i) => (
+              <CourseCard course={item} key={i} />
+            ))}
+          </Row>
+        </Carousel.Item>
+      </Carousel>
     </Container>
   );
 }

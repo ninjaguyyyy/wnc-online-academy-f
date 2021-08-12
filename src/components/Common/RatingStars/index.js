@@ -12,10 +12,10 @@ export default function RatingStars({ point, color, size, className, style, onCl
   return (
     <div>
       {fillStars.map((_, i) => (
-        <BsStarFill color={color} size={size} className={className} style={style} onClick={() => onClickStar(i + 1)} />
+        <BsStarFill key={i} color={color} size={size} className={className} style={style} onClick={() => onClickStar(i + 1)} />
       ))}
       {emptyStars.map((point, i) => (
-        <BsStar color={color} size={size} className={className} style={style} onClick={() => onClickStar(i + 1 + point)} />
+        <BsStar key={i} color={color} size={size} className={className} style={style} onClick={() => onClickStar(i + 1 + point)} />
       ))}
     </div>
   );

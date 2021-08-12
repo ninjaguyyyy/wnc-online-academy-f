@@ -6,7 +6,7 @@ export default function DynamicBreadcrumb({ paths }) {
   return (
     <Breadcrumb>
       {paths.map((path) => (
-        <Breadcrumb.Item active={!!!path.ref}>
+        <Breadcrumb.Item key={path.label} active={!!!path.ref}>
           <Link to={path.ref} style={{ color: "inherit" }}>
             {path.label}
           </Link>

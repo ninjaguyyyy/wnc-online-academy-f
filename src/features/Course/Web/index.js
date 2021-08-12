@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, FormControl, InputGroup, Row, Spinner } from "react-bootstrap";
 import Pagination from "react-bootstrap/Pagination";
 import { BsSearch } from "react-icons/bs";
-import { useLocation, useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import CourseCard from "../../../components/Common/CourseCard";
 
 const PER_PAGE = 10;
@@ -115,7 +115,9 @@ function CoursesList() {
             <Form.Select value={chosenCategory} onChange={(e) => setChosenCategory(e.target.value)} style={{ paddingRight: "2.5rem" }}>
               <option value="">All Courses</option>
               {categories.map((category) => (
-                <option value={category._id}>{category.name}</option>
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
               ))}
             </Form.Select>
           </InputGroup>
@@ -136,7 +138,7 @@ function CoursesList() {
       <Row>
         {!loading ? (
           courses.length ? (
-            courses.map((course, idx) => <CourseCard course={course} />)
+            courses.map((course, idx) => <CourseCard key={course._id} course={course} />)
           ) : (
             <h3 className="text-center mt-5">Not Have Courses</h3>
           )
