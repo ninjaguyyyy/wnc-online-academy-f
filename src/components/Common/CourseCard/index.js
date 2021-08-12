@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, Col, Button } from "react-bootstrap";
-import { generateURLGetImageResource } from "helpers";
+import { Card, Col, Button, Badge } from "react-bootstrap";
+import { generateURLGetImageResource, getDayAgo } from "helpers";
 import { useHistory, Link } from "react-router-dom";
 import "./index.css";
 import { BsStarFill, BsStar, BsHeart, BsHeartFill } from "react-icons/bs";
@@ -46,6 +46,8 @@ export default function CourseCard({ course }) {
     msg && toast.error(msg);
   };
 
+  const isNew = getDayAgo(course.createdAt) < 5;
+
   return (
     <Col sm={4} style={{ padding: "20px" }} className="CourseCard">
       <Card>
@@ -63,10 +65,32 @@ export default function CourseCard({ course }) {
               Edit course
             </Button>
           )}
-          <p className="card__category mt-3 mb-2">{category.name}</p>
-          <Link to={`/web?category=${category._id}`} className="card__category mt-3 mb-2">
-            {category.name}
-          </Link>
+          <div className="d-flex justify-content-between align-items-center">
+            <Link to={`/web?category=${category._id}`} className="card__category mt-3 mb-2">
+              {category.name}
+            </Link>
+            <div>
+              {isNew && (
+                <Badge
+                  style={{
+                    marginRight: "5px",
+                    fontWeight: "400",
+                    padding: " 10px 13px",
+                    height: "fit-content",
+                    backgroundColor: "rgb(228 21 21)",
+                  }}
+                >
+                  New
+                </Badge>
+              )}
+              {course.students.length > 1 && (
+                <Badge style={{ fontWeight: "400", padding: " 10px 13px", height: "fit-content", backgroundColor: "rgb(11 166 191)" }}>
+                  Best Seller
+                </Badge>
+              )}
+            </div>
+          </div>
+
           <Card.Title>
             <Link className="card__title" to={`/course/${_id}`}>
               {title}
