@@ -10,6 +10,18 @@ import { useSelector } from 'react-redux';
 
 function Index() {
   const coursesdata=useSelector(state=>state.user.dashboard.courses)
+  const newestCourse=coursesdata.concat().reverse()
+  const mostViewsCourse=coursesdata.concat().sort(
+    function(a, b) {
+      return b.feedbacks.length-a.feedbacks.length
+    }
+  )
+  const ratingCourse=coursesdata.concat().sort(
+    function(a, b) {
+      return b.rating-a.rating
+    }
+  )
+
   return (
     <Container className="course" id="carousel__course">
       <h2>Top 4 popular course</h2>
@@ -46,14 +58,21 @@ function Index() {
       <Carousel id='course__carousel'>
         <Carousel.Item>
           <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {coursesdata?.slice(0,4).map((item,i)=>(
+          {mostViewsCourse?.slice(0,4).map((item,i)=>(
             <CourseCard course={item} key={i} />
           ))}
         </Row>
         </Carousel.Item>
         <Carousel.Item>
           <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {coursesdata?.slice(2,5).map((item,i)=>(
+          {mostViewsCourse?.slice(4,8).map((item,i)=>(
+            <CourseCard course={item} key={i} />
+          ))}
+        </Row>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {mostViewsCourse?.slice(8,10).map((item,i)=>(
             <CourseCard course={item} key={i} />
           ))}
         </Row>
@@ -63,14 +82,21 @@ function Index() {
       <Carousel id='course__carousel'>
         <Carousel.Item>
           <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {coursesdata?.slice(0,4).map((item,i)=>(
+          {newestCourse?.slice(0,4).map((item,i)=>(
             <CourseCard course={item} key={i} />
           ))}
         </Row>
         </Carousel.Item>
         <Carousel.Item>
           <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {coursesdata?.slice(2,5).map((item,i)=>(
+          {newestCourse?.slice(4,8).map((item,i)=>(
+            <CourseCard course={item} key={i} />
+          ))}
+        </Row>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {newestCourse?.slice(8,10).map((item,i)=>(
             <CourseCard course={item} key={i} />
           ))}
         </Row>
@@ -80,19 +106,27 @@ function Index() {
       <Carousel id='course__carousel'>
         <Carousel.Item>
           <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {coursesdata?.slice(0,4).map((item,i)=>(
+          {ratingCourse?.slice(0,4).map((item,i)=>(
             <CourseCard course={item} key={i} />
           ))}
         </Row>
         </Carousel.Item>
         <Carousel.Item>
           <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {coursesdata?.slice(2,5).map((item,i)=>(
+          {ratingCourse?.slice(4,8).map((item,i)=>(
+            <CourseCard course={item} key={i} />
+          ))}
+        </Row>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {ratingCourse?.slice(8,10).map((item,i)=>(
             <CourseCard course={item} key={i} />
           ))}
         </Row>
         </Carousel.Item>
       </Carousel>
+      
     </Container>
   );
 }
