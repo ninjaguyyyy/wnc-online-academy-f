@@ -98,11 +98,15 @@ export default function CourseCard({ course }) {
           </Card.Title>
           <div className="reviews d-flex justify-content-between align-items-center mb-4 mt-3">
             <div className="rating d-flex align-items-center">
-              {/* {console.lo} */}
-              {/* <RatingStars point={rating} color="#FFC78B" size={16} className="mr-1" /> */}
-
-              <div className="card__statistics ml-3">
-                {rating} ({feedbacks?.length} reviews)
+              <div className="card__statistics ml-3" style={{ display: "flex" }}>
+                <div style={{ display: "flex", minHeight: "35px" }}>
+                  {Array(Math.floor(rating))
+                    .fill()
+                    .map((_, i) => (
+                      <p>⭐️</p>
+                    ))}
+                </div>
+                <div>({feedbacks?.length} reviews)</div>
               </div>
             </div>
 

@@ -14,9 +14,11 @@ import {
   Modal,
 } from "react-bootstrap";
 import { Editor } from "react-draft-wysiwyg";
+import { EditorState, ContentState, convertFromHTML } from 'draft-js'
 import { Formik } from "formik";
 import * as yup from "yup";
 import teacherApi from 'api/teacherApi';
+import EditorDescription from './EditDescription';
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -36,12 +38,20 @@ function EditCourse(props) {
   const [video, setVideo] = useState(null);
   const [short, setShort] = useState("");
   const [long, setLong] = useState("");
+  const [isComplete, setIsComplete] = useState(false);
   const Course = useSelector((state) => state.user.course);
   const isLoading = useSelector((state) => state.user.loading);
   const Sections = useSelector((state) => state.teacher.sections);
   const SelectChapter = useSelector((state) => state.teacher.selectChapter);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [editorState,setEditorState]= useState('')
+  const getContentShort = (htmlContentProp) => {
+    setShort(htmlContentProp);
+  }
+  const getContentLong = (htmlContentProp) => {
+    setLong(htmlContentProp);
+  }
   useEffect(() => {
     if (Course == null) {
       dispatch(setLoading(true));
@@ -52,6 +62,11 @@ function EditCourse(props) {
           dispatch(sections(res.course.sections))
           setShort(res.course.shortDescription)
           setLong(res.course.fullDescription)
+          // setEditorState(EditorState.createWithContent(
+          //   ContentState.createFromBlockArray(
+          //     convertFromHTML(res.course.shortDescription)
+          //   )
+          // ))
         }
       });
     }else{
@@ -69,13 +84,13 @@ function EditCourse(props) {
               data.shortDescription = short
               data.fullDescription = long
               data.sections=Sections
+              data.isComplete=isComplete
               if (data.avatar) {
                 const uploadRes = await teacherApi.upLoad(data.avatar);
                 data.avatar = uploadRes.files[0].filename;
               }
               dispatch(setLoading(true))
               teacherApi.editCourses(data,Course._id).then(res=>{
-                console.log(res)
                 dispatch(setLoading(false))
                 dispatch(course(res.course))
               })
@@ -262,24 +277,16 @@ function EditCourse(props) {
                   </Modal.Footer>
                 </Modal>
                 <Form.Label> Short Descriptions:</Form.Label>
-                <Editor
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                  value={values.shortDescription}
-                  onChange={(e) => setShort(e.blocks[0].text)}
-                >
-                </Editor>
+                <EditorDescription getContent={getContentShort} data={Course.shortDescription}/>
                 <Form.Label style={{ marginTop:'20px'}}> Full Descriptions:</Form.Label>
-                <Editor
-                  value={values.fullDescription}
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                  onChange={(e) => setLong(e.blocks[0].text)}
-                >
-                </Editor>
-                <Button type="submit" style={{ marginTop:'20px'}}>Submit form</Button>
+                <EditorDescription getContent={getContentLong} data={Course.fullDescription}/>
+                <Form.Check 
+                  type='checkbox'
+                  id={`default-checkbox`}
+                  label={`Please check this if this course IS COMPLETE`}
+                  onChange={(e) =>setIsComplete(e.target.checked)}
+                />
+                <Button type="submit" style={{ margin:'100px 0'}}>Submit form</Button>
               </Form>
             )}
           </Formik>
