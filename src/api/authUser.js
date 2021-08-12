@@ -1,6 +1,7 @@
 import axiosClient from "./axiosClient";
 
 export const ApiUrl = "https://wnc-online-academy-21.herokuapp.com/";
+// export const ApiUrl = "http://localhost:3001/";
 
 const authApi = {
   registerApi: (data) => {
@@ -21,6 +22,14 @@ const authApi = {
   },
   refreshToken: (data) => {
     const url = `${ApiUrl}users/refresh-token`;
+    return axiosClient.post(url, data);
+  },
+  getCourseById: (data) => {
+    const url = `${ApiUrl}courses/${data}`;
+    return axiosClient.get(url);
+  },
+  verifyOTP: (data) => {
+    const url = `${ApiUrl}users/otp-verify`;
     return axiosClient.post(url, data);
   },
 };

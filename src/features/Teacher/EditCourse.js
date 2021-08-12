@@ -14,9 +14,11 @@ import {
   Modal,
 } from "react-bootstrap";
 import { Editor } from "react-draft-wysiwyg";
+import { EditorState, ContentState, convertFromHTML } from 'draft-js'
 import { Formik } from "formik";
 import * as yup from "yup";
 import teacherApi from 'api/teacherApi';
+import EditorDescription from './EditDescription';
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -36,12 +38,20 @@ function EditCourse(props) {
   const [video, setVideo] = useState(null);
   const [short, setShort] = useState("");
   const [long, setLong] = useState("");
+  const [isComplete, setIsComplete] = useState(false);
   const Course = useSelector((state) => state.user.course);
   const isLoading = useSelector((state) => state.user.loading);
   const Sections = useSelector((state) => state.teacher.sections);
   const SelectChapter = useSelector((state) => state.teacher.selectChapter);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [editorState,setEditorState]= useState('')
+  const getContentShort = (htmlContentProp) => {
+    setShort(htmlContentProp);
+  }
+  const getContentLong = (htmlContentProp) => {
+    setLong(htmlContentProp);
+  }
   useEffect(() => {
     if (Course == null) {
       dispatch(setLoading(true));
@@ -52,12 +62,15 @@ function EditCourse(props) {
           dispatch(sections(res.course.sections))
           setShort(res.course.shortDescription)
           setLong(res.course.fullDescription)
+          // setEditorState(EditorState.createWithContent(
+          //   ContentState.createFromBlockArray(
+          //     convertFromHTML(res.course.shortDescription)
+          //   )
+          // ))
         }
       });
-    }
-    else{
-      setShort(Course.shortDescription)
-      setLong(Course.fullDescription)
+    }else{
+      dispatch(sections(Course.sections))
     }
   }, [Course, props.match.params.id, dispatch]);
   return (
@@ -71,9 +84,13 @@ function EditCourse(props) {
               data.shortDescription = short
               data.fullDescription = long
               data.sections=Sections
+              data.isComplete=isComplete
+              if (data.avatar) {
+                const uploadRes = await teacherApi.upLoad(data.avatar);
+                data.avatar = uploadRes.files[0].filename;
+              }
               dispatch(setLoading(true))
               teacherApi.editCourses(data,Course._id).then(res=>{
-                console.log(res)
                 dispatch(setLoading(false))
                 dispatch(course(res.course))
               })
@@ -82,6 +99,7 @@ function EditCourse(props) {
               title: Course.title,
               originPrice: Course.originPrice,
               sections: null,
+              avatar:'',
               shortDescription: Course.shortDescription,
               fullDescription: Course.fullDescription,
             }}
@@ -92,6 +110,7 @@ function EditCourse(props) {
               values,
               touched,
               errors,
+              setFieldValue
             }) => (
               <Form noValidate onSubmit={handleSubmit}>
                 <Row className="mb-3">
@@ -131,12 +150,13 @@ function EditCourse(props) {
                     </InputGroup>
                   </Form.Group>
                 </Row>
-            
+               
                 <Form.Group className="position-relative mb-3">
                   <Button variant="primary" onClick={handleShow1}>
                     Add Chapter
                   </Button>
                 </Form.Group>
+                
                 {Sections.length>0&&
                 <Form.Group className="position-relative mb-3">
                   {Sections.map((e,i)=>(
@@ -153,6 +173,19 @@ function EditCourse(props) {
                     </div>
                   ))}
                 </Form.Group>}
+                <Col sm={6}>
+                  <Form.Group className="position-relative mb-3">
+                    <Form.Label>Avatar</Form.Label>
+                    <br />
+                    <input
+                      type="file"
+                      name="avatar"
+                      onChange={(event) => {
+                        setFieldValue("avatar", event.target.files[0]);
+                      }}
+                    />
+                  </Form.Group>
+                </Col>
                 <Modal show={show1} onHide={handleClose1}>
                   <Modal.Header closeButton>
                     <Modal.Title>Chapter name:</Modal.Title>
@@ -202,6 +235,7 @@ function EditCourse(props) {
                       as={Col}
                       md="12"
                       controlId="validationFormikUsername2"
+                      style={{ marginTop:'20px'}}
                     >
                       <Form.Label style={{ marginRight: "10px" }}>
                         Videos:
@@ -224,7 +258,7 @@ function EditCourse(props) {
                       onClick={()=>{
                         handleClose()
                         dispatch(setLoading(true))
-                        teacherApi.upLoad(video).then(res=>{
+                        teacherApi.upLoad(video[0]).then(res=>{
                           if(res.success&& res.files.length>0){
                             let payload={
                               title:title,
@@ -243,44 +277,16 @@ function EditCourse(props) {
                   </Modal.Footer>
                 </Modal>
                 <Form.Label> Short Descriptions:</Form.Label>
-                <Editor
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                  value={values.shortDescription}
-                  onChange={(e) => setShort(e.blocks[0].text)}
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="shortDescription"
-                    name="shortDescription"
-                    value={short}
-                    onChange={handleChange}
-                    isValid={
-                      touched.shortDescription && !errors.shortDescription
-                    }
-                    isInvalid={!!errors.shortDescription}
-                  />
-                </Editor>
-                <Form.Label> Full Descriptions:</Form.Label>
-                <Editor
-                  value={values.fullDescription}
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="editorClassName"
-                  onChange={(e) => setLong(e.blocks[0].text)}
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="fullDescription"
-                    name="fullDescription"
-                    value={long}
-                    onChange={handleChange}
-                    isValid={touched.fullDescription && !errors.fullDescription}
-                    isInvalid={!!errors.fullDescription}
-                  />
-                </Editor>
-                <Button type="submit">Submit form</Button>
+                <EditorDescription getContent={getContentShort} data={Course.shortDescription}/>
+                <Form.Label style={{ marginTop:'20px'}}> Full Descriptions:</Form.Label>
+                <EditorDescription getContent={getContentLong} data={Course.fullDescription}/>
+                <Form.Check 
+                  type='checkbox'
+                  id={`default-checkbox`}
+                  label={`Please check this if this course IS COMPLETE`}
+                  onChange={(e) =>setIsComplete(e.target.checked)}
+                />
+                <Button type="submit" style={{ margin:'100px 0'}}>Submit form</Button>
               </Form>
             )}
           </Formik>

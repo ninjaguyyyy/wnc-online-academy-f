@@ -7,7 +7,7 @@ export default function HeadingInfo({ title, paths }) {
     <div className="heading-info">
       <div>
         <h2>{title}</h2>
-        <div style={{ width: "150px", margin: "auto" }}>
+        <div className="heading__breadcrumb">
           <DynamicBreadcrumb paths={paths} />
         </div>
       </div>

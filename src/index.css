@@ -4,18 +4,11 @@ a:hover {
 *:focus {
   outline: none;
 }
-div.editorClassName.rdw-editor-main {
-  border: 1px solid black;
-  padding: 10px 15px;
-  height: 150px;
-  overflow-y: hidden;
-}
-.fullDes.rdw-editor-main {
+.editor-description.rdw-editor-main {
   border: 1px solid black;
   padding: 0px 15px;
   margin-bottom: 30px;
   height: 150px;
-  overflow-y: hidden;
 }
 button#dropdown-basic-button {
   width: 100%;
@@ -24,7 +17,8 @@ button#dropdown-basic {
   width: 100%;
 }
 .imgCourse {
-  width: 530px;
+  padding: 20px;
+  width: 100%;
   height: 230px;
   object-fit: cover;
 }
@@ -38,5 +32,48 @@ button#dropdown-basic {
 }
 
 body {
-  font-family: "Jost", sans-serif;
+  font-family: "Roboto", sans-serif;
+}
+.h2css {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.CourseCard:hover {
+  /* opacity: 0.8; */
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+.editbtncss {
+  margin: 10px 0;
+}
+.paginationcss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-layout {
+  text-align: center;
+  color: gray;
+  padding-top: 30px;
+  border-top: 1px solid lightgray;
+  margin-top: 80px;
+  margin-bottom: 30px;
+}
+#course__carousel{
+  position: relative;
+}
+#course__carousel a.carousel-control-prev{
+  position: absolute;
+  left:-50px;
+  width: 50px;
+  height: 84.5%;
+}
+#course__carousel a.carousel-control-next{
+  position: absolute;
+  right:-50px;
+  width: 50px;
+  height: 84.5%;
+
 }

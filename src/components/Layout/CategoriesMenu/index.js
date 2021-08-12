@@ -14,12 +14,14 @@ export default function CategoriesMenu() {
   }, []);
 
   return (
-    <NavDropdownMenu title="Categories" id="dropdown-autoclose-true">
+    <DropdownButton className="category-dropdown" title="Categories" id="dropdown-autoclose-true">
       {categories.map((category) => {
         if (category.child.length === 0) {
           return (
-            <NavDropdown.Item href="javascript:void(0)">
-              <Link to={`/web?category=${category._id}`}>{category.name}</Link>
+            <NavDropdown.Item>
+              <Link style={{ color: "#000" }} to={`/web?category=${category._id}`}>
+                {category.name}
+              </Link>
             </NavDropdown.Item>
           );
         }
@@ -28,12 +30,14 @@ export default function CategoriesMenu() {
           <DropdownSubmenu href={`/web?category=${category._id}`} title={category.name}>
             {category.child.map((subCategory) => (
               <NavDropdown.Item>
-                <Link to={`/web?category=${subCategory._id}`}>{subCategory.name}</Link>
+                <Link style={{ color: "#000" }} to={`/web?category=${subCategory._id}`}>
+                  {subCategory.name}
+                </Link>
               </NavDropdown.Item>
             ))}
           </DropdownSubmenu>
         );
       })}
-    </NavDropdownMenu>
+    </DropdownButton>
   );
 }

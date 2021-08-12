@@ -1,8 +1,6 @@
 import { Provider } from "react-redux";
 import store from "./store/rootstore";
 import { BrowserRouter, Redirect, Switch, Route, useLocation } from "react-router-dom";
-import Login from "features/Auth/Login";
-import Register from "features/Auth/Register";
 import PublicRoute from "components/PublicRoute";
 import PrivateRoute from "components/PrivateRoute";
 import TeacherRouter from "components/PrivateRoute/TeacherRouter";
@@ -16,10 +14,13 @@ import Web from "features/Course/Web";
 import Mobile from "features/Course/Mobile";
 import CourseDetail from "features/Course/CourseDetail";
 import TeacherCourse from "features/Course/TeacherCourse";
-import MyCourses from "features/Student/MyCourses";
+import AttendedCourses from "features/Student/AttendedCourses";
 import AddNewCourse from "features/Teacher/AddNewCourse";
 import EditCourse from "features/Teacher/EditCourse";
 import { ToastContainer } from "react-toastify";
+import Login from "features/Login";
+import Register from "features/Register";
+import VerifyOTP from "features/VerifyOTP";
 
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -29,12 +30,12 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <ToastContainer autoClose={1000} />
+        <ToastContainer autoClose={3000} closeOnClick={true} hideProgressBar={false} pauseOnHover={true} />
         <Switch>
           <Route path="/dashboard" component={Dashboard} />
           <PublicRoute path="/login" component={Login} />
           <PublicRoute path="/register" component={Register} />
-          <PublicRoute path="/forgot-password" component={ResetPassword} />
+          <PublicRoute path="/verify-otp" component={VerifyOTP} />
           <Layout>
             <Switch>
               <Route path="/web" component={Web} />
@@ -42,7 +43,7 @@ function App() {
               <Route path="/course/:id" component={CourseDetail} />
               <PrivateRoute exact path="/student" component={Student} />
               <PrivateRoute exact path="/student/wishlist" component={WishList} />
-              <PrivateRoute exact path="/student/my-courses" component={MyCourses} />
+              <PrivateRoute exact path="/student/my-courses" component={AttendedCourses} />
               <TeacherRouter exact path="/teacher" component={Teacher} />
               <TeacherRouter exact path="/teacher/courses" component={TeacherCourse} />
               <TeacherRouter exact path="/teacher/courses/add-course" component={AddNewCourse} />

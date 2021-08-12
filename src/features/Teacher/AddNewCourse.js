@@ -19,14 +19,13 @@ import { toast } from "react-toastify";
 import teacherApi from "api/teacherApi";
 import * as yup from "yup";
 import { Formik } from "formik";
-import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useDispatch, useSelector } from "react-redux";
 import { categories, promotions } from "store/teacherSlice";
 import categoriesAPI from "api/categoriesApi";
 import promotionsAPI from "api/promotionsApi";
 import { useHistory } from "react-router-dom";
-
+import EditorShort from './ShortDescription'
 const schema = yup.object().shape({
   title: yup.string().required(),
   category: yup.string(),
@@ -41,14 +40,17 @@ const schema = yup.object().shape({
 function AddNewCourse() {
   const [categories, setCategories] = useState([]);
   const [promotions, setPromotions] = useState([]);
-
   const [categoryValue, setCategoryValue] = useState("");
   const [promotionValue, setPromotionValue] = useState("");
-
-  const [show, setShow] = useState(false);
-  const [short, setshort] = useState("");
-  const [long, setLong] = useState("");
-
+  const [shortDescriptionValue, setShortDescriptionValue] = useState("");
+  const [fullDescriptionValue, setFullDescriptionValue] = useState("");
+  const getContentShort = (htmlContentProp) => {
+    setShortDescriptionValue(htmlContentProp);
+  }
+  const getContentFull = (htmlContentProp) => {
+    setFullDescriptionValue(htmlContentProp);
+  }
+    
   const history = useHistory();
 
   useEffect(() => {
@@ -60,10 +62,10 @@ function AddNewCourse() {
   }, []);
 
   const handleSubmit = async (data) => {
+    data.shortDescription=shortDescriptionValue
+    data.fullDescription=fullDescriptionValue
     toast.info("Loading ...", { autoClose: 3000 });
     data.category = categoryValue;
-    data.shortDescription = short;
-    data.fullDescription = long;
     promotionValue && (data.promotion = promotionValue);
     if (data.avatar) {
       const uploadRes = await teacherApi.upLoad(data.avatar);
@@ -172,43 +174,13 @@ function AddNewCourse() {
                   </Col>
                   <Col sm={6}>
                     <Form.Label> Short Descriptions:</Form.Label>
-                    <Editor
-                      toolbarClassName="toolbarClassName"
-                      wrapperClassName="wrapperClassName"
-                      editorClassName="editorClassName"
-                      onChange={(e) => setshort(e.blocks[0].text)}
-                    >
-                      <Form.Control
-                        type="text"
-                        placeholder="shortDescription"
-                        name="shortDescription"
-                        value={short}
-                        onChange={handleChange}
-                        isValid={touched.shortDescription && !errors.shortDescription}
-                        isInvalid={!!errors.shortDescription}
-                      />
-                    </Editor>
+                    <EditorShort getContent={getContentShort} />
                   </Col>
                 </Row>
 
                 <Form.Label> Full Descriptions:</Form.Label>
-                <Editor
-                  value={values.fullDescription}
-                  toolbarClassName="toolbarClassName"
-                  wrapperClassName="wrapperClassName"
-                  editorClassName="fullDes"
-                  onChange={(e) => setLong(e.blocks[0].text)}
-                >
-                  <Form.Control
-                    type="text"
-                    placeholder="fullDescription"
-                    name="fullDescription"
-                    value={long}
-                    onChange={handleChange}
-                    isValid={touched.fullDescription && !errors.fullDescription}
-                    isInvalid={!!errors.fullDescription}
-                  />
-                </Editor>
+                <EditorShort getContent={getContentFull} />
+                
                 <Button type="submit">Submit form</Button>
               </Form>
             )}

@@ -10,10 +10,10 @@ const userInfoInit = userInfoLocalStorage ? JSON.parse(userInfoLocalStorage) : n
 const initialState = {
   token: cookies.get("token") || null,
   userInfo: userInfoInit,
-  courses: null,
-  course: null,
   loading: false,
-  favoriteCourses: [],
+  dashboard:{
+    courses:null,
+  }
 };
 
 const userSlice = createSlice({
@@ -36,6 +36,13 @@ const userSlice = createSlice({
       state.userInfo = action.payload;
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
       state.favoriteCourses = action.payload.favoriteCourses;
+      state.attendedCourses = action.payload.attendedCourses;
+    },
+    updateUserAttendedCourses(state, action) {
+      state.userInfo.attendedCourses = action.payload;
+    },
+    updateUserFavoriteCourses(state, action) {
+      state.userInfo.favoriteCourses = action.payload;
     },
     updateProfile: (state, action) => {
       state.userInfo.firstName = action.payload.user.firstName;
@@ -49,15 +56,26 @@ const userSlice = createSlice({
     course: (state, action) => {
       state.course = action.payload;
     },
+    dashboardCourse:(state, action) => {
+      state.dashboard.courses=action.payload
+    },
     setLoading: (state, action) => {
       state.loading = action.payload;
-    },
-    addFavoriteCourse(state, action) {
-      //
     },
   },
 });
 
 const { reducer, actions } = userSlice;
-export const { saveToken, removeToken, saveUserInfo, updateProfile, changePassword, course, setLoading, addFavoriteCourse } = actions;
+export const {
+  saveToken,
+  removeToken,
+  saveUserInfo,
+  updateProfile,
+  changePassword,
+  course,
+  setLoading,
+  updateUserAttendedCourses,
+  updateUserFavoriteCourses,
+  dashboardCourse
+} = actions;
 export default reducer;

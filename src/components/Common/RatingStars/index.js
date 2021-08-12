@@ -1,0 +1,22 @@
+import React from "react";
+import { BsStar, BsStarFill } from "react-icons/bs";
+
+const MAX_POINT = 5;
+
+export default function RatingStars({ point, color, size, className, style, onClickStar }) {
+  const roundPoint = Math.floor(point);
+
+  const fillStars = Array(roundPoint).fill(roundPoint);
+  const emptyStars = Array(MAX_POINT - roundPoint).fill(roundPoint);
+
+  return (
+    <div>
+      {fillStars.map((_, i) => (
+        <BsStarFill color={color} size={size} className={className} style={style} onClick={() => onClickStar(i + 1)} />
+      ))}
+      {emptyStars.map((point, i) => (
+        <BsStar color={color} size={size} className={className} style={style} onClick={() => onClickStar(i + 1 + point)} />
+      ))}
+    </div>
+  );
+}

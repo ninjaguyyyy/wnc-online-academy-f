@@ -1,38 +1,27 @@
 import React from "react";
 import "./Course.css";
-import { Card, Carousel, Row, Col, Container } from "react-bootstrap";
+import { Carousel, Row, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import no1 from "assets/image/5.jpg";
 import no2 from "assets/image/17.png";
 import no3 from "assets/image/36.jpg";
-function index() {
-  const items = [
-    {
-      id: 1,
-      name: "no1",
-      title: "text no1",
-    },
-    {
-      id: 2,
-      name: "no2",
-      title: "text no2",
-    },
-    {
-      id: 3,
-      name: "no3",
-      title: "text no3",
-    },
-    {
-      id: 4,
-      name: "no4",
-      title: "text no4",
-    },
-    {
-      id: 5,
-      name: "no5",
-      title: "text no5 ",
-    },
-  ];
+import CourseCard from 'components/Common/CourseCard'
+import { useSelector } from 'react-redux';
+
+function Index() {
+  const coursesdata=useSelector(state=>state.user.dashboard.courses)
+  const newestCourse=coursesdata.concat().reverse()
+  const mostViewsCourse=coursesdata.concat().sort(
+    function(a, b) {
+      return b.feedbacks.length-a.feedbacks.length
+    }
+  )
+  const ratingCourse=coursesdata.concat().sort(
+    function(a, b) {
+      return b.rating-a.rating
+    }
+  )
+
   return (
     <Container className="course" id="carousel__course">
       <h2>Top 4 popular course</h2>
@@ -65,119 +54,80 @@ function index() {
           </Link>
         </Carousel.Item>
       </Carousel>
-      <h2>Top 10 most views course</h2>
-      <Container fluid>
-        <Row xs={1} md={2}>
-          {items.map((item, idx) => (
-            <div key={1 * idx}>
-              <Link to={`/course/${item.id}`}>
-                <Col style={{ padding: "20px" }}>
-                  <Card>
-                    <Card.Img variant="top" src={no1} />
-                    <Card.Body>
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Title>Teacher</Card.Title>
-                      <Card.Text
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        {item.title}
-                        <span style={{ display: "flex" }}>
-                          {Array(4)
-                            .fill()
-                            .map((_, i) => (
-                              <span key={1 * i}>⭐️</span>
-                            ))}
-                        </span>
-                      </Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Link>
-            </div>
+      <h2 className='h2css'>Top 10 most views course</h2>
+      <Carousel id='course__carousel'>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {mostViewsCourse?.slice(0,4).map((item,i)=>(
+            <CourseCard course={item} key={i} />
           ))}
         </Row>
-      </Container>
-      <h2>Top 10 most views course</h2>
-      <Container fluid>
-        <Row xs={1} md={2}>
-          {items.map((item, idx) => (
-            <div key={2 * idx}>
-              <Link to={`/course/${item.id}`}>
-                <Col style={{ padding: "20px" }}>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Text>{item.title}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Link>
-            </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {mostViewsCourse?.slice(4,8).map((item,i)=>(
+            <CourseCard course={item} key={i} />
           ))}
         </Row>
-      </Container>
-      <h2>Top 10 news course</h2>
-      <Container fluid>
-        <Row xs={1} md={2}>
-          {items.map((item, idx) => (
-            <div key={3 * idx}>
-              <Link to={`/course/${item.id}`} key={idx}>
-                <Col style={{ padding: "20px" }}>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Text>{item.title}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Link>
-            </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {mostViewsCourse?.slice(8,10).map((item,i)=>(
+            <CourseCard course={item} key={i} />
           ))}
         </Row>
-      </Container>
-      <h2>Top 10 most views</h2>
-      <Container fluid>
-        <Row xs={1} md={2}>
-          {items.map((item, idx) => (
-            <div key={4 * idx}>
-              <Link to={`/course/${item.id}`} key={idx}>
-                <Col style={{ padding: "20px" }}>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Text>{item.title}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Link>
-            </div>
+        </Carousel.Item>
+      </Carousel>
+      <h2 className='h2css'>Top 10 newest course</h2>
+      <Carousel id='course__carousel'>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {newestCourse?.slice(0,4).map((item,i)=>(
+            <CourseCard course={item} key={i} />
           ))}
         </Row>
-      </Container>
-      <h2>Top categories subcribe</h2>
-      <Container fluid>
-        <Row xs={1} md={3}>
-          {items.map((item, idx) => (
-            <div key={5 * idx}>
-              <Link to={`/course/${item.id}`} key={idx}>
-                <Col style={{ padding: "20px" }}>
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>{item.name}</Card.Title>
-                      <Card.Text>{item.title}</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Link>
-            </div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {newestCourse?.slice(4,8).map((item,i)=>(
+            <CourseCard course={item} key={i} />
           ))}
         </Row>
-      </Container>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {newestCourse?.slice(8,10).map((item,i)=>(
+            <CourseCard course={item} key={i} />
+          ))}
+        </Row>
+        </Carousel.Item>
+      </Carousel>
+      <h2 className='h2css'>Top 10 Rating course</h2>
+      <Carousel id='course__carousel'>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {ratingCourse?.slice(0,4).map((item,i)=>(
+            <CourseCard course={item} key={i} />
+          ))}
+        </Row>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {ratingCourse?.slice(4,8).map((item,i)=>(
+            <CourseCard course={item} key={i} />
+          ))}
+        </Row>
+        </Carousel.Item>
+        <Carousel.Item>
+          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
+          {ratingCourse?.slice(8,10).map((item,i)=>(
+            <CourseCard course={item} key={i} />
+          ))}
+        </Row>
+        </Carousel.Item>
+      </Carousel>
+      
     </Container>
   );
 }
-
-export default index;
+export default Index;
