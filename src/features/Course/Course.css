@@ -22,11 +22,11 @@
   position: unset;
 }
 #carousel__course a.carousel-control-prev{
-  background: radial-gradient(black, transparent);
+  background: #a7b0b2;
   height: 320px;
 }
 #carousel__course a.carousel-control-next{
-  background: radial-gradient(black, transparent);
+  background: #a7b0b2;
   height: 320px;
 }
 .carousel__courseLink{

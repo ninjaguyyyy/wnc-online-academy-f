@@ -3,7 +3,7 @@ import { ApiUrl } from "./authUser";
 
 const coursesAPI = {
   getAll: () => {
-    const url = `${ApiUrl}courses/`;
+    const url = `${ApiUrl}courses`;
     return axiosClient.get(url);
   },
 

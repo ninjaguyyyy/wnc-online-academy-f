@@ -11,7 +11,7 @@ import { ROLE } from "helpers/constants";
 import authApi from "api/authUser";
 import { saveToken, saveUserInfo } from "store/userSlice";
 
-export default function Login() {
+export default function Login(props) {
   const [role, setRole] = useState(ROLE.STUDENT);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -20,9 +20,6 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    console.log("data", role, username, password);
-
     const { errorCode, msg, user, accessToken, refreshToken } = await authApi.signInApi({ userName: username, passWord: password, role });
 
     if (errorCode) {
