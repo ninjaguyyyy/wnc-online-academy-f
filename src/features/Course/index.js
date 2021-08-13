@@ -103,30 +103,14 @@ function Index() {
         </Carousel.Item>
       </Carousel>
       <h2 className='h2css'>Top 10 Rating course</h2>
-      <Carousel id='course__carousel'>
-        <Carousel.Item>
           <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {ratingCourse?.slice(0,4).map((item,i)=>(
+          {ratingCourse?.map((item,i)=>(
             <CourseCard course={item} key={i} />
           ))}
         </Row>
-        </Carousel.Item>
-        <Carousel.Item>
-          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {ratingCourse?.slice(4,8).map((item,i)=>(
-            <CourseCard course={item} key={i} />
-          ))}
-        </Row>
-        </Carousel.Item>
-        <Carousel.Item>
-          <Row xs={1} md={4} style={{ marginBottom:'100px', backgroundColor:'#f69113' }}>
-          {ratingCourse?.slice(8,10).map((item,i)=>(
-            <CourseCard course={item} key={i} />
-          ))}
-        </Row>
-        </Carousel.Item>
-      </Carousel>
+        
       
+
     </Container>
   );
 }
