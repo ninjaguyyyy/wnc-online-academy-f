@@ -24,7 +24,7 @@ const userSlice = createSlice({
     setSections: (state, action) => {
       let obj = {
         name: action.payload,
-        lecture: [],
+        lectures: [],
       };
       state.sections.push(obj);
     },
@@ -32,12 +32,12 @@ const userSlice = createSlice({
       state.sections = action.payload;
     },
     addLecture: (state, action) => {
-      console.log("action", action.payload);
+      console.log(action)
       let lecture = {
         title: action.payload.title,
-        video: action.payload.video,
+        video: action.payload.video[0].filename,
       };
-      state.sections[action.payload.id].lecture.push(lecture);
+      state.sections[action.payload.id].lectures.push(lecture);
     },
     selectChapter: (state, action) => {
       state.selectChapter = action.payload;

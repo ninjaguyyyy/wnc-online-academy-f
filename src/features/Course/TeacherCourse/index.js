@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Container, Button, Row, Pagination } from "react-bootstrap";
+import { Container, Button, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import teacherApi from "api/teacherApi";
@@ -43,11 +43,6 @@ function Courses() {
           <img src={loading} className="loading" alt="loading" />
         </div>
       )}
-      <Pagination className="paginationcss">
-        <Pagination.Item>{1}</Pagination.Item>
-        <Pagination.Item>{10}</Pagination.Item>
-        <Pagination.Item>{11}</Pagination.Item>
-      </Pagination>
     </Container>
   );
 }
