@@ -10,7 +10,7 @@ import { BsSearch } from "react-icons/bs";
 import { useHistory, useLocation } from "react-router-dom";
 import CourseCard from "../../../components/Common/CourseCard";
 
-const PER_PAGE = 10;
+const PER_PAGE = 6;
 
 function CoursesList() {
   const query = useQuery();

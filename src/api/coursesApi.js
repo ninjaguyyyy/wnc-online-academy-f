@@ -12,6 +12,11 @@ const coursesAPI = {
     return axiosClient.get(url);
   },
 
+  getByTeacher: (id) => {
+    const url = `${ApiUrl}courses/teacher/${id}`;
+    return axiosClient.get(url);
+  },
+
   postReview(courseId, review) {
     const url = `${ApiUrl}courses/${courseId}/feedback`;
     return axiosClient.post(url, review);

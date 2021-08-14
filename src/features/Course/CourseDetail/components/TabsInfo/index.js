@@ -1,13 +1,10 @@
 import React from "react";
-import { Button, Card, Tab, Tabs } from "react-bootstrap";
-import Accordion from "react-bootstrap/Accordion";
-import { BsFileEarmarkText, BsPlay, BsLock, BsLockFill } from "react-icons/bs";
-import { toast } from "react-toastify";
+import { Tab, Tabs } from "react-bootstrap";
 import LearnTabItem from "./components/LearnTabItem";
 import ReviewTabItem from "./components/ReviewTabItem";
 import TeacherTabItem from "./components/TeacherTabItem";
 
-export default function TabsInfo({ course }) {
+export default function TabsInfo({ course, teacherCourses }) {
   return (
     <Tabs id="uncontrolled-tab-example" className="mb-3" style={{ marginTop: "30px" }}>
       <Tab eventKey="Overview" title="Overview">
@@ -18,13 +15,11 @@ export default function TabsInfo({ course }) {
         <LearnTabItem courseId={course._id} sections={course.sections} />
       </Tab>
       <Tab eventKey="Instructor" title="Instructor">
-        <TeacherTabItem teacher={course.lecturer} />
+        <TeacherTabItem teacher={course.lecturer} courses={teacherCourses} />
       </Tab>
       <Tab eventKey="Reviews" title="Reviews">
         <ReviewTabItem course={course} />
       </Tab>
     </Tabs>
   );
-}
-{
 }

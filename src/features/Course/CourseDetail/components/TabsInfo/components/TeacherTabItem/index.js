@@ -1,7 +1,18 @@
+import CourseCard from "components/Common/CourseCard";
 import React from "react";
 import { BsGem, BsStar, BsChatDots, BsDisplay } from "react-icons/bs";
 
-export default function TeacherTabItem({ teacher }) {
+export default function TeacherTabItem({ teacher, courses }) {
+  const totalReviews = () => {
+    let total = 0;
+
+    for (let course of courses) {
+      total += course.feedbacks.length;
+    }
+
+    return total;
+  };
+
   return (
     <div className="mt-5">
       <div className="d-flex justify-content-between align-items-center">
@@ -19,21 +30,18 @@ export default function TeacherTabItem({ teacher }) {
           </div>
         </div>
 
-        <div className="teacher-intro">
-          Hi everyone. I’m Arash and I’m a UI/UX designer. In this course, I will help you learn and master Figma app comprehensively from
-          scratch. Figma is an innovative and brilliant tool for User Interface design
-        </div>
+        <div className="teacher-intro">Hi everyone. I’m a teacher come from subject "Phát triển ứng dụng Web nâng cao"</div>
       </div>
 
       <div className="extra-info">
         <div className="extra-item">
           <BsStar size={18} />
-          <span className="ml-2">500 Ratings</span>
+          <span className="ml-2">{totalReviews()} Ratings</span>
         </div>
 
         <div className="extra-item">
           <BsChatDots size={18} />
-          <span className="ml-2">500 Reviews</span>
+          <span className="ml-2">{totalReviews()} Reviews</span>
         </div>
 
         <div className="extra-item">
@@ -43,7 +51,14 @@ export default function TeacherTabItem({ teacher }) {
 
         <div className="extra-item">
           <BsDisplay size={18} />
-          <span className="ml-2">500 Courses</span>
+          <span className="ml-2">{courses.length} Courses</span>
+        </div>
+      </div>
+      <div>
+        <div className="row">
+          {courses.slice(0, 4).map((course) => (
+            <CourseCard key={course._id} course={course} isOpenNewTab={true} column={6} />
+          ))}
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ import { course as CourseRedux, updateUserFavoriteCourses } from "store/userSlic
 import RatingStars from "../RatingStars";
 import "./index.css";
 
-export default function CourseCard({ course }) {
+export default function CourseCard({ course, isOpenNewTab, column }) {
   const user = useSelector((state) => state.user);
   const courses = useSelector((state) => state.teacher.courses);
   const history = useHistory();
@@ -48,7 +48,7 @@ export default function CourseCard({ course }) {
   const isNew = getDayAgo(course.createdAt) < 5;
 
   return (
-    <Col sm={4} style={{ padding: "20px" }} className="CourseCard">
+    <Col sm={column ? column : 4} style={{ padding: "20px" }} className="CourseCard">
       <Card>
         <Card.Body>
           <Card.Img variant="top" style={{ width: "100%", height: "200px" }} src={generateURLGetImageResource(avatar)} />
@@ -91,7 +91,7 @@ export default function CourseCard({ course }) {
           </div>
 
           <Card.Title>
-            <Link className="card__title" to={`/course/${_id}`}>
+            <Link className="card__title" to={`/course/${_id}`} target={isOpenNewTab ? "_blank" : "_self"}>
               {title}
             </Link>
           </Card.Title>
