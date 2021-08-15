@@ -32,10 +32,10 @@ const userSlice = createSlice({
       state.sections = action.payload;
     },
     addLecture: (state, action) => {
-      console.log(action)
       let lecture = {
         title: action.payload.title,
         video: action.payload.video[0].filename,
+        isPreview:action.payload.isPreview,
       };
       state.sections[action.payload.id].lectures.push(lecture);
     },

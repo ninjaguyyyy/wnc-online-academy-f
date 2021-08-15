@@ -37,6 +37,7 @@ function EditCourse(props) {
   const [video, setVideo] = useState(null);
   const [short, setShort] = useState("");
   const [long, setLong] = useState("");
+  const [preview,setPreview] = useState(false)
   const [isComplete, setIsComplete] = useState(false);
   const Course = useSelector((state) => state.user.course);
   const isLoading = useSelector((state) => state.user.loading);
@@ -125,6 +126,7 @@ function EditCourse(props) {
                       isValid={touched.title && !errors.title}
                       isInvalid={!!errors.title}
                     />
+                    
                   </Form.Group>
                   <Form.Group
                     as={Col}
@@ -215,6 +217,14 @@ function EditCourse(props) {
                         name="title"
                         onChange={e=>setTitle(e.target.value)}
                       />
+                      <Form.Check 
+                        className='mt20'
+                        type='checkbox'
+                        id={`default-checkbox`}
+                        label={`Please check this if video is FREE TO VIEW`}
+                        onChange={e=>setPreview(e.target.checked)}
+
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -249,7 +259,8 @@ function EditCourse(props) {
                             let payload={
                               title:title,
                               video:res.files,
-                              id:SelectChapter
+                              id:SelectChapter,
+                              isPreview:preview
                             }
                             dispatch(addLecture(payload))
                             dispatch(setLoading(false))
