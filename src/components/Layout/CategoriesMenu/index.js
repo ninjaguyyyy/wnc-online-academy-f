@@ -3,13 +3,16 @@ import React, { useEffect, useState } from "react";
 import { DropdownButton, NavDropdown } from "react-bootstrap";
 import { DropdownSubmenu } from "react-bootstrap-submenu";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { topCategory } from "store/userSlice";
 export default function CategoriesMenu() {
   const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
       const { success, categories } = await categoriesAPI.getTree();
       success && setCategories(categories);
+      dispatch(topCategory(categories));
     })();
   }, []);
 

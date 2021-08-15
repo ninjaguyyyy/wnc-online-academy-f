@@ -82,10 +82,6 @@ function NavbarLayout(props) {
         <Navbar.Collapse id="basic-navbar-nav" className="navbar__right">
           <Nav className="mr-auto navbar__search ">
             <CategoriesMenu />
-            <Form inline style={{ width: "100%" }} className="ml-4 d-flex">
-              <FormControl type="text" placeholder="Search" className="mr-sm-2" style={{ width: "75%" }} />
-              <Button variant="outline-success">Search</Button>
-            </Form>
           </Nav>
 
           <NavDropdown

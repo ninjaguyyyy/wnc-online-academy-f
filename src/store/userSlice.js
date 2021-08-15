@@ -13,6 +13,7 @@ const initialState = {
   loading: false,
   dashboard: {
     courses: null,
+    categories: null,
   },
 };
 
@@ -62,6 +63,9 @@ const userSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+    topCategory: (state, action) => {
+      state.dashboard.categories = action.payload;
+    },
   },
 });
 
@@ -77,5 +81,6 @@ export const {
   updateUserAttendedCourses,
   updateUserFavoriteCourses,
   dashboardCourse,
+  topCategory,
 } = actions;
 export default reducer;

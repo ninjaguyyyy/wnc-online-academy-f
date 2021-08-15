@@ -6,22 +6,13 @@ import {
   Row,
   Col,
   InputGroup,
-  OverlayTrigger,
-  Popover,
-  Accordion,
-  Card,
-  Dropdown,
-  DropdownButton,
 } from "react-bootstrap";
-import loading from "assets/image/loading.svg";
 
 import { toast } from "react-toastify";
 import teacherApi from "api/teacherApi";
 import * as yup from "yup";
 import { Formik } from "formik";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { useDispatch, useSelector } from "react-redux";
-import { categories, promotions } from "store/teacherSlice";
 import categoriesAPI from "api/categoriesApi";
 import promotionsAPI from "api/promotionsApi";
 import { useHistory } from "react-router-dom";
