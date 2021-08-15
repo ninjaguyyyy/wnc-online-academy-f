@@ -86,7 +86,7 @@ export default function LearnTabItem({ courseId, sections }) {
         </Modal.Header>
         <Modal.Body>
           <Player ref={playerElement} startTime={localStorage.getItem(selectedLecture._id) || 0}>
-            <source src={`${"http://localhost:3001/"}resources/video/wnc21-NDZm7pXF4I.mp4`} type="video/mp4" />
+            <source src={`${ApiUrl}resources/video/wnc21-NDZm7pXF4I.mp4`} type="video/mp4" />
           </Player>
         </Modal.Body>
         <Modal.Footer>
