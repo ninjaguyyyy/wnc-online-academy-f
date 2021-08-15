@@ -1,15 +1,18 @@
 import categoriesAPI from "api/categoriesApi";
 import React, { useEffect, useState } from "react";
-import { NavDropdown, Dropdown, DropdownButton } from "react-bootstrap";
-import { DropdownSubmenu, NavDropdownMenu } from "react-bootstrap-submenu";
+import { DropdownButton, NavDropdown } from "react-bootstrap";
+import { DropdownSubmenu } from "react-bootstrap-submenu";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { topCategory } from "store/userSlice";
 export default function CategoriesMenu() {
   const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
     (async () => {
       const { success, categories } = await categoriesAPI.getTree();
       success && setCategories(categories);
+      dispatch(topCategory(categories));
     })();
   }, []);
 
@@ -18,7 +21,7 @@ export default function CategoriesMenu() {
       {categories.map((category) => {
         if (category.child.length === 0) {
           return (
-            <NavDropdown.Item>
+            <NavDropdown.Item key={category._id}>
               <Link style={{ color: "#000" }} to={`/web?category=${category._id}`}>
                 {category.name}
               </Link>
@@ -27,9 +30,9 @@ export default function CategoriesMenu() {
         }
 
         return (
-          <DropdownSubmenu href={`/web?category=${category._id}`} title={category.name}>
+          <DropdownSubmenu href={`/web?category=${category._id}`} key={category._id} title={category.name}>
             {category.child.map((subCategory) => (
-              <NavDropdown.Item>
+              <NavDropdown.Item key={subCategory._id}>
                 <Link style={{ color: "#000" }} to={`/web?category=${subCategory._id}`}>
                   {subCategory.name}
                 </Link>

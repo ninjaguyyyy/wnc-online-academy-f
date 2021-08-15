@@ -11,7 +11,7 @@ function Dashboard() {
   const coursesdata=useSelector(state=>state.user.dashboard.courses)
   useEffect(()=>{
     coursesAPI.getAll().then(res=>dispatch(dashboardCourse(res.courses)))
-  },[coursesdata])
+  },[dispatch])
   return (
     <div>
       <Layout />

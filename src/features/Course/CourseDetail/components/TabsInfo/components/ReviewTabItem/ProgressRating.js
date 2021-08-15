@@ -1,7 +1,6 @@
 import RatingStars from "components/Common/RatingStars";
 import React from "react";
 import { ProgressBar } from "react-bootstrap";
-import { BsStarFill, BsStar } from "react-icons/bs";
 
 export default function ProgressRating({ point, total, rate }) {
   return (

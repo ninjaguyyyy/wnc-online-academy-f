@@ -3,38 +3,35 @@ import DynamicBreadcrumb from "components/Common/DynamicBreadcrumb";
 import RatingStars from "components/Common/RatingStars";
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import CourseCard from "../../../components/Common/CourseCard";
 import CardPaymentInfo from "./components/CardPaymentInfo";
 import TabsInfo from "./components/TabsInfo";
 import "./detailCourse.css";
-import CourseCard from "../../../components/Common/CourseCard";
 
 function CourseDetail() {
-  const dispatch = useDispatch();
   let { id } = useParams();
-  const [loading, setLoading] = useState(false);
   const [course, setCourse] = useState(null);
   const [relativeCourses, setRelativeCourses] = useState([]);
-
-  const history = useHistory();
+  const [teacherCourses, setTeacherCourses] = useState([]);
 
   useEffect(() => {
     (async () => {
-      // setLoading(true);
       const { success, course } = await coursesAPI.getById(id);
       success && setCourse(course);
 
-      const { courses } = await coursesAPI.getAll({ category: course.category._id });
-      const sortedCourses = courses.sort((a, b) => b.students.length - a.students.length);
+      const [relativeCourses, teacherCourses] = await Promise.all([
+        coursesAPI.getAll({ category: course.category._id }),
+        coursesAPI.getByTeacher(course.lecturer._id),
+      ]);
+      const sortedCourses = relativeCourses.courses.sort((a, b) => b.students.length - a.students.length);
       const filteredCourses = sortedCourses.filter((course) => course._id !== id);
       const slicedCourses = filteredCourses.slice(0, 5);
       setRelativeCourses(slicedCourses);
-      // setLoading(false);
+
+      setTeacherCourses(teacherCourses.courses);
     })();
   }, []);
-
-  const token = useSelector((state) => state.user.token);
 
   return (
     <Container>
@@ -43,9 +40,9 @@ function CourseDetail() {
       </Row>
       {course && (
         <Row>
-          <Col sm={8} style={{ paddingRight: "150px" }}>
+          <Col sm={8} style={{ paddingRight: "100px" }}>
             <h2>{course.title}</h2>
-            <div className="short-des mt-3 mb-4 ">{course.shortDescription}</div>
+            <div className="short-des mt-3 mb-4 " dangerouslySetInnerHTML={{ __html: course.shortDescription }}></div>
             <div className="info mb-5">
               <img
                 className="rounded-full"
@@ -72,7 +69,7 @@ function CourseDetail() {
                 </div>
               </div>
             </div>
-            <TabsInfo course={course} />
+            <TabsInfo course={course} teacherCourses={teacherCourses} />
           </Col>
           <Col sm={4}>
             <CardPaymentInfo course={course} />
@@ -82,9 +79,8 @@ function CourseDetail() {
 
       <Row className="mt-5">
         <h2>Relative Courses</h2>
-        {console.log(relativeCourses)}
         {relativeCourses.map((course) => (
-          <CourseCard course={course} />
+          <CourseCard course={course} isOpenNewTab={true} />
         ))}
       </Row>
     </Container>
@@ -92,6 +88,3 @@ function CourseDetail() {
 }
 
 export default CourseDetail;
-{
-  /* <img src={loading} className="loading" alt="loading" /> */
-}

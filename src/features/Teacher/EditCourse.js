@@ -13,12 +13,11 @@ import {
   Button,
   Modal,
 } from "react-bootstrap";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState, ContentState, convertFromHTML } from 'draft-js'
 import { Formik } from "formik";
 import * as yup from "yup";
 import teacherApi from 'api/teacherApi';
 import EditorDescription from './EditDescription';
+import { useHistory } from 'react-router-dom';
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -38,6 +37,7 @@ function EditCourse(props) {
   const [video, setVideo] = useState(null);
   const [short, setShort] = useState("");
   const [long, setLong] = useState("");
+  const [preview,setPreview] = useState(false)
   const [isComplete, setIsComplete] = useState(false);
   const Course = useSelector((state) => state.user.course);
   const isLoading = useSelector((state) => state.user.loading);
@@ -45,7 +45,7 @@ function EditCourse(props) {
   const SelectChapter = useSelector((state) => state.teacher.selectChapter);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [editorState,setEditorState]= useState('')
+  const history = useHistory()
   const getContentShort = (htmlContentProp) => {
     setShort(htmlContentProp);
   }
@@ -85,21 +85,17 @@ function EditCourse(props) {
               data.fullDescription = long
               data.sections=Sections
               data.isComplete=isComplete
-              if (data.avatar) {
-                const uploadRes = await teacherApi.upLoad(data.avatar);
-                data.avatar = uploadRes.files[0].filename;
-              }
               dispatch(setLoading(true))
               teacherApi.editCourses(data,Course._id).then(res=>{
                 dispatch(setLoading(false))
                 dispatch(course(res.course))
+                history.push("/teacher/courses")
               })
             }}
             initialValues={{
               title: Course.title,
               originPrice: Course.originPrice,
               sections: null,
-              avatar:'',
               shortDescription: Course.shortDescription,
               fullDescription: Course.fullDescription,
             }}
@@ -124,11 +120,13 @@ function EditCourse(props) {
                     <Form.Control
                       type="text"
                       name="title"
+                      disabled
                       value={values.title}
                       onChange={handleChange}
                       isValid={touched.title && !errors.title}
                       isInvalid={!!errors.title}
                     />
+                    
                   </Form.Group>
                   <Form.Group
                     as={Col}
@@ -139,6 +137,7 @@ function EditCourse(props) {
                     <InputGroup hasValidation>
                       <Form.Control
                         type="number"
+                        disabled
                         placeholder="Origin Price"
                         aria-describedby="inputGroupPrepend"
                         name="originPrice"
@@ -150,17 +149,15 @@ function EditCourse(props) {
                     </InputGroup>
                   </Form.Group>
                 </Row>
-               
                 <Form.Group className="position-relative mb-3">
                   <Button variant="primary" onClick={handleShow1}>
                     Add Chapter
                   </Button>
                 </Form.Group>
-                
                 {Sections.length>0&&
                 <Form.Group className="position-relative mb-3">
                   {Sections.map((e,i)=>(
-                    <div style={{ margin:'15px 0'}}>
+                    <div style={{ margin:'15px 0', display: 'flex'}}>
                       <Button variant="info" 
                         onClick={()=>{
                           handleShow()
@@ -170,22 +167,13 @@ function EditCourse(props) {
                       >
                         {e.name}
                       </Button>
+                      {e.lectures.length>0&&
+                      <div className='displayvideo'>
+                        {e.lectures.length} videos
+                      </div>}
                     </div>
                   ))}
                 </Form.Group>}
-                <Col sm={6}>
-                  <Form.Group className="position-relative mb-3">
-                    <Form.Label>Avatar</Form.Label>
-                    <br />
-                    <input
-                      type="file"
-                      name="avatar"
-                      onChange={(event) => {
-                        setFieldValue("avatar", event.target.files[0]);
-                      }}
-                    />
-                  </Form.Group>
-                </Col>
                 <Modal show={show1} onHide={handleClose1}>
                   <Modal.Header closeButton>
                     <Modal.Title>Chapter name:</Modal.Title>
@@ -229,6 +217,14 @@ function EditCourse(props) {
                         name="title"
                         onChange={e=>setTitle(e.target.value)}
                       />
+                      <Form.Check 
+                        className='mt20'
+                        type='checkbox'
+                        id={`default-checkbox`}
+                        label={`Please check this if video is FREE TO VIEW`}
+                        onChange={e=>setPreview(e.target.checked)}
+
+                      />
                     </Form.Group>
 
                     <Form.Group
@@ -263,7 +259,8 @@ function EditCourse(props) {
                             let payload={
                               title:title,
                               video:res.files,
-                              id:SelectChapter
+                              id:SelectChapter,
+                              isPreview:preview
                             }
                             dispatch(addLecture(payload))
                             dispatch(setLoading(false))

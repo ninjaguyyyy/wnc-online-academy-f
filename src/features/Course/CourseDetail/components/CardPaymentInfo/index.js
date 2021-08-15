@@ -1,14 +1,13 @@
 import { ApiUrl } from "api/authUser";
-import React, { useState } from "react";
-import { Card, Button, Badge, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
-import "./index.css";
-import { BsHeart, BsClockHistory, BsGift } from "react-icons/bs";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import userAPi from "api/userApi";
-import { useDispatch } from "react-redux";
-import { addAttendedCourse, saveUserInfo, updateUserAttendedCourses, updateUserFavoriteCourses } from "store/userSlice";
-import { getFormatDate, getFormatDateTime } from "helpers";
+import { getFormatDate } from "helpers";
+import React, { useState } from "react";
+import { Badge, Button, Card, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { BsClockHistory, BsGift, BsHeart, BsCloudUpload, BsFilm, BsPersonPlus } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { updateUserAttendedCourses, updateUserFavoriteCourses } from "store/userSlice";
+import "./index.css";
 
 export default function CardPaymentInfo({ course }) {
   const dispatch = useDispatch();
@@ -82,14 +81,14 @@ export default function CardPaymentInfo({ course }) {
             <ul className="list-info">
               <li className="list-item">
                 <div className="head d-flex align-items-center">
-                  <BsClockHistory color="#949DA6" size={15} />
+                  <BsFilm color="#949DA6" size={15} />
                   <div className="head__label ml-3">Lessons</div>
                 </div>
                 <div className="tail">{course.sections.reduce((sum, section) => section.lectures.length + sum, 0)}</div>
               </li>
               <li className="list-item">
                 <div className="head d-flex align-items-center">
-                  <BsClockHistory color="#949DA6" size={15} />
+                  <BsPersonPlus color="#949DA6" size={15} />
                   <div className="head__label ml-3">Enrolled</div>
                 </div>
                 <div className="tail">{course.students.length}</div>
@@ -113,6 +112,13 @@ export default function CardPaymentInfo({ course }) {
                   <div className="head__label ml-3">Last Update</div>
                 </div>
                 <div className="tail">{getFormatDate(course.updatedAt)}</div>
+              </li>
+              <li className="list-item">
+                <div className="head d-flex align-items-center">
+                  <BsCloudUpload color="#949DA6" size={15} />
+                  <div className="head__label ml-3">Full Lectures</div>
+                </div>
+                <div className="tail">{course.isComplete ? "Yes" : "No"}</div>
               </li>
             </ul>
             <div className="d-flex justify-content-center">
@@ -140,12 +146,3 @@ export default function CardPaymentInfo({ course }) {
     </>
   );
 }
-
-//             <div style={{ margin: "30px 0 150px 0" }}>
-//               <Button variant="primary" size="lg" style={{ marginRight: "30px" }} onClick={handleAddToFavorite}>
-//                 Add to your wishlist
-//               </Button>
-//               <Button variant="primary" size="lg">
-//                 Assign
-//               </Button>
-//             </div>

@@ -3,12 +3,17 @@ import { ApiUrl } from "./authUser";
 
 const coursesAPI = {
   getAll: (params) => {
-    const url = `${ApiUrl}courses`;
+    const url = `${ApiUrl}courses/`;
     return axiosClient.get(url, { params });
   },
 
   getById: (id) => {
     const url = `${ApiUrl}courses/${id}`;
+    return axiosClient.get(url);
+  },
+
+  getByTeacher: (id) => {
+    const url = `${ApiUrl}courses/teacher/${id}`;
     return axiosClient.get(url);
   },
 

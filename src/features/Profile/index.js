@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { Form, Button, Container, Row, Col } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import * as yup from 'yup';
@@ -41,6 +41,7 @@ function Profile() {
           lastName: userInfo.lastName,
           email: userInfo.email
         }}
+        enableReinitialize={true}
       >
         {({
           handleSubmit,
@@ -49,7 +50,10 @@ function Profile() {
           touched,
           errors,
         }) => (
-          <Form noValidate onSubmit={handleSubmit}>
+          <Form 
+            noValidate 
+            onSubmit={handleSubmit}
+          >
             <Row className='mb-3'>
               <Form.Group
                 as={Col}
@@ -99,7 +103,7 @@ function Profile() {
                 />
               </Form.Group>
             </Row>
-            <Button type='submit'>Submit form</Button>
+            <Button type='submit' className='mt20'>Submit form</Button>
           </Form>
         )}
       </Formik>
@@ -149,7 +153,7 @@ function Profile() {
                 md='8'
                 className='position-relative'
               >
-                <Form.Label htmlFor='newPassword'>New Password</Form.Label>
+                <Form.Label htmlFor='newPassword' className='mt20'>New Password</Form.Label>
                 <Form.Control
                   type='password'
                   id='newPassword'
@@ -177,7 +181,7 @@ function Profile() {
                 />
               </Form.Group>
             </Row>
-            <Button type='submit'>Submit form</Button>
+            <Button type='submit' className='mt20'>Submit form</Button>
           </Form>
         )}
       </Formik>
