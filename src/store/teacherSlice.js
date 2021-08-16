@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   categories: null,
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 const userSlice = createSlice({
-  name: "teacher",
+  name: 'teacher',
   initialState: initialState,
   reducers: {
     categories: (state, action) => {

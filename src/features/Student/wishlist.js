@@ -1,9 +1,9 @@
-import userAPi from "api/userApi";
-import CourseCard from "components/Common/CourseCard";
-import HeadingInfo from "components/Common/HeadingInfo";
-import React, { useEffect, useState } from "react";
-import { Container, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import userAPi from 'api/userApi';
+import CourseCard from 'components/Common/CourseCard';
+import HeadingInfo from 'components/Common/HeadingInfo';
+import React, { useEffect, useState } from 'react';
+import { Container, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
 function WishList() {
   const [favoriteCourses, setFavoriteCourses] = useState([]);
@@ -19,7 +19,7 @@ function WishList() {
   return (
     <Container>
       <Row>
-        <HeadingInfo title="Wish List" paths={[{ label: "Home", ref: "/" }, { label: "Wish List" }]} />
+        <HeadingInfo title="Wish List" paths={[{ label: 'Home', ref: '/' }, { label: 'Wish List' }]} />
       </Row>
       <Row>
         {favoriteCourses.map((course) => (

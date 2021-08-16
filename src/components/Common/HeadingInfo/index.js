@@ -1,6 +1,6 @@
-import React from "react";
-import DynamicBreadcrumb from "../DynamicBreadcrumb";
-import "./index.css";
+import React from 'react';
+import DynamicBreadcrumb from '../DynamicBreadcrumb';
+import './index.css';
 
 export default function HeadingInfo({ title, paths }) {
   return (

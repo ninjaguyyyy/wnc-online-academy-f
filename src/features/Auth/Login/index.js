@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import background from "assets/image/backgroundLogin.jpg";
-import IconTeacher from "assets/image/IconTeacher";
-import IconStudent from "assets/image/IconStudent";
-import "./index.css";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import authApi from "api/authUser";
-import { saveToken, saveUserInfo } from "store/userSlice";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import loading from "assets/image/loading.svg";
-import { setLoadingSignIn } from "store/signSlice";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import background from 'assets/image/backgroundLogin.jpg';
+import IconTeacher from 'assets/image/IconTeacher';
+import IconStudent from 'assets/image/IconStudent';
+import './index.css';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import authApi from 'api/authUser';
+import { saveToken, saveUserInfo } from 'store/userSlice';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import loading from 'assets/image/loading.svg';
+import { setLoadingSignIn } from 'store/signSlice';
 
 const schema = yup.object().shape({
   userName: yup.string().required(),
@@ -34,12 +34,12 @@ function Login(props) {
   const [role, setRole] = useState(3);
   const List = [
     {
-      role: "Student",
+      role: 'Student',
       roleNum: 3,
       icon: <IconStudent />,
     },
     {
-      role: "Teacher",
+      role: 'Teacher',
       roleNum: 2,
       icon: <IconTeacher />,
     },
@@ -54,7 +54,7 @@ function Login(props) {
               checked={role === item.roleNum}
               value={item.roleNum}
               onClick={() => setRole(item.roleNum)}
-              {...register("role")}
+              {...register('role')}
             />
             <div className="login__chooseRole">
               {item.icon}
@@ -66,8 +66,8 @@ function Login(props) {
     });
   };
   const displayRole = (role) => {
-    if (role === 2) return "Teacher";
-    if (role === 3) return "Student";
+    if (role === 2) return 'Teacher';
+    if (role === 3) return 'Student';
   };
   const dispatch = useDispatch();
 
@@ -85,25 +85,25 @@ function Login(props) {
       dispatch(setLoadingSignIn(false));
       dispatch(saveUserInfo(user));
       dispatch(saveToken(accessToken));
-      user.role === 2 && props.history.push("/teacher");
+      user.role === 2 && props.history.push('/teacher');
     }
   };
   return (
     <LoginContainer>
       {!isLoading && (
         <Formstyle>
-          <h3 style={{ paddingTop: "50px" }}>Login as {displayRole(role)}</h3>
+          <h3 style={{ paddingTop: '50px' }}>Login as {displayRole(role)}</h3>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Role>{displayList(role)}</Role>
-            <label htmlFor="username" style={{ marginTop: "30px" }}>
+            <label htmlFor="username" style={{ marginTop: '30px' }}>
               Username
             </label>
-            <Input {...register("userName")} id="username" />
+            <Input {...register('userName')} id="username" />
             <p className="login__error">{errors.userName?.message}</p>
             <label htmlFor="password">Password</label>
-            <Input type="password" {...register("passWord")} id="password" />
+            <Input type="password" {...register('passWord')} id="password" />
             <p className="login__error">{errors.passWord?.message}</p>
-            <div className="login__button" style={{ width: "100%", marginTop: "50px" }}>
+            <div className="login__button" style={{ width: '100%', marginTop: '50px' }}>
               <Button variant="primary" size="lg" className="login__button" type="submit">
                 Login
               </Button>

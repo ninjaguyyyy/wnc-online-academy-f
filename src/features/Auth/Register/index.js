@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import IconTeacher from "assets/image/IconTeacher";
-import IconStudent from "assets/image/IconStudent";
-import "./../Login/index.css";
-import background from "assets/image/backgroundSignUp.jpg";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { Formstyle, Form, LoginContainer, Role, Input } from "./../Login/index";
-import { useSelector, useDispatch } from "react-redux";
-import { signUp, setLoadingSignUp } from "store/signSlice";
-import authApi from "api/authUser";
-import loading from "assets/image/loading.svg";
+import React, { useState } from 'react';
+import IconTeacher from 'assets/image/IconTeacher';
+import IconStudent from 'assets/image/IconStudent';
+import './../Login/index.css';
+import background from 'assets/image/backgroundSignUp.jpg';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Formstyle, Form, LoginContainer, Role, Input } from './../Login/index';
+import { useSelector, useDispatch } from 'react-redux';
+import { signUp, setLoadingSignUp } from 'store/signSlice';
+import authApi from 'api/authUser';
+import loading from 'assets/image/loading.svg';
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   userName: yup.string().required(),
   passWord: yup.string().required(),
-  repeatPassWord: yup.string().oneOf([yup.ref("passWord"), null], "Passwords must match"),
+  repeatPassWord: yup.string().oneOf([yup.ref('passWord'), null], 'Passwords must match'),
   role: yup.number().required(),
   firstName: yup.string().required(),
   lastName: yup.string().required(),
@@ -37,12 +37,12 @@ function Register() {
   const [role, setRole] = useState(3);
   const List = [
     {
-      role: "Student",
+      role: 'Student',
       roleNum: 3,
       icon: <IconStudent />,
     },
     {
-      role: "Teacher",
+      role: 'Teacher',
       roleNum: 2,
       icon: <IconTeacher />,
     },
@@ -72,7 +72,7 @@ function Register() {
               checked={role === item.roleNum}
               value={item.roleNum}
               onClick={() => setRole(item.roleNum)}
-              {...register("role")}
+              {...register('role')}
             />
             <div className="login__chooseRole">
               {item.icon}
@@ -84,39 +84,39 @@ function Register() {
     });
   };
   const displayRole = (role) => {
-    if (role === 2) return "Teacher";
-    if (role === 3) return "Student";
+    if (role === 2) return 'Teacher';
+    if (role === 3) return 'Student';
   };
   return (
     <LoginContainer style={{ backgroundImage: `url(${background})` }}>
       {!isLoading && (
-        <Formstyle style={{ margin: "unset" }}>
-          <h3 style={{ paddingTop: "30px" }}>Sign up as {displayRole(role)}</h3>
+        <Formstyle style={{ margin: 'unset' }}>
+          <h3 style={{ paddingTop: '30px' }}>Sign up as {displayRole(role)}</h3>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Role>{displayList(role)}</Role>
-            <Input {...register("email")} placeholder="Email" />
+            <Input {...register('email')} placeholder="Email" />
             <p className="login__error">{errors.email?.message}</p>
-            <Input {...register("userName")} placeholder="Username" />
+            <Input {...register('userName')} placeholder="Username" />
             <p className="login__error">{errors.userName?.message}</p>
-            <Input {...register("firstName")} placeholder="First Name" />
+            <Input {...register('firstName')} placeholder="First Name" />
             <p className="login__error">{errors.firstName?.message}</p>
-            <Input {...register("lastName")} placeholder="Last Name" />
+            <Input {...register('lastName')} placeholder="Last Name" />
             <p className="login__error">{errors.lastName?.message}</p>
-            <Input type="password" {...register("passWord")} placeholder="Password" />
+            <Input type="password" {...register('passWord')} placeholder="Password" />
             <p className="login__error">{errors.passWord?.message}</p>
-            <Input type="password" {...register("repeatPassWord")} placeholder="Retype Password" />
+            <Input type="password" {...register('repeatPassWord')} placeholder="Retype Password" />
             <p className="login__error">{errors.repeatPassWord?.message}</p>
-            <div className="login__button" style={{ width: "100%" }}>
-              <Button variant="primary" size="lg" className="login__button" type="submit" style={{ margin: "unset", marginTop: "40px" }}>
+            <div className="login__button" style={{ width: '100%' }}>
+              <Button variant="primary" size="lg" className="login__button" type="submit" style={{ margin: 'unset', marginTop: '40px' }}>
                 Sign up
               </Button>
             </div>
             <div className="login__signup">
               <Link className="login__signupbtn" to="/login">
-                Login{" "}
+                Login{' '}
               </Link>
               <Link className="login__signupbtn" to="/dashboard">
-                Dashboard{" "}
+                Dashboard{' '}
               </Link>
             </div>
           </Form>

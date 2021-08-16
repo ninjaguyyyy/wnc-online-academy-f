@@ -1,17 +1,17 @@
-import authApi from "api/authUser";
-import { useQuery } from "App";
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import RegisterImage from "../../assets/image/register.svg";
-import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
+import authApi from 'api/authUser';
+import { useQuery } from 'App';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import RegisterImage from '../../assets/image/register.svg';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
 export default function VerifyOTP() {
   const query = useQuery();
   const history = useHistory();
 
-  const [email, setEmail] = useState(query.get("email") || "");
-  const [otp, setOTP] = useState("");
+  const [email, setEmail] = useState(query.get('email') || '');
+  const [otp, setOTP] = useState('');
 
   const handleVerify = async (e) => {
     e.preventDefault();
@@ -19,7 +19,7 @@ export default function VerifyOTP() {
     const { msg, user } = await authApi.verifyOTP({ email, otp: +otp });
     msg && toast.error(msg);
     if (user) {
-      toast.success("Verify successfully. You can login to system.");
+      toast.success('Verify successfully. You can login to system.');
       history.push(`/login`);
     }
   };
@@ -80,13 +80,13 @@ export default function VerifyOTP() {
         <div className="panel right-panel">
           <div className="content">
             <h3>
-              <Link to="/" style={{ color: "#fff" }}>
+              <Link to="/" style={{ color: '#fff' }}>
                 Online Academy - WNC 21
               </Link>
             </h3>
             <p>If you don't have a OTP code, please check your email or register another account.</p>
             <button className="login__btn transparent" id="sign-in-btn">
-              <Link to="/register" style={{ color: "#fff" }}>
+              <Link to="/register" style={{ color: '#fff' }}>
                 Register
               </Link>
             </button>

@@ -1,9 +1,9 @@
-import React from "react";
-import Profile from "features/Profile";
-import { Container, Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-import loading from "assets/image/loading.svg";
+import React from 'react';
+import Profile from 'features/Profile';
+import { Container, Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import loading from 'assets/image/loading.svg';
 
 function Teacher() {
   const history = useHistory();
@@ -14,13 +14,13 @@ function Teacher() {
         <Profile />
         <div
           style={{
-            display: "flex",
-            alginItems: "center",
-            justifyContent: "center",
-            marginTop: "30px",
+            display: 'flex',
+            alginItems: 'center',
+            justifyContent: 'center',
+            marginTop: '30px',
           }}
         >
-          <Button onClick={() => history.push("/teacher/courses")}>My Course</Button>
+          <Button onClick={() => history.push('/teacher/courses')}>My Course</Button>
         </div>
       </Container>
     );

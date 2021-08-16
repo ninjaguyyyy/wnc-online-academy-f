@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
-import authApi from "api/authUser";
-import { useDispatch, useSelector } from "react-redux";
-import { course, setLoading } from "store/userSlice";
-import { setSections, sections, addLecture, selectChapter } from "store/teacherSlice";
-import loading from "assets/image/loading.svg";
-import { Container, Form, Row, Col, InputGroup, Button, Modal } from "react-bootstrap";
-import { Formik } from "formik";
-import * as yup from "yup";
-import teacherApi from "api/teacherApi";
-import EditorDescription from "./EditDescription";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import authApi from 'api/authUser';
+import { useDispatch, useSelector } from 'react-redux';
+import { course, setLoading } from 'store/userSlice';
+import { setSections, sections, addLecture, selectChapter } from 'store/teacherSlice';
+import loading from 'assets/image/loading.svg';
+import { Container, Form, Row, Col, InputGroup, Button, Modal } from 'react-bootstrap';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import teacherApi from 'api/teacherApi';
+import EditorDescription from './EditDescription';
+import { useHistory } from 'react-router-dom';
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -24,11 +24,11 @@ function EditCourse(props) {
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => setShow1(true);
   const [show, setShow] = useState(false);
-  const [chapter, setChapter] = useState("");
-  const [title, setTitle] = useState("");
+  const [chapter, setChapter] = useState('');
+  const [title, setTitle] = useState('');
   const [video, setVideo] = useState(null);
-  const [short, setShort] = useState("");
-  const [long, setLong] = useState("");
+  const [short, setShort] = useState('');
+  const [long, setLong] = useState('');
   const [preview, setPreview] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const Course = useSelector((state) => state.user.course);
@@ -81,7 +81,7 @@ function EditCourse(props) {
               teacherApi.editCourses(data, Course._id).then((res) => {
                 dispatch(setLoading(false));
                 dispatch(course(res.course));
-                history.push("/teacher/courses");
+                history.push('/teacher/courses');
               });
             }}
             initialValues={{
@@ -132,7 +132,7 @@ function EditCourse(props) {
                 {Sections.length > 0 && (
                   <Form.Group className="position-relative mb-3">
                     {Sections.map((e, i) => (
-                      <div style={{ margin: "15px 0", display: "flex" }}>
+                      <div style={{ margin: '15px 0', display: 'flex' }}>
                         <Button
                           variant="info"
                           onClick={() => {
@@ -187,8 +187,8 @@ function EditCourse(props) {
                       />
                     </Form.Group>
 
-                    <Form.Group as={Col} md="12" controlId="validationFormikUsername2" style={{ marginTop: "20px" }}>
-                      <Form.Label style={{ marginRight: "10px" }}>Videos:</Form.Label>
+                    <Form.Group as={Col} md="12" controlId="validationFormikUsername2" style={{ marginTop: '20px' }}>
+                      <Form.Label style={{ marginRight: '10px' }}>Videos:</Form.Label>
                       <input
                         type="file"
                         name="avatar"
@@ -228,7 +228,7 @@ function EditCourse(props) {
                 </Modal>
                 <Form.Label> Short Descriptions:</Form.Label>
                 <EditorDescription getContent={getContentShort} data={Course.shortDescription} />
-                <Form.Label style={{ marginTop: "20px" }}> Full Descriptions:</Form.Label>
+                <Form.Label style={{ marginTop: '20px' }}> Full Descriptions:</Form.Label>
                 <EditorDescription getContent={getContentLong} data={Course.fullDescription} />
                 <Form.Check
                   type="checkbox"
@@ -236,7 +236,7 @@ function EditCourse(props) {
                   label={`Please check this if this course IS COMPLETE`}
                   onChange={(e) => setIsComplete(e.target.checked)}
                 />
-                <Button type="submit" style={{ margin: "100px 0" }}>
+                <Button type="submit" style={{ margin: '100px 0' }}>
                   Submit form
                 </Button>
               </Form>

@@ -1,5 +1,5 @@
-import axiosClient from "./axiosClient";
-import { ApiUrl } from "./authUser";
+import axiosClient from './axiosClient';
+import { ApiUrl } from './authUser';
 
 const teacherApi = {
   updateProfile: (data) => {
@@ -14,11 +14,11 @@ const teacherApi = {
     const url = `${ApiUrl}upload`;
 
     var formData = new FormData();
-    formData.append("files", data);
+    formData.append('files', data);
 
     return axiosClient.post(url, formData, {
       headers: {
-        "Content-type": "multipart/form-data",
+        'Content-type': 'multipart/form-data',
       },
     });
   },

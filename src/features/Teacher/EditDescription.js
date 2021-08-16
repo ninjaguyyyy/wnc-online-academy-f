@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState, ContentState, convertFromHTML, convertToRaw } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { useState } from 'react';
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState, ContentState, convertFromHTML, convertToRaw } from 'draft-js';
+import draftToHtml from 'draftjs-to-html';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 const EditorDescription = ({ getContent, data }) => {
   const [editorState, setEditorState] = useState(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(data))));
 

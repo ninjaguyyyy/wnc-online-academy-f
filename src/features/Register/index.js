@@ -1,21 +1,21 @@
-import authApi from "api/authUser";
-import { ROLE } from "helpers/constants";
-import React, { useState } from "react";
-import { Form } from "react-bootstrap";
-import { BsUnlockFill } from "react-icons/bs";
-import { FaUserGraduate, FaUserTie } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import RegisterImage from "../../assets/image/register.svg";
-import { useHistory } from "react-router-dom";
+import authApi from 'api/authUser';
+import { ROLE } from 'helpers/constants';
+import React, { useState } from 'react';
+import { Form } from 'react-bootstrap';
+import { BsUnlockFill } from 'react-icons/bs';
+import { FaUserGraduate, FaUserTie } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import RegisterImage from '../../assets/image/register.svg';
+import { useHistory } from 'react-router-dom';
 
 export default function Register() {
   const [role, setRole] = useState(ROLE.STUDENT);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
 
   const history = useHistory();
 
@@ -25,7 +25,7 @@ export default function Register() {
     const { msg, user } = await authApi.registerApi({ userName: username, passWord: password, email, firstName, lastName, role });
     msg && toast.error(msg);
     if (user) {
-      toast.success("Register successfully. Please check your email to receive OTP code.");
+      toast.success('Register successfully. Please check your email to receive OTP code.');
       history.push(`/verify-otp?email=${email}`);
     }
   };
@@ -97,7 +97,7 @@ export default function Register() {
               />
             </div>
 
-            <div style={{ fontSize: "20px", display: "flex", alignItems: "center" }}>
+            <div style={{ fontSize: '20px', display: 'flex', alignItems: 'center' }}>
               <FaUserGraduate color="#565387" />
               <Form.Check
                 inline
@@ -105,7 +105,7 @@ export default function Register() {
                 onChange={(e) => setRole(ROLE.STUDENT)}
                 className="ml-2 login__radio"
                 type="radio"
-                style={{ display: "flex" }}
+                style={{ display: 'flex' }}
               />
               <FaUserTie color="#565387" />
               <Form.Check
@@ -114,12 +114,12 @@ export default function Register() {
                 checked={role === ROLE.TEACHER}
                 className="ml-2 login__radio"
                 type="radio"
-                style={{ display: "flex" }}
+                style={{ display: 'flex' }}
               />
             </div>
 
             <input type="submit" className="login__btn mt-3 mb-3" defaultValue="Sign up" />
-            <div style={{ width: "45%", display: "flex", justifyContent: "flex-end", fontWeight: "700", fontSize: "15px" }}>
+            <div style={{ width: '45%', display: 'flex', justifyContent: 'flex-end', fontWeight: '700', fontSize: '15px' }}>
               <div className="d-flex align-items-center ">
                 <BsUnlockFill color="#2a3d9e" size={16} />
                 <Link to="/verify-otp" className="ml-2 link-verify">
@@ -144,13 +144,13 @@ export default function Register() {
         <div className="panel right-panel">
           <div className="content">
             <h3>
-              <Link to="/" style={{ color: "#fff" }}>
+              <Link to="/" style={{ color: '#fff' }}>
                 Online Academy - WNC 21
               </Link>
             </h3>
             <p>After having your own account invite you to use it to use the system</p>
             <button className="login__btn transparent" id="sign-in-btn">
-              <Link to="/login" style={{ color: "#fff" }}>
+              <Link to="/login" style={{ color: '#fff' }}>
                 Login
               </Link>
             </button>

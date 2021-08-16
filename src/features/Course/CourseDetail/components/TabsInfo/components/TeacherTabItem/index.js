@@ -1,6 +1,6 @@
-import CourseCard from "components/Common/CourseCard";
-import React from "react";
-import { BsGem, BsStar, BsChatDots, BsDisplay } from "react-icons/bs";
+import CourseCard from 'components/Common/CourseCard';
+import React from 'react';
+import { BsGem, BsStar, BsChatDots, BsDisplay } from 'react-icons/bs';
 
 export default function TeacherTabItem({ teacher, courses }) {
   const totalReviews = () => {
@@ -22,7 +22,7 @@ export default function TeacherTabItem({ teacher, courses }) {
               <img className="rounded-full w-100" src={`https://i.pravatar.cc/350?u=${teacher.userName}`} alt="lecturer" />
             </div>
           </div>
-          <div className="teacher-name mr-5 ml-3 " style={{ width: "100px" }}>
+          <div className="teacher-name mr-5 ml-3 " style={{ width: '100px' }}>
             <h6 className="text-capitalize">
               {teacher.firstName} {teacher.lastName}
             </h6>

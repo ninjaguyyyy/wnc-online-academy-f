@@ -1,18 +1,18 @@
-import axios from "axios";
-import queryString from "query-string";
-import Cookies from "universal-cookie";
+import axios from 'axios';
+import queryString from 'query-string';
+import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
 const axiosClient = axios.create({
   headers: {
-    "content-type": "application/json",
+    'content-type': 'application/json',
   },
   paramsSerializer: (params) => queryString.stringify(params),
 });
 
 axiosClient.interceptors.request.use(async (config) => {
-  const token = cookies.get("token");
+  const token = cookies.get('token');
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });

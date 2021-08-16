@@ -1,4 +1,4 @@
-label [type="checkbox"] {
+label [type='checkbox'] {
   opacity: 0;
 }
 :checked + div {

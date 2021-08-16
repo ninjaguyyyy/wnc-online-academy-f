@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { Form, Button, Container, Row, Col } from "react-bootstrap";
-import { useSelector, useDispatch } from "react-redux";
-import * as yup from "yup";
-import { Formik } from "formik";
-import teacherApi from "api/teacherApi";
-import { updateProfile, changePassword, setLoading } from "store/userSlice";
-import authApi from "api/authUser";
+import React, { useEffect } from 'react';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { useSelector, useDispatch } from 'react-redux';
+import * as yup from 'yup';
+import { Formik } from 'formik';
+import teacherApi from 'api/teacherApi';
+import { updateProfile, changePassword, setLoading } from 'store/userSlice';
+import authApi from 'api/authUser';
 
 const schema = yup.object().shape({
   firstName: yup.string().required(),
@@ -14,14 +14,14 @@ const schema = yup.object().shape({
 const schema1 = yup.object().shape({
   oldPassword: yup.string().required(),
   newPassword: yup.string().required(),
-  retypePassword: yup.string().oneOf([yup.ref("newPassword"), null], "Passwords must match"),
+  retypePassword: yup.string().oneOf([yup.ref('newPassword'), null], 'Passwords must match'),
 });
 function Profile() {
   const userInfo = useSelector((state) => state.user.userInfo);
   const dispatch = useDispatch();
   return (
     <Container>
-      <div style={{ marginLeft: "20%" }}>
+      <div style={{ marginLeft: '20%' }}>
         <h2>User Profile</h2>
         <Formik
           validationSchema={schema}
@@ -77,7 +77,7 @@ function Profile() {
             </Form>
           )}
         </Formik>
-        <h2 style={{ marginTop: "60px" }}>Change Password</h2>
+        <h2 style={{ marginTop: '60px' }}>Change Password</h2>
         <Formik
           validationSchema={schema1}
           onSubmit={(data) => {
@@ -88,9 +88,9 @@ function Profile() {
             });
           }}
           initialValues={{
-            oldPassword: "",
-            newPassword: "",
-            retypePassword: "",
+            oldPassword: '',
+            newPassword: '',
+            retypePassword: '',
           }}
         >
           {({ handleSubmit, handleChange, values, errors }) => (

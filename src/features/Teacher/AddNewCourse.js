@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Form, Button, Container, Row, Col, InputGroup, Modal } from "react-bootstrap";
-import { course, setLoading } from "store/userSlice";
-import { setSections, sections, addLecture, selectChapter } from "store/teacherSlice";
-import { toast } from "react-toastify";
-import teacherApi from "api/teacherApi";
-import * as yup from "yup";
-import { Formik } from "formik";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import categoriesAPI from "api/categoriesApi";
-import promotionsAPI from "api/promotionsApi";
-import { useHistory } from "react-router-dom";
-import EditorShort from "./ShortDescription";
-import { useDispatch, useSelector } from "react-redux";
-import loading from "assets/image/loading.svg";
+import React, { useState, useEffect } from 'react';
+import { Form, Button, Container, Row, Col, InputGroup, Modal } from 'react-bootstrap';
+import { course, setLoading } from 'store/userSlice';
+import { setSections, sections, addLecture, selectChapter } from 'store/teacherSlice';
+import { toast } from 'react-toastify';
+import teacherApi from 'api/teacherApi';
+import * as yup from 'yup';
+import { Formik } from 'formik';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import categoriesAPI from 'api/categoriesApi';
+import promotionsAPI from 'api/promotionsApi';
+import { useHistory } from 'react-router-dom';
+import EditorShort from './ShortDescription';
+import { useDispatch, useSelector } from 'react-redux';
+import loading from 'assets/image/loading.svg';
 const schema = yup.object().shape({
   title: yup.string().required(),
   category: yup.string(),
@@ -29,13 +29,13 @@ function AddNewCourse() {
   const SelectChapter = useSelector((state) => state.teacher.selectChapter);
   const [categories, setCategories] = useState([]);
   const [promotions, setPromotions] = useState([]);
-  const [categoryValue, setCategoryValue] = useState("");
-  const [promotionValue, setPromotionValue] = useState("");
-  const [shortDescriptionValue, setShortDescriptionValue] = useState("");
-  const [fullDescriptionValue, setFullDescriptionValue] = useState("");
+  const [categoryValue, setCategoryValue] = useState('');
+  const [promotionValue, setPromotionValue] = useState('');
+  const [shortDescriptionValue, setShortDescriptionValue] = useState('');
+  const [fullDescriptionValue, setFullDescriptionValue] = useState('');
   const [show1, setShow1] = useState(false);
   const [show, setShow] = useState(false);
-  const [chapter, setChapter] = useState("");
+  const [chapter, setChapter] = useState('');
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const handleClose1 = () => setShow1(false);
@@ -44,7 +44,7 @@ function AddNewCourse() {
 
   const [preview, setPreview] = useState(false);
 
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState('');
   const getContentShort = (htmlContentProp) => {
     setShortDescriptionValue(htmlContentProp);
   };
@@ -66,7 +66,7 @@ function AddNewCourse() {
   const handleSubmit = async (data) => {
     data.shortDescription = shortDescriptionValue;
     data.fullDescription = fullDescriptionValue;
-    toast.info("Loading ...", { autoClose: 3000 });
+    toast.info('Loading ...', { autoClose: 3000 });
     data.category = categoryValue;
     data.sections = Sections;
     console.log(data);
@@ -77,8 +77,8 @@ function AddNewCourse() {
     }
     const res = await teacherApi.createCourses(data);
     if (res.success === true) {
-      toast.success("Successfully create course");
-      history.push("/teacher/courses");
+      toast.success('Successfully create course');
+      history.push('/teacher/courses');
     }
   };
   if (!isLoading)
@@ -91,11 +91,11 @@ function AddNewCourse() {
               validationSchema={schema}
               onSubmit={handleSubmit}
               initialValues={{
-                title: "",
-                originPrice: "",
-                avatar: "",
-                shortDescription: "",
-                fullDescription: "",
+                title: '',
+                originPrice: '',
+                avatar: '',
+                shortDescription: '',
+                fullDescription: '',
               }}
             >
               {({ handleSubmit, handleChange, values, touched, errors, setFieldValue }) => (
@@ -173,8 +173,8 @@ function AddNewCourse() {
                         />
                       </Form.Group>
 
-                      <Form.Group as={Col} md="12" controlId="validationFormikUsername2" style={{ marginTop: "20px" }}>
-                        <Form.Label style={{ marginRight: "10px" }}>Videos:</Form.Label>
+                      <Form.Group as={Col} md="12" controlId="validationFormikUsername2" style={{ marginTop: '20px' }}>
+                        <Form.Label style={{ marginRight: '10px' }}>Videos:</Form.Label>
                         <input
                           type="file"
                           name="avatar"
@@ -214,7 +214,7 @@ function AddNewCourse() {
                   </Modal>
                   <Row className="mb-4">
                     <Col sm={6}>
-                      <Form.Group controlId="validationFormik102" className="position-relative" style={{ display: "grid" }}>
+                      <Form.Group controlId="validationFormik102" className="position-relative" style={{ display: 'grid' }}>
                         <Form.Label>Category</Form.Label>
                         <Form.Select value={categoryValue} onChange={(e) => setCategoryValue(e.target.value)}>
                           <option value="">Default select</option>
@@ -248,7 +248,7 @@ function AddNewCourse() {
                   {Sections.length > 0 && (
                     <Form.Group className="position-relative mb-3">
                       {Sections.map((e, i) => (
-                        <div style={{ margin: "15px 0", display: "flex" }}>
+                        <div style={{ margin: '15px 0', display: 'flex' }}>
                           <Button
                             variant="info"
                             onClick={() => {
@@ -272,7 +272,7 @@ function AddNewCourse() {
                           type="file"
                           name="avatar"
                           onChange={(event) => {
-                            setFieldValue("avatar", event.target.files[0]);
+                            setFieldValue('avatar', event.target.files[0]);
                           }}
                         />
                       </Form.Group>

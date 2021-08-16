@@ -1,5 +1,5 @@
-import axiosClient from "./axiosClient";
-import { ApiUrl } from "./authUser";
+import axiosClient from './axiosClient';
+import { ApiUrl } from './authUser';
 
 const promotionsAPI = {
   getAll: () => {

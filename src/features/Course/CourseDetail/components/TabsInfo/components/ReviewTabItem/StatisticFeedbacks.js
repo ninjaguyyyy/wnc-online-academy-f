@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import ProgressRating from "./ProgressRating";
+import React, { useEffect } from 'react';
+import ProgressRating from './ProgressRating';
 
 export default function StatisticFeedbacks({ statisticsRating, feedbacksTotal }) {
   return (

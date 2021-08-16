@@ -1,7 +1,7 @@
-import RatingStars from "components/Common/RatingStars";
-import { getFormatDateTime } from "helpers";
-import React from "react";
-import { BsStarFill, BsStar, BsClock } from "react-icons/bs";
+import RatingStars from 'components/Common/RatingStars';
+import { getFormatDateTime } from 'helpers';
+import React from 'react';
+import { BsStarFill, BsStar, BsClock } from 'react-icons/bs';
 
 export default function CommentReview({ review }) {
   return (

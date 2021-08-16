@@ -1,13 +1,13 @@
-import coursesAPI from "api/coursesApi";
-import DynamicBreadcrumb from "components/Common/DynamicBreadcrumb";
-import RatingStars from "components/Common/RatingStars";
-import React, { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
-import CourseCard from "../../../components/Common/CourseCard";
-import CardPaymentInfo from "./components/CardPaymentInfo";
-import TabsInfo from "./components/TabsInfo";
-import "./detailCourse.css";
+import coursesAPI from 'api/coursesApi';
+import DynamicBreadcrumb from 'components/Common/DynamicBreadcrumb';
+import RatingStars from 'components/Common/RatingStars';
+import React, { useEffect, useState } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
+import CourseCard from '../../../components/Common/CourseCard';
+import CardPaymentInfo from './components/CardPaymentInfo';
+import TabsInfo from './components/TabsInfo';
+import './detailCourse.css';
 
 function CourseDetail() {
   let { id } = useParams();
@@ -36,11 +36,11 @@ function CourseDetail() {
   return (
     <Container>
       <Row className="mb-4">
-        <DynamicBreadcrumb paths={[{ label: "Home", ref: "/" }, { label: "Courses", ref: `/web` }, { label: course?.title }]} />
+        <DynamicBreadcrumb paths={[{ label: 'Home', ref: '/' }, { label: 'Courses', ref: `/web` }, { label: course?.title }]} />
       </Row>
       {course && (
         <Row>
-          <Col sm={8} style={{ paddingRight: "100px" }}>
+          <Col sm={8} style={{ paddingRight: '100px' }}>
             <h2>{course.title}</h2>
             <div className="short-des mt-3 mb-4 " dangerouslySetInnerHTML={{ __html: course.shortDescription }}></div>
             <div className="info mb-5">
@@ -53,7 +53,7 @@ function CourseDetail() {
               />
               <div className="lecturer">
                 <div className="font-weight-bold">Created by</div>
-                <div className="info-value">{course.lecturer.firstName + " " + course.lecturer.lastName}</div>
+                <div className="info-value">{course.lecturer.firstName + ' ' + course.lecturer.lastName}</div>
               </div>
               <div>
                 <div className="font-weight-bold">Category</div>
@@ -63,7 +63,7 @@ function CourseDetail() {
                 <div className="font-weight-bold">Reviews</div>
                 <div className="info-value d-flex align-items-center">
                   <RatingStars point={course.rating} color="#FFC78B" size={16} className="mr-1" />
-                  <div className="ml-1" style={{ fontSize: "14px" }}>
+                  <div className="ml-1" style={{ fontSize: '14px' }}>
                     {course.rating} ({course.feedbacks.length} reviews)
                   </div>
                 </div>
