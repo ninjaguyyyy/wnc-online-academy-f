@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
+          
+      - name: Set env CI
+        run: unset CI
 
       - name: Install package
         run: npm install
