@@ -1,13 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const IconTeacher = () => (
-  <svg
-    width="50px"
-    height="50px"
-    viewBox="0 0 50 50"
-    xmlns="http://www.w3.org/2000/svg"
-    xlinkHref="http://www.w3.org/1999/xlink"
-  >
+  <svg width="50px" height="50px" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" xlinkHref="http://www.w3.org/1999/xlink">
     <path
       d="M33.6931 2.7431L33.5896 2.67931L34.4828 0H26.4284C23.306 0.000107759 20.3114 1.24041 18.1034 3.44828H17.3146C15.7683 3.44828 14.4368 4.53966 14.1336 6.05603C13.9204 7.11994 14.2533 8.21994 15.0207 8.98707L17.2414 11.2069V25L25 27.5862L32.7586 25V12.931L34.644 11.0457C36.7285 8.96175 36.7291 5.58254 34.6451 3.49795C34.3584 3.2111 34.0398 2.95787 33.6957 2.7431H33.6931Z"
       fill="#F8C09C"

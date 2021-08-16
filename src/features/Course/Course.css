@@ -1,40 +1,40 @@
-.course{
+.course {
   width: 100%;
   height: max-content;
   cursor: pointer;
 }
-.pd{
+.pd {
   margin: 10px !important;
 }
-.pd:hover{
+.pd:hover {
   transform: scale(1.01);
 }
-.pdlr{
+.pdlr {
   padding: 0 20px;
 }
-.carousel__img{
+.carousel__img {
   width: 70%;
   height: 320px;
   object-fit: cover;
 }
-.carousel__text{
+.carousel__text {
   color: black;
   position: unset;
 }
-#carousel__course a.carousel-control-prev{
+#carousel__course a.carousel-control-prev {
   background: #a7b0b2;
   height: 320px;
 }
-#carousel__course a.carousel-control-next{
+#carousel__course a.carousel-control-next {
   background: #a7b0b2;
   height: 320px;
 }
-.carousel__courseLink{
+.carousel__courseLink {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.card__item__img{
+.card__item__img {
   width: 25%;
 }

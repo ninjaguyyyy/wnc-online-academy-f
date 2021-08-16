@@ -33,7 +33,7 @@ function Index() {
               <img className="carousel__img" src={`${ApiUrl}resources/image/${item.avatar}`} alt="First slide" />
               <Carousel.Caption className="carousel__text">
                 <h3>{item.title}</h3>
-                <div dangerouslySetInnerHTML={{__html:item.shortDescription}}></div>
+                <div dangerouslySetInnerHTML={{ __html: item.shortDescription }}></div>
               </Carousel.Caption>
             </Link>
           </Carousel.Item>

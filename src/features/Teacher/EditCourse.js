@@ -2,22 +2,14 @@ import React, { useEffect, useState } from "react";
 import authApi from "api/authUser";
 import { useDispatch, useSelector } from "react-redux";
 import { course, setLoading } from "store/userSlice";
-import {setSections,sections,addLecture,selectChapter } from 'store/teacherSlice'
+import { setSections, sections, addLecture, selectChapter } from "store/teacherSlice";
 import loading from "assets/image/loading.svg";
-import {
-  Container,
-  Form,
-  Row,
-  Col,
-  InputGroup,
-  Button,
-  Modal,
-} from "react-bootstrap";
+import { Container, Form, Row, Col, InputGroup, Button, Modal } from "react-bootstrap";
 import { Formik } from "formik";
 import * as yup from "yup";
-import teacherApi from 'api/teacherApi';
-import EditorDescription from './EditDescription';
-import { useHistory } from 'react-router-dom';
+import teacherApi from "api/teacherApi";
+import EditorDescription from "./EditDescription";
+import { useHistory } from "react-router-dom";
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -32,12 +24,12 @@ function EditCourse(props) {
   const handleClose1 = () => setShow1(false);
   const handleShow1 = () => setShow1(true);
   const [show, setShow] = useState(false);
-  const [chapter, setChapter] = useState('');
-  const [title, setTitle] = useState('');
+  const [chapter, setChapter] = useState("");
+  const [title, setTitle] = useState("");
   const [video, setVideo] = useState(null);
   const [short, setShort] = useState("");
   const [long, setLong] = useState("");
-  const [preview,setPreview] = useState(false)
+  const [preview, setPreview] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const Course = useSelector((state) => state.user.course);
   const isLoading = useSelector((state) => state.user.loading);
@@ -45,13 +37,13 @@ function EditCourse(props) {
   const SelectChapter = useSelector((state) => state.teacher.selectChapter);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const history = useHistory()
+  const history = useHistory();
   const getContentShort = (htmlContentProp) => {
     setShort(htmlContentProp);
-  }
+  };
   const getContentLong = (htmlContentProp) => {
     setLong(htmlContentProp);
-  }
+  };
   useEffect(() => {
     if (Course == null) {
       dispatch(setLoading(true));
@@ -59,9 +51,9 @@ function EditCourse(props) {
         if (res.success === true) {
           dispatch(setLoading(false));
           dispatch(course(res.course));
-          dispatch(sections(res.course.sections))
-          setShort(res.course.shortDescription)
-          setLong(res.course.fullDescription)
+          dispatch(sections(res.course.sections));
+          setShort(res.course.shortDescription);
+          setLong(res.course.fullDescription);
           // setEditorState(EditorState.createWithContent(
           //   ContentState.createFromBlockArray(
           //     convertFromHTML(res.course.shortDescription)
@@ -69,8 +61,8 @@ function EditCourse(props) {
           // ))
         }
       });
-    }else{
-      dispatch(sections(Course.sections))
+    } else {
+      dispatch(sections(Course.sections));
     }
   }, [Course, props.match.params.id, dispatch]);
   return (
@@ -81,16 +73,16 @@ function EditCourse(props) {
           <Formik
             validationSchema={schema}
             onSubmit={async (data) => {
-              data.shortDescription = short
-              data.fullDescription = long
-              data.sections=Sections
-              data.isComplete=isComplete
-              dispatch(setLoading(true))
-              teacherApi.editCourses(data,Course._id).then(res=>{
-                dispatch(setLoading(false))
-                dispatch(course(res.course))
-                history.push("/teacher/courses")
-              })
+              data.shortDescription = short;
+              data.fullDescription = long;
+              data.sections = Sections;
+              data.isComplete = isComplete;
+              dispatch(setLoading(true));
+              teacherApi.editCourses(data, Course._id).then((res) => {
+                dispatch(setLoading(false));
+                dispatch(course(res.course));
+                history.push("/teacher/courses");
+              });
             }}
             initialValues={{
               title: Course.title,
@@ -100,22 +92,10 @@ function EditCourse(props) {
               fullDescription: Course.fullDescription,
             }}
           >
-            {({
-              handleSubmit,
-              handleChange,
-              values,
-              touched,
-              errors,
-              setFieldValue
-            }) => (
+            {({ handleSubmit, handleChange, values, touched, errors, setFieldValue }) => (
               <Form noValidate onSubmit={handleSubmit}>
                 <Row className="mb-3">
-                  <Form.Group
-                    as={Col}
-                    md="4"
-                    controlId="validationFormik101"
-                    className="position-relative"
-                  >
+                  <Form.Group as={Col} md="4" controlId="validationFormik101" className="position-relative">
                     <Form.Label>Title</Form.Label>
                     <Form.Control
                       type="text"
@@ -126,13 +106,8 @@ function EditCourse(props) {
                       isValid={touched.title && !errors.title}
                       isInvalid={!!errors.title}
                     />
-                    
                   </Form.Group>
-                  <Form.Group
-                    as={Col}
-                    md="5"
-                    controlId="validationFormikUsername2"
-                  >
+                  <Form.Group as={Col} md="5" controlId="validationFormikUsername2">
                     <Form.Label>Origin Price</Form.Label>
                     <InputGroup hasValidation>
                       <Form.Control
@@ -154,46 +129,41 @@ function EditCourse(props) {
                     Add Chapter
                   </Button>
                 </Form.Group>
-                {Sections.length>0&&
-                <Form.Group className="position-relative mb-3">
-                  {Sections.map((e,i)=>(
-                    <div style={{ margin:'15px 0', display: 'flex'}}>
-                      <Button variant="info" 
-                        onClick={()=>{
-                          handleShow()
-                          dispatch(selectChapter(i))
-                        }
-                      }
-                      >
-                        {e.name}
-                      </Button>
-                      {e.lectures.length>0&&
-                      <div className='displayvideo'>
-                        {e.lectures.length} videos
-                      </div>}
-                    </div>
-                  ))}
-                </Form.Group>}
+                {Sections.length > 0 && (
+                  <Form.Group className="position-relative mb-3">
+                    {Sections.map((e, i) => (
+                      <div style={{ margin: "15px 0", display: "flex" }}>
+                        <Button
+                          variant="info"
+                          onClick={() => {
+                            handleShow();
+                            dispatch(selectChapter(i));
+                          }}
+                        >
+                          {e.name}
+                        </Button>
+                        {e.lectures.length > 0 && <div className="displayvideo">{e.lectures.length} videos</div>}
+                      </div>
+                    ))}
+                  </Form.Group>
+                )}
                 <Modal show={show1} onHide={handleClose1}>
                   <Modal.Header closeButton>
                     <Modal.Title>Chapter name:</Modal.Title>
                   </Modal.Header>
                   <Form.Group as={Col} md="12" className="position-relative">
-                    <Form.Control
-                      type="text"
-                      name="section"
-                      onChange={(e) => setChapter(e.target.value)}
-                    />
+                    <Form.Control type="text" name="section" onChange={(e) => setChapter(e.target.value)} />
                   </Form.Group>
 
                   <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose1}>
                       Close
                     </Button>
-                    <Button variant="primary" 
-                      onClick={()=>{
-                        dispatch(setSections(chapter))
-                        handleClose1()
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        dispatch(setSections(chapter));
+                        handleClose1();
                       }}
                     >
                       Save Chapter
@@ -205,43 +175,26 @@ function EditCourse(props) {
                     <Modal.Title>Lecture detail</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <Form.Group
-                      as={Col}
-                      md="12"
-                      controlId="validationFormik101"
-                      className="position-relative"
-                    >
+                    <Form.Group as={Col} md="12" controlId="validationFormik101" className="position-relative">
                       <Form.Label>Title</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="title"
-                        onChange={e=>setTitle(e.target.value)}
-                      />
-                      <Form.Check 
-                        className='mt20'
-                        type='checkbox'
+                      <Form.Control type="text" name="title" onChange={(e) => setTitle(e.target.value)} />
+                      <Form.Check
+                        className="mt20"
+                        type="checkbox"
                         id={`default-checkbox`}
                         label={`Please check this if video is FREE TO VIEW`}
-                        onChange={e=>setPreview(e.target.checked)}
-
+                        onChange={(e) => setPreview(e.target.checked)}
                       />
                     </Form.Group>
 
-                    <Form.Group
-                      as={Col}
-                      md="12"
-                      controlId="validationFormikUsername2"
-                      style={{ marginTop:'20px'}}
-                    >
-                      <Form.Label style={{ marginRight: "10px" }}>
-                        Videos:
-                      </Form.Label>
+                    <Form.Group as={Col} md="12" controlId="validationFormikUsername2" style={{ marginTop: "20px" }}>
+                      <Form.Label style={{ marginRight: "10px" }}>Videos:</Form.Label>
                       <input
                         type="file"
                         name="avatar"
                         multiple
                         onChange={(event) => {
-                          setVideo(event.target.files)
+                          setVideo(event.target.files);
                         }}
                       />
                     </Form.Group>
@@ -250,40 +203,42 @@ function EditCourse(props) {
                     <Button variant="secondary" onClick={handleClose}>
                       Close
                     </Button>
-                    <Button variant="primary" 
-                      onClick={()=>{
-                        handleClose()
-                        dispatch(setLoading(true))
-                        teacherApi.upLoad(video[0]).then(res=>{
-                          if(res.success&& res.files.length>0){
-                            let payload={
-                              title:title,
-                              video:res.files,
-                              id:SelectChapter,
-                              isPreview:preview
-                            }
-                            dispatch(addLecture(payload))
-                            dispatch(setLoading(false))
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        handleClose();
+                        dispatch(setLoading(true));
+                        teacherApi.upLoad(video[0]).then((res) => {
+                          if (res.success && res.files.length > 0) {
+                            let payload = {
+                              title: title,
+                              video: res.files,
+                              id: SelectChapter,
+                              isPreview: preview,
+                            };
+                            dispatch(addLecture(payload));
+                            dispatch(setLoading(false));
                           }
-                        })
-                      }
-                      }
+                        });
+                      }}
                     >
-                      Save Lecture 
+                      Save Lecture
                     </Button>
                   </Modal.Footer>
                 </Modal>
                 <Form.Label> Short Descriptions:</Form.Label>
-                <EditorDescription getContent={getContentShort} data={Course.shortDescription}/>
-                <Form.Label style={{ marginTop:'20px'}}> Full Descriptions:</Form.Label>
-                <EditorDescription getContent={getContentLong} data={Course.fullDescription}/>
-                <Form.Check 
-                  type='checkbox'
+                <EditorDescription getContent={getContentShort} data={Course.shortDescription} />
+                <Form.Label style={{ marginTop: "20px" }}> Full Descriptions:</Form.Label>
+                <EditorDescription getContent={getContentLong} data={Course.fullDescription} />
+                <Form.Check
+                  type="checkbox"
                   id={`default-checkbox`}
                   label={`Please check this if this course IS COMPLETE`}
-                  onChange={(e) =>setIsComplete(e.target.checked)}
+                  onChange={(e) => setIsComplete(e.target.checked)}
                 />
-                <Button type="submit" style={{ margin:'100px 0'}}>Submit form</Button>
+                <Button type="submit" style={{ margin: "100px 0" }}>
+                  Submit form
+                </Button>
               </Form>
             )}
           </Formik>
