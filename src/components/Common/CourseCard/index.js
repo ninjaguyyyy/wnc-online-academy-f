@@ -95,7 +95,7 @@ export default function CourseCard({ course, isOpenNewTab, column }) {
               {title}
             </Link>
           </Card.Title>
-          <div className="reviews d-flex justify-content-between align-items-center mb-4 mt-3">
+          <div className="reviews d-flex justify-content-between align-items-center mb-4">
             <div className="rating d-flex align-items-center">
               <RatingStars point={rating} color="#FFC78B" size={16} className="mr-1" />
 

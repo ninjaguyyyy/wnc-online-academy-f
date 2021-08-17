@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient';
 
-export const ApiUrl = 'https://wnc-online-academy-21.herokuapp.com/';
-// export const ApiUrl = "http://localhost:3001/";
+// export const ApiUrl = "https://wnc-online-academy-21.herokuapp.com/";
+export const ApiUrl = "http://localhost:3001/";
 
 const authApi = {
   registerApi: (data) => {
