@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import LoginImage from "../../assets/image/log.svg";
-import { FaUserTie, FaUserGraduate } from "react-icons/fa";
-import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import LoginImage from '../../assets/image/log.svg';
+import { FaUserTie, FaUserGraduate } from 'react-icons/fa';
+import { Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
-import "./index.css";
-import { ROLE } from "helpers/constants";
-import authApi from "api/authUser";
-import { saveToken, saveUserInfo } from "store/userSlice";
+import './index.css';
+import { ROLE } from 'helpers/constants';
+import authApi from 'api/authUser';
+import { saveToken, saveUserInfo } from 'store/userSlice';
 
 export default function Login(props) {
   const [role, setRole] = useState(ROLE.STUDENT);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
 
@@ -30,7 +30,7 @@ export default function Login(props) {
     if (accessToken) {
       dispatch(saveUserInfo(user));
       dispatch(saveToken(accessToken));
-      user.role === 2 && props.history.push("/teacher");
+      user.role === 2 && props.history.push('/teacher');
     }
   };
 
@@ -63,7 +63,7 @@ export default function Login(props) {
               />
             </div>
 
-            <div style={{ fontSize: "20px", display: "flex", alignItems: "center" }}>
+            <div style={{ fontSize: '20px', display: 'flex', alignItems: 'center' }}>
               <FaUserGraduate color="#565387" />
               <Form.Check
                 inline
@@ -71,7 +71,7 @@ export default function Login(props) {
                 onChange={(e) => setRole(ROLE.STUDENT)}
                 className="ml-2 login__radio"
                 type="radio"
-                style={{ display: "flex" }}
+                style={{ display: 'flex' }}
               />
               <FaUserTie color="#565387" />
               <Form.Check
@@ -80,7 +80,7 @@ export default function Login(props) {
                 checked={role === ROLE.TEACHER}
                 className="ml-2 login__radio"
                 type="radio"
-                style={{ display: "flex" }}
+                style={{ display: 'flex' }}
               />
             </div>
             <input type="submit" defaultValue="Login" className="mt-4 login__btn solid" />
@@ -92,13 +92,13 @@ export default function Login(props) {
         <div className="panel left-panel">
           <div className="content">
             <h3>
-              <Link to="/" style={{ color: "#fff" }}>
+              <Link to="/" style={{ color: '#fff' }}>
                 Online Academy - WNC 21
               </Link>
             </h3>
             <p>Please register an account to be able to use more functions of the system</p>
             <button className="login__btn transparent" id="sign-up-btn">
-              <Link style={{ color: "#fff" }} to="/register">
+              <Link style={{ color: '#fff' }} to="/register">
                 Register
               </Link>
             </button>

@@ -1,13 +1,13 @@
-import React from "react";
-import "./navbar.css";
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container, Row } from "react-bootstrap";
-import { Link, useHistory } from "react-router-dom";
-import "./navbar.css";
-import logo from "assets/image/logo.png";
-import { useDispatch, useSelector } from "react-redux";
-import { removeToken } from "store/userSlice";
-import CategoriesMenu from "../CategoriesMenu";
-import { BsFillPersonLinesFill } from "react-icons/bs";
+import React from 'react';
+import './navbar.css';
+import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container, Row } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
+import './navbar.css';
+import logo from 'assets/image/logo.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeToken } from 'store/userSlice';
+import CategoriesMenu from '../CategoriesMenu';
+import { BsFillPersonLinesFill } from 'react-icons/bs';
 
 function NavbarLayout(props) {
   const { token, userInfo } = useSelector((state) => state.user);
@@ -15,8 +15,8 @@ function NavbarLayout(props) {
   const history = useHistory();
 
   const handleRedirectProfile = (role) => {
-    role === 3 && history.push("/student");
-    role === 2 && history.push("/teacher");
+    role === 3 && history.push('/student');
+    role === 2 && history.push('/teacher');
   };
 
   const renderGuestOptions = () => (
@@ -43,7 +43,7 @@ function NavbarLayout(props) {
       {userInfo.role === 3 && renderStudentUserOptions()}
       <NavDropdown.Item
         onClick={() => {
-          history.push("/dashboard");
+          history.push('/dashboard');
           dispatch(removeToken());
         }}
       >
@@ -54,18 +54,18 @@ function NavbarLayout(props) {
 
   const renderTeacherUserOptions = () => (
     <>
-      <NavDropdown.Item onClick={() => history.push("/teacher/courses")}>My Courses</NavDropdown.Item>
+      <NavDropdown.Item onClick={() => history.push('/teacher/courses')}>My Courses</NavDropdown.Item>
       <NavDropdown.Divider />
-      <NavDropdown.Item onClick={() => history.push("/teacher/courses/add-course")}>Add Course</NavDropdown.Item>
+      <NavDropdown.Item onClick={() => history.push('/teacher/courses/add-course')}>Add Course</NavDropdown.Item>
       <NavDropdown.Divider />
     </>
   );
 
   const renderStudentUserOptions = () => (
     <>
-      <NavDropdown.Item onClick={() => history.push("/student/wishlist")}>Wishlist</NavDropdown.Item>
+      <NavDropdown.Item onClick={() => history.push('/student/wishlist')}>Wishlist</NavDropdown.Item>
       <NavDropdown.Divider />
-      <NavDropdown.Item onClick={() => history.push("/student/my-courses")}>My Courses</NavDropdown.Item>
+      <NavDropdown.Item onClick={() => history.push('/student/my-courses')}>My Courses</NavDropdown.Item>
       <NavDropdown.Divider />
     </>
   );

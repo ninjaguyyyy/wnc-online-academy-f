@@ -1,13 +1,7 @@
 import React from 'react';
 
 const IconStudent = () => (
-  <svg
-    width="50px"
-    height="50px"
-    viewBox="0 0 50 50"
-    xmlns="http://www.w3.org/2000/svg"
-    xlinkHref="http://www.w3.org/1999/xlink"
-  >
+  <svg width="50px" height="50px" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" xlinkHref="http://www.w3.org/1999/xlink">
     <path
       d="M28.5569 30.5102L36.9956 32.7605C40.1097 33.5909 42.2765 36.4111 42.2765 39.6341V48.9939C42.2765 49.5496 41.8261 50 41.2704 50H8.7296C8.17393 50 7.72354 49.5496 7.72354 48.9939V39.6341C7.72354 36.4111 9.89034 33.5909 13.0044 32.7605L21.4431 30.5102H28.5569Z"
       fill="#D8E2F1"

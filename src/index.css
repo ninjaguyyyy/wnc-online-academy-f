@@ -32,7 +32,7 @@ button#dropdown-basic {
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 .h2css {
   font-weight: 700;
@@ -61,26 +61,26 @@ body {
   margin-top: 80px;
   margin-bottom: 30px;
 }
-#course__carousel{
+#course__carousel {
   position: relative;
 }
-#course__carousel a.carousel-control-prev{
+#course__carousel a.carousel-control-prev {
   position: absolute;
-  left:-50px;
+  left: -50px;
   width: 40px;
   height: 20%;
   top: 30%;
 }
-#course__carousel a.carousel-control-next{
+#course__carousel a.carousel-control-next {
   position: absolute;
-  right:-50px;
+  right: -50px;
   width: 40px;
   height: 20%;
   top: 30%;
 }
-.mt20{
-  margin-top:20px;
+.mt20 {
+  margin-top: 20px;
 }
-.displayvideo{
+.displayvideo {
   padding: 10px 20px;
 }

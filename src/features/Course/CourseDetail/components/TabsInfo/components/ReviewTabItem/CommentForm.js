@@ -1,14 +1,14 @@
-import RatingStars from "components/Common/RatingStars";
-import React, { useState } from "react";
-import { ProgressBar, FloatingLabel, Form, Button } from "react-bootstrap";
-import { BsStarFill, BsStar, BsClock } from "react-icons/bs";
-import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
-import coursesAPI from "api/coursesApi";
+import RatingStars from 'components/Common/RatingStars';
+import React, { useState } from 'react';
+import { ProgressBar, FloatingLabel, Form, Button } from 'react-bootstrap';
+import { BsStarFill, BsStar, BsClock } from 'react-icons/bs';
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import coursesAPI from 'api/coursesApi';
 
 export default function CommentForm({ course, onAddReview }) {
   const [rateValue, setRateValue] = useState(4);
-  const [commentValue, setCommentValue] = useState("");
+  const [commentValue, setCommentValue] = useState('');
 
   const token = useSelector((state) => state.user.token);
 
@@ -18,18 +18,18 @@ export default function CommentForm({ course, onAddReview }) {
 
   const handlePost = async () => {
     if (!token) {
-      return toast.error("Please post a valid comment!");
+      return toast.error('Please post a valid comment!');
     }
 
     if (!commentValue) {
-      return toast.error("Please post a valid comment!");
+      return toast.error('Please post a valid comment!');
     }
 
     const { msg, feedbacks, success } = await coursesAPI.postReview(course._id, { rating: rateValue, content: commentValue });
     msg && toast.error(msg);
     if (success) {
       onAddReview(feedbacks);
-      setCommentValue("");
+      setCommentValue('');
     }
   };
 
@@ -47,7 +47,7 @@ export default function CommentForm({ course, onAddReview }) {
           />
         </div>
         <FloatingLabel label="Your Comments" style={{ flexGrow: 1 }}>
-          <Form.Control as="textarea" value={commentValue} onChange={(e) => setCommentValue(e.target.value)} style={{ height: "100px" }} />
+          <Form.Control as="textarea" value={commentValue} onChange={(e) => setCommentValue(e.target.value)} style={{ height: '100px' }} />
         </FloatingLabel>
       </div>
       <Button variant="outline-primary" className="float-right mt-2" onClick={handlePost}>

@@ -1,12 +1,12 @@
-import RatingStars from "components/Common/RatingStars";
-import React, { useState } from "react";
-import { ProgressBar, FloatingLabel, Form } from "react-bootstrap";
-import { BsStarFill, BsStar } from "react-icons/bs";
-import CommentForm from "./CommentForm";
-import CommentReview from "./CommentReview";
-import "./index.css";
-import ProgressRating from "./ProgressRating";
-import StatisticFeedbacks from "./StatisticFeedbacks";
+import RatingStars from 'components/Common/RatingStars';
+import React, { useState } from 'react';
+import { ProgressBar, FloatingLabel, Form } from 'react-bootstrap';
+import { BsStarFill, BsStar } from 'react-icons/bs';
+import CommentForm from './CommentForm';
+import CommentReview from './CommentReview';
+import './index.css';
+import ProgressRating from './ProgressRating';
+import StatisticFeedbacks from './StatisticFeedbacks';
 
 export default function ReviewTabItem({ course }) {
   const [reviews, setReviews] = useState(course.feedbacks);
@@ -29,7 +29,7 @@ export default function ReviewTabItem({ course }) {
       <div className="review-info">
         <div className="review-card">
           <div className="text-center">
-            <h1 style={{ margin: "-5px 0" }} className="font-weight-500">
+            <h1 style={{ margin: '-5px 0' }} className="font-weight-500">
               {averageRating}
             </h1>
             <div>Course Rating</div>

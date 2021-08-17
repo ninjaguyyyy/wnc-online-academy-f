@@ -1,11 +1,11 @@
-import RatingStars from "components/Common/RatingStars";
-import React from "react";
-import { ProgressBar } from "react-bootstrap";
+import RatingStars from 'components/Common/RatingStars';
+import React from 'react';
+import { ProgressBar } from 'react-bootstrap';
 
 export default function ProgressRating({ point, total, rate }) {
   return (
     <div className="progress-item">
-      <ProgressBar style={{ height: "10px", flexGrow: 1 }}>
+      <ProgressBar style={{ height: '10px', flexGrow: 1 }}>
         <ProgressBar variant="info" now={rate} />
       </ProgressBar>
       <div className="stars d-flex align-items-center ml-4">

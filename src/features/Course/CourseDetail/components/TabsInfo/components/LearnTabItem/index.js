@@ -1,11 +1,11 @@
-import React, { useState, useRef } from "react";
-import { Accordion, Modal, Button } from "react-bootstrap";
-import { BsFileEarmarkText, BsPlay, BsLock, BsLockFill } from "react-icons/bs";
-import { toast } from "react-toastify";
-import "../../../../../../../../node_modules/video-react/dist/video-react.css";
-import { Player } from "video-react";
-import { useSelector } from "react-redux";
-import { ApiUrl } from "api/authUser";
+import React, { useState, useRef } from 'react';
+import { Accordion, Modal, Button } from 'react-bootstrap';
+import { BsFileEarmarkText, BsPlay, BsLock, BsLockFill } from 'react-icons/bs';
+import { toast } from 'react-toastify';
+import '../../../../../../../../node_modules/video-react/dist/video-react.css';
+import { Player } from 'video-react';
+import { useSelector } from 'react-redux';
+import { ApiUrl } from 'api/authUser';
 
 export default function LearnTabItem({ courseId, sections }) {
   const [showModal, setShowModal] = useState(false);
@@ -46,23 +46,23 @@ export default function LearnTabItem({ courseId, sections }) {
                   section.lectures.map((lecture) => (
                     <div className="lecture">
                       <div className="d-flex justify-between">
-                        <BsFileEarmarkText size={20} color={"#77838F"} />
+                        <BsFileEarmarkText size={20} color={'#77838F'} />
                         <span className="text-capitalize ml-2">
-                          <a href="javascript:void" style={{ color: "#77838F" }}>
+                          <a href="javascript:void" style={{ color: '#77838F' }}>
                             {lecture.title}
                           </a>
                         </span>
                       </div>
                       <div>
                         {lecture.isPreview || isAttended ? (
-                          <a href="javascript:void" onClick={() => handlePlayVideo(lecture)} style={{ color: "#656464" }}>
+                          <a href="javascript:void" onClick={() => handlePlayVideo(lecture)} style={{ color: '#656464' }}>
                             <BsPlay size={22} />
                           </a>
                         ) : (
                           <a
                             href="javascript:void"
-                            onClick={() => toast.info("Please buy to continue learn this course !!")}
-                            style={{ color: "#656464" }}
+                            onClick={() => toast.info('Please buy to continue learn this course !!')}
+                            style={{ color: '#656464' }}
                           >
                             <BsLockFill size={22} />
                           </a>
@@ -71,7 +71,7 @@ export default function LearnTabItem({ courseId, sections }) {
                     </div>
                   ))
                 ) : (
-                  <div className="lecture" style={{ borderBottom: "none" }}>
+                  <div className="lecture" style={{ borderBottom: 'none' }}>
                     Lectures are being updated and coming soon!
                   </div>
                 )}
@@ -86,7 +86,7 @@ export default function LearnTabItem({ courseId, sections }) {
         </Modal.Header>
         <Modal.Body>
           <Player ref={playerElement} startTime={localStorage.getItem(selectedLecture._id) || 0}>
-            <source src={`${"http://localhost:3001/"}resources/video/wnc21-NDZm7pXF4I.mp4`} type="video/mp4" />
+            <source src={`${ApiUrl}resources/video/${selectedLecture.video}`} type="video/mp4" />
           </Player>
         </Modal.Body>
         <Modal.Footer>

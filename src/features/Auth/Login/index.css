@@ -1,38 +1,38 @@
-label [type="checkbox"] {
+label [type='checkbox'] {
   opacity: 0;
 }
 :checked + div {
   background: cyan;
   color: #ffffff;
   border: 1px solid black;
-  border-radius: 8px ;
+  border-radius: 8px;
 }
-.login__chooseRole{
+.login__chooseRole {
   display: flex;
   flex-direction: column;
   padding: 20px;
   cursor: pointer;
 }
-.login__checkbox{
+.login__checkbox {
   border-radius: 5px;
 }
-.login__button{
+.login__button {
   width: 80%;
   display: flex;
   align-items: center;
   border-radius: 40px;
   justify-content: center;
 }
-.login__error{
+.login__error {
   color: #ff4d4d;
 }
-.login__signup{
+.login__signup {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px 0;
 }
-.login__signupbtn{
+.login__signupbtn {
   padding-bottom: 20px;
 }

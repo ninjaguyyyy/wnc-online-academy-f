@@ -1,13 +1,13 @@
-import { ApiUrl } from "api/authUser";
-import userAPi from "api/userApi";
-import { getFormatDate } from "helpers";
-import React, { useState } from "react";
-import { Badge, Button, Card, Modal, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { BsClockHistory, BsGift, BsHeart, BsCloudUpload, BsFilm, BsPersonPlus } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { updateUserAttendedCourses, updateUserFavoriteCourses } from "store/userSlice";
-import "./index.css";
+import { ApiUrl } from 'api/authUser';
+import userAPi from 'api/userApi';
+import { getFormatDate } from 'helpers';
+import React, { useState } from 'react';
+import { Badge, Button, Card, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { BsClockHistory, BsGift, BsHeart, BsCloudUpload, BsFilm, BsPersonPlus } from 'react-icons/bs';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { updateUserAttendedCourses, updateUserFavoriteCourses } from 'store/userSlice';
+import './index.css';
 
 export default function CardPaymentInfo({ course }) {
   const dispatch = useDispatch();
@@ -23,14 +23,14 @@ export default function CardPaymentInfo({ course }) {
 
   const handleAddToFavorite = async () => {
     if (!token) {
-      return toast.info("Please login to use this feature!");
+      return toast.info('Please login to use this feature!');
     }
     if (isExistInFavoriteList) {
-      return toast.info("This course is in your favorite courses!");
+      return toast.info('This course is in your favorite courses!');
     }
     const { success, msg, updatedFavoriteCourses } = await userAPi.addCoursesToFavorite({ courseId: course._id });
     if (success) {
-      toast.success("Successfully add to favorite");
+      toast.success('Successfully add to favorite');
       dispatch(updateUserFavoriteCourses(updatedFavoriteCourses));
     }
     msg && toast.error(msg);
@@ -38,10 +38,10 @@ export default function CardPaymentInfo({ course }) {
 
   const handleBuy = async () => {
     if (!token) {
-      return toast.info("Please login to use this feature!");
+      return toast.info('Please login to use this feature!');
     }
     if (isAttended) {
-      return toast.info("You already buy this course. Let learn in tab Curriculum!");
+      return toast.info('You already buy this course. Let learn in tab Curriculum!');
     }
     setShowPayModal(true);
   };
@@ -50,7 +50,7 @@ export default function CardPaymentInfo({ course }) {
     const { success, updatedAttendedCourses } = await userAPi.attendCourse({ courseId: course._id });
     if (success) {
       setShowPayModal(false);
-      toast.success("Congratulations, you have successfully registered for the course 🎉🎉🎉");
+      toast.success('Congratulations, you have successfully registered for the course 🎉🎉🎉');
       dispatch(updateUserAttendedCourses(updatedAttendedCourses));
     }
   };
@@ -59,16 +59,16 @@ export default function CardPaymentInfo({ course }) {
     <>
       <Card>
         <Card.Body>
-          <img src={`${ApiUrl}resources/image/${course.avatar}`} alt="img" className="w-100" height={250} style={{ borderRadius: "5px" }} />
+          <img src={`${ApiUrl}resources/image/${course.avatar}`} alt="img" className="w-100" height={250} style={{ borderRadius: '5px' }} />
           <div className="info-card">
             <div className="price">
               <div className="d-flex align-items-center">
                 <div className="origin mr-3">${course.totalPrice}</div>
-                <del style={{ fontSize: "1.1rem", color: "#77838F" }}>${course.originPrice}</del>
+                <del style={{ fontSize: '1.1rem', color: '#77838F' }}>${course.originPrice}</del>
               </div>
 
               <h5 className="discount">
-                <Badge style={{ fontWeight: "400", padding: " 10px 13px", backgroundColor: "#B8B2FD" }}>
+                <Badge style={{ fontWeight: '400', padding: ' 10px 13px', backgroundColor: '#B8B2FD' }}>
                   {course.promotion.discount * 100}% Off
                 </Badge>
               </h5>
@@ -118,7 +118,7 @@ export default function CardPaymentInfo({ course }) {
                   <BsCloudUpload color="#949DA6" size={15} />
                   <div className="head__label ml-3">Full Lectures</div>
                 </div>
-                <div className="tail">{course.isComplete ? "Yes" : "No"}</div>
+                <div className="tail">{course.isComplete ? 'Yes' : 'No'}</div>
               </li>
             </ul>
             <div className="d-flex justify-content-center">

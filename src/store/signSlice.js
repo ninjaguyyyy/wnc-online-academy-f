@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const initialState = {
   signUp: {
@@ -14,13 +14,13 @@ const initialState = {
 };
 
 const sign = createSlice({
-  name: "sign",
+  name: 'sign',
   initialState,
   reducers: {
     signUp: (state, { payload }) => {
       state.signUp.err = payload;
       if (payload.msg) toast.error(payload.msg);
-      else toast.success("Successfully register");
+      else toast.success('Successfully register');
     },
     setLoadingSignIn: (state, { payload }) => {
       state.signIn.loading = payload;

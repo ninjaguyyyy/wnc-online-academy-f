@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   categories: null,
@@ -9,7 +9,7 @@ const initialState = {
 };
 
 const userSlice = createSlice({
-  name: "teacher",
+  name: 'teacher',
   initialState: initialState,
   reducers: {
     categories: (state, action) => {
@@ -35,7 +35,7 @@ const userSlice = createSlice({
       let lecture = {
         title: action.payload.title,
         video: action.payload.video[0].filename,
-        isPreview:action.payload.isPreview,
+        isPreview: action.payload.isPreview,
       };
       state.sections[action.payload.id].lectures.push(lecture);
     },

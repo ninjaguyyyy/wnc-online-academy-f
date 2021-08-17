@@ -1,14 +1,14 @@
-import categoriesAPI from "api/categoriesApi";
-import coursesAPI from "api/coursesApi";
-import { useQuery } from "App";
-import HeadingInfo from "components/Common/HeadingInfo";
-import qs from "query-string";
-import React, { useEffect, useState } from "react";
-import { Button, Col, Container, Form, FormControl, InputGroup, Row, Spinner } from "react-bootstrap";
-import Pagination from "react-bootstrap/Pagination";
-import { BsSearch } from "react-icons/bs";
-import { useHistory, useLocation } from "react-router-dom";
-import CourseCard from "../../../components/Common/CourseCard";
+import categoriesAPI from 'api/categoriesApi';
+import coursesAPI from 'api/coursesApi';
+import { useQuery } from 'App';
+import HeadingInfo from 'components/Common/HeadingInfo';
+import qs from 'query-string';
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Container, Form, FormControl, InputGroup, Row, Spinner } from 'react-bootstrap';
+import Pagination from 'react-bootstrap/Pagination';
+import { BsSearch } from 'react-icons/bs';
+import { useHistory, useLocation } from 'react-router-dom';
+import CourseCard from '../../../components/Common/CourseCard';
 
 const PER_PAGE = 6;
 
@@ -20,10 +20,10 @@ function CoursesList() {
   const [courses, setCourses] = useState([]);
   const [categories, setCategories] = useState([]);
 
-  const getInitialChosenCategory = () => query.get("category") || "";
+  const getInitialChosenCategory = () => query.get('category') || '';
   const [chosenCategory, setChosenCategory] = useState(getInitialChosenCategory());
-  const [sortValue, setSortValue] = useState("");
-  const [searchValue, setSearchValue] = useState("");
+  const [sortValue, setSortValue] = useState('');
+  const [searchValue, setSearchValue] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCourses, setTotalCourses] = useState(0);
@@ -45,18 +45,18 @@ function CoursesList() {
     }
 
     const searchString = qs.stringify(queryParams);
-    history.push({ pathname: "/web", search: `?${searchString}` });
+    history.push({ pathname: '/web', search: `?${searchString}` });
   }, [chosenCategory, sortValue, page, searchValue]);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       const params = {
-        category: query.get("category"),
-        sort: query.get("sort"),
-        search: query.get("search"),
-        page: query.get("page"),
-        perPage: query.get("perPage"),
+        category: query.get('category'),
+        sort: query.get('sort'),
+        search: query.get('search'),
+        page: query.get('page'),
+        perPage: query.get('perPage'),
       };
       setChosenCategory(params.category);
       const { success, courses, totalCourses, totalPages } = await coursesAPI.getAll(params);
@@ -89,7 +89,7 @@ function CoursesList() {
   return (
     <Container>
       <Row>
-        <HeadingInfo title="List of Courses" paths={[{ label: "Home", ref: "/" }, { label: "Courses" }]} />
+        <HeadingInfo title="List of Courses" paths={[{ label: 'Home', ref: '/' }, { label: 'Courses' }]} />
       </Row>
       <Row>
         <Col sm={4}>
@@ -112,7 +112,7 @@ function CoursesList() {
         <Col sm={3}>
           <InputGroup size="sm">
             <InputGroup.Text id="inputGroup-sizing-default">Category: </InputGroup.Text>
-            <Form.Select value={chosenCategory} onChange={(e) => setChosenCategory(e.target.value)} style={{ paddingRight: "2.5rem" }}>
+            <Form.Select value={chosenCategory} onChange={(e) => setChosenCategory(e.target.value)} style={{ paddingRight: '2.5rem' }}>
               <option value="">All Courses</option>
               {categories.map((category) => (
                 <option key={category._id} value={category._id}>
@@ -125,7 +125,7 @@ function CoursesList() {
         <Col sm={2}>
           <InputGroup size="sm">
             <InputGroup.Text id="inputGroup-sizing-default">Sort by: </InputGroup.Text>
-            <Form.Select value={sortValue} onChange={(e) => setSortValue(e.target.value)} style={{ paddingRight: "2.5rem" }}>
+            <Form.Select value={sortValue} onChange={(e) => setSortValue(e.target.value)} style={{ paddingRight: '2.5rem' }}>
               <option value="">Default</option>
               <option value="price_asc">Price ➚</option>
               <option value="price_desc">Price ➘</option>
@@ -150,7 +150,7 @@ function CoursesList() {
       </Row>
 
       {courses.length ? (
-        <Pagination className="mt-4" style={{ justifyContent: "center" }}>
+        <Pagination className="mt-4" style={{ justifyContent: 'center' }}>
           <Pagination.Prev
             onClick={() => {
               const prevPage = page - 1 < 1 ? 1 : page - 1;
