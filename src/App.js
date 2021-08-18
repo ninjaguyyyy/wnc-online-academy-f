@@ -30,7 +30,7 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <ToastContainer autoClose={3000} closeOnClick={true} hideProgressBar={false} pauseOnHover={true} />
+        <ToastContainer closeOnClick={true} hideProgressBar={false} pauseOnHover={true} />
         <Switch>
           <Route path="/dashboard" component={Dashboard} />
           <PublicRoute path="/login" component={Login} />

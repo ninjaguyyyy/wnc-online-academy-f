@@ -7,11 +7,13 @@ import { courses } from 'store/teacherSlice';
 import { setLoading } from 'store/userSlice';
 import loading from 'assets/image/loading.svg';
 import CourseCard from 'components/Common/CourseCard';
+
 function Courses() {
   const history = useHistory();
   const dispatch = useDispatch();
   const Courses = useSelector((state) => state.teacher.courses);
   const isLoading = useSelector((state) => state.user.loading);
+
   useEffect(() => {
     dispatch(setLoading(true));
     teacherApi.myCourses().then((res) => {
@@ -21,6 +23,7 @@ function Courses() {
       }
     });
   }, [dispatch]);
+
   return (
     <Container>
       {!isLoading && (
@@ -30,7 +33,7 @@ function Courses() {
       )}
       {!isLoading && <h2>My Course</h2>}
       {!isLoading && Courses !== null && (
-        <Row xs={1} md={2}>
+        <Row>
           {Courses.map((item, idx) => (
             <CourseCard course={item} />
           ))}
