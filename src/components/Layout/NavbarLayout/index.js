@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeToken } from 'store/userSlice';
 import CategoriesMenu from '../CategoriesMenu';
 import { BsFillPersonLinesFill } from 'react-icons/bs';
-
+import { sections } from 'store/teacherSlice'
 function NavbarLayout(props) {
   const { token, userInfo } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -56,7 +56,13 @@ function NavbarLayout(props) {
     <>
       <NavDropdown.Item onClick={() => history.push('/teacher/courses')}>My Courses</NavDropdown.Item>
       <NavDropdown.Divider />
-      <NavDropdown.Item onClick={() => history.push('/teacher/courses/add-course')}>Add Course</NavDropdown.Item>
+      <NavDropdown.Item onClick={() => {
+        dispatch(sections([]))
+        history.push('/teacher/courses/add-course')
+        }}
+      >
+        Add Course
+      </NavDropdown.Item>
       <NavDropdown.Divider />
     </>
   );
