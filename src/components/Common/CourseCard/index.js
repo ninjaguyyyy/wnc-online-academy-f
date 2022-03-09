@@ -15,8 +15,7 @@ export default function CourseCard({ course, isOpenNewTab, column }) {
   const user = useSelector((state) => state.user);
   const courses = useSelector((state) => state.teacher.courses);
   const history = useHistory();
-  const { avatar, title, lecturer, category, _id, rating, feedbacks, totalPrice, originPrice } =
-    course;
+  const { avatar, title, lecturer, category, _id, rating, feedbacks, totalPrice, originPrice } = course;
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const favoriteCourses = useSelector((state) => state.user.userInfo?.favoriteCourses);
@@ -40,9 +39,7 @@ export default function CourseCard({ course, isOpenNewTab, column }) {
   };
 
   const handleRemoveFromFavorite = async () => {
-    const { success, msg, updatedFavoriteCourses } = await userAPi.deleteCoursesFromFavorite(
-      course._id
-    );
+    const { success, msg, updatedFavoriteCourses } = await userAPi.deleteCoursesFromFavorite(course._id);
     if (success) {
       toast.success('Successfully Remove.');
       dispatch(updateUserFavoriteCourses(updatedFavoriteCourses));
@@ -61,20 +58,18 @@ export default function CourseCard({ course, isOpenNewTab, column }) {
             style={{ width: '100%', height: '200px' }}
             src={generateURLGetImageResource(avatar)}
           />
-          {user.userInfo !== null &&
-            user.userInfo.role === 2 &&
-            window.location.href.includes('teacher/courses') && (
-              <Button
-                onClick={() => {
-                  let temp = courses.filter((item) => item._id === course._id);
-                  dispatch(CourseRedux(temp[0]));
-                  history.push(`/teacher/editcourse/${course._id}`);
-                }}
-                className="editbtncss"
-              >
-                Edit course
-              </Button>
-            )}
+          {user.userInfo !== null && user.userInfo.role === 2 && window.location.href.includes('teacher/courses') && (
+            <Button
+              onClick={() => {
+                let temp = courses.filter((item) => item._id === course._id);
+                dispatch(CourseRedux(temp[0]));
+                history.push(`/teacher/editcourse/${course._id}`);
+              }}
+              className="editbtncss"
+            >
+              Edit course
+            </Button>
+          )}
           <div className="d-flex justify-content-between align-items-center">
             <Link to={`/web?category=${category._id}`} className="card__category mt-3 mb-2">
               {category.name}
@@ -109,11 +104,7 @@ export default function CourseCard({ course, isOpenNewTab, column }) {
           </div>
 
           <Card.Title>
-            <Link
-              className="card__title"
-              to={`/course/${_id}`}
-              target={isOpenNewTab ? '_blank' : '_self'}
-            >
+            <Link className="card__title" to={`/course/${_id}`} target={isOpenNewTab ? '_blank' : '_self'}>
               {title}
             </Link>
           </Card.Title>
@@ -136,12 +127,7 @@ export default function CourseCard({ course, isOpenNewTab, column }) {
                     onClick={handleRemoveFromFavorite}
                   />
                 ) : (
-                  <BsHeart
-                    className="fav_icon"
-                    color="rgb(220 73 52)"
-                    size={20}
-                    onClick={handleAddToFavorite}
-                  />
+                  <BsHeart className="fav_icon" color="rgb(220 73 52)" size={20} onClick={handleAddToFavorite} />
                 )}
               </Link>
             </div>
@@ -154,9 +140,7 @@ export default function CourseCard({ course, isOpenNewTab, column }) {
           >
             <div className="card__lecture d-flex align-items-center">
               <BiBookReader color="gray" size={18} />
-              <span className="ml-2 text-capitalize">
-                {lecturer.firstName + ' ' + lecturer.lastName}
-              </span>
+              <span className="ml-2 text-capitalize">{lecturer.firstName + ' ' + lecturer.lastName}</span>
             </div>
             <div className="card__prices">
               {originPrice !== totalPrice && <del className="mr-2">${originPrice}</del>}

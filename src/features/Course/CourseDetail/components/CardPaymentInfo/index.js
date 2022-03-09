@@ -1,6 +1,5 @@
-import { ApiUrl } from 'api/authUser';
 import userAPi from 'api/userApi';
-import { getFormatDate } from 'helpers';
+import { generateURLGetImageResource, getFormatDate } from 'helpers';
 import React, { useState } from 'react';
 import { Badge, Button, Card, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { BsClockHistory, BsGift, BsHeart, BsCloudUpload, BsFilm, BsPersonPlus } from 'react-icons/bs';
@@ -59,7 +58,13 @@ export default function CardPaymentInfo({ course }) {
     <>
       <Card>
         <Card.Body>
-          <img src={`${ApiUrl}resources/image/${course.avatar}`} alt="img" className="w-100" height={250} style={{ borderRadius: '5px' }} />
+          <img
+            src={generateURLGetImageResource(course.avatar)}
+            alt="img"
+            className="w-100"
+            height={250}
+            style={{ borderRadius: '5px' }}
+          />
           <div className="info-card">
             <div className="price">
               <div className="d-flex align-items-center">

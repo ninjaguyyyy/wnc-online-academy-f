@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import LoginImage from '../../assets/image/log.svg';
-import { FaUserTie, FaUserGraduate } from 'react-icons/fa';
-import { Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
-
-import './index.css';
-import { ROLE } from 'helpers/constants';
 import authApi from 'api/authUser';
+import { ROLE } from 'helpers/constants';
+import React, { useState } from 'react';
+import { Form } from 'react-bootstrap';
+import { FaUserGraduate, FaUserTie } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { saveToken, saveUserInfo } from 'store/userSlice';
+import LoginImage from '../../assets/image/log.svg';
+import './index.css';
 
 export default function Login(props) {
   const [role, setRole] = useState(ROLE.STUDENT);
@@ -20,7 +19,11 @@ export default function Login(props) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const { errorCode, msg, user, accessToken, refreshToken } = await authApi.signInApi({ userName: username, passWord: password, role });
+    const { errorCode, msg, user, accessToken, refreshToken } = await authApi.signInApi({
+      userName: username,
+      passWord: password,
+      role,
+    });
 
     if (errorCode) {
       toast.error(msg);
