@@ -4,6 +4,8 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
+export const ApiUrl = 'https://wnc-online-academy-21.herokuapp.com/';
+
 const axiosClient = axios.create({
   headers: {
     'content-type': 'application/json',

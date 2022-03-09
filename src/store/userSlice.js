@@ -83,4 +83,5 @@ export const {
   dashboardCourse,
   topCategory,
 } = actions;
+
 export default reducer;

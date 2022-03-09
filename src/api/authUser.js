@@ -1,6 +1,8 @@
 import axiosClient from './axiosClient';
 
-export const ApiUrl = "https://wnc-online-academy-21.herokuapp.com/";
+// export const ApiUrl = "https://wnc-online-academy-21.herokuapp.com/";
+export const ApiUrl = process.env.REACT_APP_API_URL;
+console.log('🚀 ~ file: authUser.js ~ line 5 ~ ApiUrl', ApiUrl);
 // export const ApiUrl = "http://localhost:3001/";
 
 const authApi = {

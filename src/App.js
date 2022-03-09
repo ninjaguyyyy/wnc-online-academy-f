@@ -4,14 +4,12 @@ import { BrowserRouter, Redirect, Switch, Route, useLocation } from 'react-route
 import PublicRoute from 'components/PublicRoute';
 import PrivateRoute from 'components/PrivateRoute';
 import TeacherRouter from 'components/PrivateRoute/TeacherRouter';
-import ResetPassword from 'features/Auth/ResetPassword';
 import Dashboard from 'features/Dashboard';
 import Student from 'features/Student';
 import WishList from 'features/Student/wishlist';
 import Teacher from 'features/Teacher';
 import Layout from 'components/Layout';
 import Web from 'features/Course/Web';
-import Mobile from 'features/Course/Mobile';
 import CourseDetail from 'features/Course/CourseDetail';
 import TeacherCourse from 'features/Course/TeacherCourse';
 import AttendedCourses from 'features/Student/AttendedCourses';
@@ -32,14 +30,13 @@ function App() {
       <BrowserRouter>
         <ToastContainer closeOnClick={true} hideProgressBar={false} pauseOnHover={true} />
         <Switch>
-          <Route path="/dashboard" component={Dashboard} />
           <PublicRoute path="/login" component={Login} />
           <PublicRoute path="/register" component={Register} />
           <PublicRoute path="/verify-otp" component={VerifyOTP} />
           <Layout>
             <Switch>
+              <Route path="/dashboard" component={Dashboard} />
               <Route path="/web" component={Web} />
-              <Route path="/mobile" component={Mobile} />
               <Route path="/course/:id" component={CourseDetail} />
               <PrivateRoute exact path="/student" component={Student} />
               <PrivateRoute exact path="/student/wishlist" component={WishList} />
