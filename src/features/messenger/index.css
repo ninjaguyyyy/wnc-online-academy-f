@@ -174,7 +174,7 @@ p {
   color: #bdbac2;
 }
 .btn {
-  background: 0 0;
+  /* background: 0 0; */
   transition: all 0.3s;
 }
 .button {

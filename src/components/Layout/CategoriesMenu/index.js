@@ -1,20 +1,17 @@
-import categoriesAPI from 'api/categoriesApi';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { DropdownButton, NavDropdown } from 'react-bootstrap';
 import { DropdownSubmenu } from 'react-bootstrap-submenu';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { topCategory } from 'store/userSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCategoriesTree } from 'store/thunks';
+
 export default function CategoriesMenu() {
-  const [categories, setCategories] = useState([]);
   const dispatch = useDispatch();
+  const categories = useSelector((state) => state.categories.tree);
+
   useEffect(() => {
-    (async () => {
-      const { success, categories } = await categoriesAPI.getTree();
-      success && setCategories(categories);
-      dispatch(topCategory(categories));
-    })();
-  }, []);
+    dispatch(fetchCategoriesTree());
+  }, [dispatch]);
 
   return (
     <DropdownButton className="category-dropdown" title="Categories" id="dropdown-autoclose-true">

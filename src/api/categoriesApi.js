@@ -1,13 +1,12 @@
 import axiosClient from './axiosClient';
-import { ApiUrl } from './authUser';
 
 const categoriesAPI = {
   getAll: () => {
-    const url = `${ApiUrl}categories/`;
+    const url = `/categories/`;
     return axiosClient.get(url);
   },
   getTree: () => {
-    const url = `${ApiUrl}categories/tree`;
+    const url = `/categories/tree`;
     return axiosClient.get(url);
   },
 };
