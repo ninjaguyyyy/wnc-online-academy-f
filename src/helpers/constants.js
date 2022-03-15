@@ -8,3 +8,8 @@ export const ROLE = {
   TEACHER: 2,
   STUDENT: 3,
 };
+
+export const TabOptions = {
+  Contacts: 'contacts',
+  Conversations: 'conversations',
+};

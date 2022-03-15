@@ -19,6 +19,7 @@ import { ToastContainer } from 'react-toastify';
 import Login from 'features/Login';
 import Register from 'features/Register';
 import VerifyOTP from 'features/VerifyOTP';
+import Messenger from 'features/messenger';
 
 export function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -33,6 +34,8 @@ function App() {
           <PublicRoute path="/login" component={Login} />
           <PublicRoute path="/register" component={Register} />
           <PublicRoute path="/verify-otp" component={VerifyOTP} />
+          <PublicRoute path="/messenger" component={Messenger} />
+
           <Layout>
             <Switch>
               <Route path="/dashboard" component={Dashboard} />
