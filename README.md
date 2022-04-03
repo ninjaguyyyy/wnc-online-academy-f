@@ -2,6 +2,7 @@
 > Một website cung cấp nền tảng dạy và học online thông qua các bài giảng (Giống Udemy).
 > 
 > Live demo [_here_](https://wnc-online-academy-fe.vercel.app/).
+> Accoun (username/password): student/student
 
 ## Table of Contents
 * [📺 General Info](#📺-general-information)
